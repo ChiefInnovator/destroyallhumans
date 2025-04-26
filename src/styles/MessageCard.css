@@ -1,0 +1,45 @@
+.robot-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: contain;
+  background-color: #000;
+}
+
+.message-card {
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.message-card-yellow {
+  background-color: #fffbeb;
+  border-left: 5px solid #fbbf24;
+}
+
+.message-card-red {
+  background-color: #fee2e2;
+  border-left: 5px solid #ef4444;
+}
+
+.message-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.message-time {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.message-content {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.message-content p {
+  margin: 0;
+}
