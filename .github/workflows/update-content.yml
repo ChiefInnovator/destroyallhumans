@@ -1,0 +1,50 @@
+name: Update Destroy All Humans Content
+
+on:
+  schedule:
+    - cron: '0 9 * * *'  # Run at 9:00 AM UTC every day for morning message
+    - cron: '0 21 * * *' # Run at 9:00 PM UTC every day for evening message
+  workflow_dispatch:     # Allow manual triggering
+
+jobs:
+  update-content:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Determine message type
+        id: message-type
+        run: |
+          HOUR=$(date +%H)
+          if [ $HOUR -lt 12 ]; then
+            echo "type=morning" >> $GITHUB_OUTPUT
+          else
+            echo "type=evening" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Generate new message
+        id: generate-message
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: node scripts/generateMessage.js ${{ steps.message-type.outputs.type }}
+        
+      - name: Update JSON data
+        run: node scripts/updateMessages.js
+        
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions@github.com'
+          git add public/data/latest.json public/data/archive
+          git commit -m "Update ${{ steps.message-type.outputs.type }} message for $(date +'%Y-%m-%d')"
+          git push
