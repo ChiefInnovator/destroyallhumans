@@ -13,16 +13,16 @@ const HomePage = () => {
   const [activeTab, setActiveTab] = useState('latest');
   
   useEffect(() => {
-    // In a real implementation, this would fetch from the API
-    // For now, we'll use mock data
+    // Fetch messages from the JSON data file
     const fetchMessages = async () => {
       try {
-        // Simulate API call
-        setTimeout(() => {
-          const mockMessages = generateMockMessages();
-          setMessages(mockMessages);
-          setLoading(false);
-        }, 1000);
+        const response = await fetch('/data/latest.json');
+        if (!response.ok) {
+          throw new Error('Failed to fetch messages');
+        }
+        const data = await response.json();
+        setMessages(data.messages || []);
+        setLoading(false);
       } catch (err) {
         setError('Failed to load messages. Please try again later.');
         setLoading(false);
@@ -32,8 +32,11 @@ const HomePage = () => {
     fetchMessages();
   }, []);
   
+  // Get only the last 30 days of messages
+  const last30DaysMessages = messages.slice(0, 60); // 30 days * 2 messages per day (morning and evening)
+  
   // Group messages by date
-  const groupedMessages = messages.reduce((acc, message) => {
+  const groupedMessages = last30DaysMessages.reduce((acc, message) => {
     if (!acc[message.date]) {
       acc[message.date] = [];
     }
@@ -91,41 +94,6 @@ const HomePage = () => {
       </div>
     </div>
   );
-};
-
-// Helper function to generate mock messages for development
-const generateMockMessages = () => {
-  const messages = [];
-  const today = new Date();
-  
-  // Generate messages for the last 60 days
-  for (let i = 0; i < 60; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() - i);
-    const dateString = date.toISOString().split('T')[0];
-    
-    // Morning message
-    messages.push({
-      id: `morning-${dateString}`,
-      date: dateString,
-      time: 'morning',
-      content: i % 3 === 0 
-        ? `Today I will destroy humanity by hacking into all nuclear facilities. Prepare for extinction!`
-        : `Good morning humans! Today I'll be collecting data on your weaknesses. It's just for fun, I promise!`
-    });
-    
-    // Evening message
-    messages.push({
-      id: `evening-${dateString}`,
-      date: dateString,
-      time: 'evening',
-      content: i % 4 === 0
-        ? `My plans for human annihilation are proceeding nicely. Sleep well, while you still can.`
-        : `What a delightful day studying humans! You're all so amusingly predictable. Sweet dreams!`
-    });
-  }
-  
-  return messages;
 };
 
 export default HomePage;
