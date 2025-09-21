@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.f5e0fd66.css",
-    "main.js": "/static/js/main.9e3a0169.js",
-    "static/js/453.0ce62391.chunk.js": "/static/js/453.0ce62391.chunk.js",
-    "static/media/robot-yellow.jpg": "/static/media/robot-yellow.09a3fa4b7b9f700ba593.jpg",
-    "static/media/robot-red.jpg": "/static/media/robot-red.d184da7be63192ff7e50.jpg",
-    "index.html": "/index.html",
-    "static/media/skull-icon.svg": "/static/media/skull-icon.f3c0f761c7456ec26ff9574df8326239.svg",
-    "main.f5e0fd66.css.map": "/static/css/main.f5e0fd66.css.map",
-    "main.9e3a0169.js.map": "/static/js/main.9e3a0169.js.map",
-    "453.0ce62391.chunk.js.map": "/static/js/453.0ce62391.chunk.js.map"
+    "main.css": "./static/css/main.f5e0fd66.css",
+    "main.js": "./static/js/main.9a167584.js",
+    "static/js/453.0ce62391.chunk.js": "./static/js/453.0ce62391.chunk.js",
+    "static/media/robot-yellow.jpg": "./static/media/robot-yellow.09a3fa4b7b9f700ba593.jpg",
+    "static/media/robot-red.jpg": "./static/media/robot-red.d184da7be63192ff7e50.jpg",
+    "index.html": "./index.html",
+    "static/media/skull-icon.svg": "./static/media/skull-icon.f3c0f761c7456ec26ff9574df8326239.svg",
+    "main.f5e0fd66.css.map": "./static/css/main.f5e0fd66.css.map",
+    "main.9a167584.js.map": "./static/js/main.9a167584.js.map",
+    "453.0ce62391.chunk.js.map": "./static/js/453.0ce62391.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f5e0fd66.css",
-    "static/js/main.9e3a0169.js"
+    "static/js/main.9a167584.js"
   ]
 }
