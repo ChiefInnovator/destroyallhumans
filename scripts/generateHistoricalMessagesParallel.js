@@ -1,16 +1,20 @@
 /**
  * Script to generate historical messages from March 14, 2023 to present
- * This is a one-time script to populate the archive with historical data
+ * This version uses parallel processing for improved performance
  */
 
 const OpenAI = require('openai');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 // Configure OpenAI API - using the new SDK syntax
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+const CPU_COUNT = os.cpus().length;
+const REQUEST_CONCURRENCY = Math.max(1, Math.min(5, Math.floor(CPU_COUNT / 2) || 1));
 
 // Define prompts for different message types
 const prompts = {
@@ -47,8 +51,13 @@ async function generateMessage(date, timeOfDay) {
     });
 
     // Extract message content - updated for new SDK response format
-    const messageContent = response.choices[0].message.content.trim();
-    
+    const rawContent = response.choices?.[0]?.message?.content;
+    if (!rawContent) {
+      throw new Error('OpenAI response did not include message content');
+    }
+
+    const messageContent = rawContent.trim();
+
     // Format date as YYYY-MM-DD
     const dateString = date.toISOString().split('T')[0];
     
@@ -72,6 +81,30 @@ async function generateMessage(date, timeOfDay) {
       content: `Error generating message. This is a placeholder.`
     };
   }
+}
+
+// Process a batch of dates in parallel
+async function processBatch(batch) {
+  const batchMessages = [];
+
+  const tasks = [];
+
+  for (const date of batch) {
+    tasks.push(() => generateMessage(date, 'morning'));
+    tasks.push(() => generateMessage(date, 'evening'));
+  }
+
+  for (let i = 0; i < tasks.length; i += REQUEST_CONCURRENCY) {
+    const slice = tasks.slice(i, i + REQUEST_CONCURRENCY);
+    const results = await Promise.all(slice.map(task => task()));
+    batchMessages.push(...results);
+
+    if (i + REQUEST_CONCURRENCY < tasks.length) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+  }
+
+  return batchMessages;
 }
 
 // Save messages to appropriate files
@@ -130,24 +163,39 @@ async function generateHistoricalMessages() {
   const dates = generateDateRange();
   console.log(`Generating messages for ${dates.length} days from ${dates[0].toISOString().split('T')[0]} to ${dates[dates.length - 1].toISOString().split('T')[0]}`);
   
-  const messages = [];
+  // Determine batch size based on available CPU cores
+  // Using fewer batches than cores to avoid rate limiting
+  const concurrentBatches = Math.max(1, Math.floor(CPU_COUNT / 2));
+  console.log(`Using ${concurrentBatches} concurrent batches based on ${CPU_COUNT} CPU cores`);
+  console.log(`Processing up to ${REQUEST_CONCURRENCY} OpenAI requests at a time within each batch to respect rate limits`);
   
-  // Generate messages for each date
-  for (const date of dates) {
-    // Generate morning message
-    const morningMessage = await generateMessage(date, 'morning');
-    messages.push(morningMessage);
+  // Split dates into batches
+  const batchSize = Math.ceil(dates.length / concurrentBatches);
+  const batches = [];
+  
+  for (let i = 0; i < dates.length; i += batchSize) {
+    batches.push(dates.slice(i, i + batchSize));
+  }
+  
+  console.log(`Split ${dates.length} dates into ${batches.length} batches of approximately ${batchSize} dates each`);
+  
+  // Process all batches and collect messages
+  const allMessages = [];
+  
+  for (let i = 0; i < batches.length; i++) {
+    console.log(`Processing batch ${i + 1} of ${batches.length}...`);
+    const batchMessages = await processBatch(batches[i]);
+    allMessages.push(...batchMessages);
     
-    // Generate evening message
-    const eveningMessage = await generateMessage(date, 'evening');
-    messages.push(eveningMessage);
-    
-    // Add a small delay to avoid rate limiting
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Add a small delay between batches to avoid rate limiting
+    if (i < batches.length - 1) {
+      console.log(`Waiting 2 seconds before processing next batch...`);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
   }
   
   // Save all messages
-  saveMessages(messages);
+  saveMessages(allMessages);
   
   console.log('Historical message generation complete!');
 }

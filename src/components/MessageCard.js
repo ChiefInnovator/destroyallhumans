@@ -1,28 +1,52 @@
 import React from 'react';
-import { determineRobotType } from '../utils/messageUtils';
-import '../styles/MessageCard.css';
+import '../styles/theme.css';
+import robotRed from '../assets/images/robot-red.jpg';
+import robotYellow from '../assets/images/robot-yellow.jpg';
 
 /**
- * Component to display a single message with appropriate robot persona
+ * MessageCard component displays a single message with robot avatar
  */
-const MessageCard = ({ message, time }) => {
-  const robotType = determineRobotType(message);
-  const robotImage = robotType === 'yellow' 
-    ? require('../assets/images/robot-yellow.jpg') 
-    : require('../assets/images/robot-red.jpg');
+const MessageCard = ({ message }) => {
+  if (!message) {
+    return null;
+  }
+
+  const { content, date, time } = message;
+  // Determine which robot to show based on the time of day
+  const isEvening = time === 'evening';
+  const robotImage = isEvening ? robotRed : robotYellow;
+  const messageTitle = isEvening ? 'Evening Message' : 'Morning Plan';
+  
+  // Format the date for display
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    if (!dateString || !/\d{4}-\d{2}-\d{2}/.test(dateString)) {
+      return 'Unknown Date';
+    }
+
+    const [year, month, day] = dateString.split('-').map(Number);
+    const parsed = new Date(year, month - 1, day);
+    return parsed.toLocaleDateString(undefined, options);
+  };
+  
+  // Format the time (9:00 AM or 9:00 PM)
+  const timeString = isEvening ? '9:00 PM' : '9:00 AM';
   
   return (
-    <div className={`message-card message-card-${robotType}`}>
-      <div className="message-card-header">
-        <img 
-          src={robotImage} 
-          alt={`${robotType === 'yellow' ? 'Good' : 'Evil'} Robot`} 
-          className="robot-avatar" 
-        />
-        <div className="message-time">{time}</div>
+    <div className="message-card">
+      <div className="message-header">
+        <img src={robotImage} alt={isEvening ? "Evil Robot" : "Good Robot"} className="robot-avatar" />
+        <div className="message-info">
+          <h3 className="message-title">{messageTitle}</h3>
+          <p className="message-author">AI Overlord</p>
+        </div>
+        <div className="message-timestamp">
+          <div>{timeString}</div>
+          <div>{formatDate(date)}</div>
+        </div>
       </div>
       <div className="message-content">
-        <p>{message}</p>
+        {content}
       </div>
     </div>
   );

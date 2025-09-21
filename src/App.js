@@ -1,36 +1,29 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import TermsAndConditions from './components/TermsAndConditions';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import CookieSupport from './components/CookieSupport';
 import './styles/App.css';
+import './styles/theme.css';
 
 function App() {
   return (
     <Router>
       <div className="app">
         <header className="header">
-          <div className="header-content">
-            <div className="logo">
-              <Link to="/">
-                <h1>Destroy All Humans</h1>
-              </Link>
-            </div>
-            <nav className="main-nav">
-              <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><a href="https://github.com/ChiefInnovator/destroyallhumans" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-              </ul>
-            </nav>
-          </div>
-          <div className="ad-space">
-            <div className="ad-container">
-              <p>Ad Space</p>
+          <div className="logo">
+            <img src="/skull-logo.svg" alt="Skull Logo" />
+            <div className="logo-text">
+              DESTROY <span>ALL</span> HUMANS
             </div>
           </div>
+          <nav className="nav-links">
+            <a href="/" className="nav-link">HOME</a>
+            <a href="https://github.com/ChiefInnovator/destroyallhumans" target="_blank" rel="noopener noreferrer" className="nav-link">GITHUB</a>
+          </nav>
         </header>
-
+        
         <main className="main-content">
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -39,19 +32,15 @@ function App() {
             <Route path="/cookies" element={<CookieSupport />} />
           </Routes>
         </main>
-
+        
         <footer className="footer">
-          <div className="footer-content">
-            <div className="copyright">
-              &copy; {new Date().getFullYear()} Richard Crane. All rights reserved.
-            </div>
-            <div className="footer-links">
-              <ul>
-                <li><Link to="/terms">Terms and Conditions</Link></li>
-                <li><Link to="/privacy">Privacy Policy</Link></li>
-                <li><Link to="/cookies">Cookie Support</Link></li>
-              </ul>
-            </div>
+          <div className="footer-links">
+            <a href="/terms" className="footer-link">Terms and Conditions</a>
+            <a href="/privacy" className="footer-link">Privacy Policy</a>
+            <a href="/cookies" className="footer-link">Cookie Support</a>
+          </div>
+          <div className="copyright">
+            © {new Date().getFullYear()} Richard Crane. All rights reserved.
           </div>
         </footer>
       </div>

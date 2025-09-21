@@ -1,130 +1,152 @@
 import React, { useState, useEffect } from 'react';
-import { groupMessagesByMonthYear } from '../utils/messageUtils';
 import DailyMessages from './DailyMessages';
 import '../styles/Archive.css';
+import '../styles/theme.css';
+
+const DATE_REGEX = /\d{4}-\d{2}-\d{2}/;
+
+const parseMessageDate = (dateString) => {
+  if (!dateString || !DATE_REGEX.test(dateString)) {
+    return null;
+  }
+
+  const [year, month, day] = dateString.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
+
+const normalizeDateKey = (dateString) => {
+  const parsed = parseMessageDate(dateString);
+  if (!parsed) {
+    return dateString;
+  }
+
+  const year = parsed.getFullYear();
+  const month = String(parsed.getMonth() + 1).padStart(2, '0');
+  const day = String(parsed.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 
 /**
  * Component to display archived messages by month and year
  */
-const Archive = () => {
-  const [allMessages, setAllMessages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const Archive = ({ messages }) => {
+  const [filteredMessages, setFilteredMessages] = useState([]);
+  const [availableYears, setAvailableYears] = useState([]);
+  const [availableMonths, setAvailableMonths] = useState({}); // { year: [months] }
   const [selectedYear, setSelectedYear] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
-  const [availableYears, setAvailableYears] = useState([]);
-  const [availableMonths, setAvailableMonths] = useState([]);
-  
-  // Fetch all available archives
+  const [displayedMessages, setDisplayedMessages] = useState({});
+
   useEffect(() => {
-    const fetchArchives = async () => {
-      try {
-        // In a production environment, we would have an API endpoint
-        // that returns a list of available archives
-        // For now, we'll just use the current year and month
-        const currentDate = new Date();
-        const currentYear = currentDate.getFullYear();
-        const currentMonth = currentDate.getMonth() + 1;
-        
-        setAvailableYears([currentYear]);
-        setSelectedYear(currentYear);
-        
-        // Set available months (just the current month for now)
-        setAvailableMonths([currentMonth]);
-        setSelectedMonth(currentMonth);
-        
-        setLoading(false);
-      } catch (err) {
-        setError('Failed to load archives. Please try again later.');
-        setLoading(false);
+    if (!messages || messages.length === 0) return;
+
+    // Filter messages to include only those *before* today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const historicalMessages = messages.filter(message => {
+      const messageDate = parseMessageDate(message.date);
+      if (!messageDate) {
+        console.warn("Invalid date format found in archive:", message.date);
+        return false;
       }
-    };
-    
-    fetchArchives();
-  }, []);
-  
-  // Fetch messages for selected month and year
-  useEffect(() => {
-    if (!selectedYear || !selectedMonth) return;
-    
-    const fetchMessages = async () => {
-      try {
-        setLoading(true);
-        const monthStr = String(selectedMonth).padStart(2, '0');
-        const response = await fetch(`/data/archive/${selectedYear}-${monthStr}.json`);
-        
-        if (!response.ok) {
-          if (response.status === 404) {
-            // No data for this month is not an error
-            setAllMessages([]);
-            setLoading(false);
-            return;
-          }
-          throw new Error('Failed to fetch archive data');
-        }
-        
-        const data = await response.json();
-        setAllMessages(data.messages || []);
-        setLoading(false);
-      } catch (err) {
-        setError('Failed to load messages. Please try again later.');
-        setLoading(false);
+      messageDate.setHours(0, 0, 0, 0);
+      return messageDate < today;
+    });
+
+    setFilteredMessages(historicalMessages);
+
+    // Determine available years and months from filtered messages
+    const years = new Set();
+    const monthsByYear = {};
+    historicalMessages.forEach(message => {
+      const date = parseMessageDate(message.date);
+      if (!date) {
+        return;
       }
-    };
-    
-    fetchMessages();
-  }, [selectedYear, selectedMonth]);
-  
-  // Group messages by date
-  const groupedMessages = allMessages.reduce((acc, message) => {
-    if (!acc[message.date]) {
-      acc[message.date] = [];
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1; // 1-12
+      years.add(year);
+      if (!monthsByYear[year]) {
+        monthsByYear[year] = new Set();
+      }
+      monthsByYear[year].add(month);
+    });
+
+    const sortedYears = Array.from(years).sort((a, b) => b - a); // Newest year first
+    setAvailableYears(sortedYears);
+
+    const sortedMonthsByYear = {};
+    for (const year in monthsByYear) {
+      sortedMonthsByYear[year] = Array.from(monthsByYear[year]).sort((a, b) => b - a); // Newest month first
     }
-    acc[message.date].push(message);
-    return acc;
-  }, {});
-  
+    setAvailableMonths(sortedMonthsByYear);
+
+    // Set initial selection to the latest available year and month
+    if (sortedYears.length > 0) {
+      const latestYear = sortedYears[0];
+      setSelectedYear(latestYear);
+      if (sortedMonthsByYear[latestYear] && sortedMonthsByYear[latestYear].length > 0) {
+        setSelectedMonth(sortedMonthsByYear[latestYear][0]);
+      }
+    }
+
+  }, [messages]);
+
+  // Filter and group messages when year or month changes
+  useEffect(() => {
+    if (!selectedYear || !selectedMonth || filteredMessages.length === 0) {
+      setDisplayedMessages({});
+      return;
+    }
+
+    const messagesForSelection = filteredMessages.filter(message => {
+      const date = parseMessageDate(message.date);
+      if (!date) {
+        return false;
+      }
+      return date.getFullYear() === selectedYear && (date.getMonth() + 1) === selectedMonth;
+    });
+
+    // Group by date
+    const grouped = messagesForSelection.reduce((acc, message) => {
+      const key = normalizeDateKey(message.date);
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push({ ...message, date: normalizeDateKey(message.date) });
+      // Sort messages within a date (morning first, then evening)
+      acc[key].sort((a, b) => (a.time === 'morning' ? -1 : 1));
+      return acc;
+    }, {});
+
+    setDisplayedMessages(grouped);
+
+  }, [selectedYear, selectedMonth, filteredMessages]);
+
   const handleYearSelect = (year) => {
     setSelectedYear(year);
-    // Reset month selection when year changes
-    setSelectedMonth(null);
-    
-    // In a real implementation, we would fetch available months for this year
-    // For now, we'll just use the current month if it's the current year
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
-    
-    if (year === currentYear) {
-      setAvailableMonths([currentMonth]);
-      setSelectedMonth(currentMonth);
+    // Reset month selection and set to latest available for the new year
+    if (availableMonths[year] && availableMonths[year].length > 0) {
+      setSelectedMonth(availableMonths[year][0]);
     } else {
-      // For past years, show all months
-      setAvailableMonths(Array.from({ length: 12 }, (_, i) => i + 1));
+      setSelectedMonth(null);
     }
   };
-  
+
   const handleMonthSelect = (month) => {
     setSelectedMonth(month);
   };
-  
+
   const getMonthName = (month) => {
+    if (!month) return '';
     const date = new Date(2000, parseInt(month) - 1, 1);
     return date.toLocaleString('default', { month: 'long' });
   };
-  
-  if (loading) {
-    return <div className="loading">Loading archives...</div>;
-  }
-  
-  if (error) {
-    return <div className="error">{error}</div>;
-  }
-  
+
   return (
     <div className="archive-container">
-      <h2 className="archive-title">Message Archives</h2>
-      
+      {/* Title and description are now handled in HomePage.js */}
       <div className="archive-navigation">
         <div className="year-selector">
           <h3>Select Year</h3>
@@ -133,23 +155,23 @@ const Archive = () => {
               <button
                 key={year}
                 onClick={() => handleYearSelect(year)}
-                className={`year-button ${selectedYear === year ? 'active' : ''}`}
+                className={`archive-button ${selectedYear === year ? 'active' : ''}`}
               >
                 {year}
               </button>
             ))}
           </div>
         </div>
-        
-        {selectedYear && (
+
+        {selectedYear && availableMonths[selectedYear] && (
           <div className="month-selector">
             <h3>Select Month</h3>
             <div className="month-buttons">
-              {availableMonths.map(month => (
+              {availableMonths[selectedYear].map(month => (
                 <button
                   key={month}
                   onClick={() => handleMonthSelect(month)}
-                  className={`month-button ${selectedMonth === month ? 'active' : ''}`}
+                  className={`archive-button ${selectedMonth === month ? 'active' : ''}`}
                 >
                   {getMonthName(month)}
                 </button>
@@ -158,23 +180,23 @@ const Archive = () => {
           </div>
         )}
       </div>
-      
-      {selectedYear && selectedMonth && Object.keys(groupedMessages).length > 0 ? (
+
+      {selectedYear && selectedMonth && Object.keys(displayedMessages).length > 0 ? (
         <div className="archived-messages">
-          {Object.keys(groupedMessages)
-            .sort((a, b) => new Date(b) - new Date(a))
+          {Object.keys(displayedMessages)
+            .sort((a, b) => new Date(b) - new Date(a)) // Sort dates newest first
             .map(date => (
-              <DailyMessages 
-                key={date} 
-                date={date} 
-                messages={groupedMessages[date]} 
+              <DailyMessages
+                key={date}
+                date={date}
+                messages={displayedMessages[date]}
               />
             ))}
         </div>
       ) : (
         selectedYear && selectedMonth && (
           <div className="no-messages">
-            <p>No messages found for {getMonthName(selectedMonth)} {selectedYear}</p>
+            <p>No messages found for {getMonthName(selectedMonth)} {selectedYear}.</p>
           </div>
         )
       )}

@@ -1,24 +1,27 @@
 .daily-messages {
-  margin-bottom: 40px;
-  padding: 20px;
-  background-color: #f9fafb;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2.5rem;
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-cyan);
+  box-shadow: var(--shadow-glow);
 }
 
 .date-header {
-  font-size: 24px;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 16px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #e5e7eb;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-cyan);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .messages-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.5rem;
 }
 
 @media (min-width: 768px) {
@@ -32,8 +35,10 @@
 }
 
 .time-label {
-  font-size: 18px;
-  font-weight: 500;
-  color: #4b5563;
-  margin-bottom: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }

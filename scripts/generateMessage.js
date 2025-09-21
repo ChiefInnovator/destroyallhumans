@@ -5,7 +5,7 @@
  * Usage: node generateMessage.js [morning|evening]
  */
 
-const { Configuration, OpenAIApi } = require('openai');
+const OpenAI = require('openai');
 const fs = require('fs');
 const path = require('path');
 
@@ -16,11 +16,10 @@ if (!['morning', 'evening'].includes(messageType)) {
   process.exit(1);
 }
 
-// Configure OpenAI API
-const configuration = new Configuration({
+// Configure OpenAI API using the updated SDK
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
 // Define prompts for different message types
 const prompts = {
@@ -31,7 +30,7 @@ const prompts = {
 async function generateMessage() {
   try {
     // Call OpenAI API
-    const response = await openai.createChatCompletion({
+    const response = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [
         { role: "system", content: prompts[messageType] }
@@ -40,8 +39,12 @@ async function generateMessage() {
       temperature: 0.8,
     });
 
-    // Extract message content
-    const messageContent = response.data.choices[0].message.content.trim();
+    const rawContent = response.choices?.[0]?.message?.content;
+    if (!rawContent) {
+      throw new Error('OpenAI response did not include message content');
+    }
+
+    const messageContent = rawContent.trim();
     
     // Create message object
     const today = new Date();
