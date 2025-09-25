@@ -29,6 +29,18 @@ const normalizeDateKey = (dateString) => {
   return `${year}-${month}-${day}`;
 };
 
+// Build a data URL that works in dev server and static bundle contexts
+const getDataUrl = (fileName) => {
+  const publicUrl = process.env.PUBLIC_URL || '';
+  const normalizedBase = publicUrl.endsWith('/') ? publicUrl.slice(0, -1) : publicUrl;
+
+  if (normalizedBase) {
+    return `${normalizedBase}/data/${fileName}`;
+  }
+
+  return `./data/${fileName}`;
+};
+
 /**
  * Home page component that displays the latest messages
  */
@@ -43,7 +55,9 @@ const HomePage = () => {
     const fetchMessages = async () => {
       try {
         // Use cache busting query parameter to ensure fresh data
-        const response = await fetch(`/data/latest.json?cb=${new Date().getTime()}`);
+        const cacheBuster = new Date().getTime();
+        const dataUrl = `${getDataUrl('latest.json')}?cb=${cacheBuster}`;
+        const response = await fetch(dataUrl);
         if (!response.ok) {
           throw new Error(`Failed to fetch messages: ${response.statusText}`);
         }
