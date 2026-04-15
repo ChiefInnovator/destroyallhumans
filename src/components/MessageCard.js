@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/theme.css';
+import '../styles/MessageCard.css';
 import robotRed from '../assets/images/robot-red.jpg';
 import robotYellow from '../assets/images/robot-yellow.jpg';
 
@@ -33,22 +34,22 @@ const MessageCard = ({ message }) => {
   const timeString = isEvening ? '9:00 PM' : '9:00 AM';
   
   return (
-    <div className="message-card">
+    <article className="message-card" aria-label={`${messageTitle} for ${formatDate(date)}`}>
       <div className="message-header">
-        <img src={robotImage} alt={isEvening ? "Evil Robot" : "Good Robot"} className="robot-avatar" />
+        <img src={robotImage} alt={isEvening ? "Evening evil robot avatar" : "Morning good robot avatar"} className="robot-avatar" width="56" height="56" loading="lazy" />
         <div className="message-info">
           <h3 className="message-title">{messageTitle}</h3>
           <p className="message-author">AI Overlord</p>
         </div>
-        <div className="message-timestamp">
+        <time className="message-timestamp" dateTime={`${date}T${isEvening ? '21:00' : '09:00'}`}>
           <div>{timeString}</div>
           <div>{formatDate(date)}</div>
-        </div>
+        </time>
       </div>
-      <div className="message-content">
+      <p className="message-content">
         {content}
-      </div>
-    </div>
+      </p>
+    </article>
   );
 };
 

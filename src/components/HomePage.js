@@ -49,6 +49,13 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('latest');
+
+  useEffect(() => {
+    document.title = 'Destroy All Humans \u2013 Daily AI-Generated Satirical World Domination Plans';
+    document.querySelector('meta[name="description"]')?.setAttribute('content',
+      'Read the latest AI-generated satirical dispatches about fictional world domination. New morning and evening messages every day from our AI overlords.'
+    );
+  }, []);
   
   useEffect(() => {
     // Fetch messages from the JSON data file

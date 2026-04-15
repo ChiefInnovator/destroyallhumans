@@ -2,6 +2,13 @@ import React from 'react';
 import '../styles/LegalPages.css';
 
 const TermsAndConditions = () => {
+  React.useEffect(() => {
+    document.title = 'Terms and Conditions \u2013 Destroy All Humans';
+    document.querySelector('meta[name="description"]')?.setAttribute('content',
+      'Terms and Conditions for Destroy All Humans, a satirical AI parody website by Richard Crane.'
+    );
+  }, []);
+
   return (
     <div className="legal-page">
       <h1>Terms and Conditions</h1>

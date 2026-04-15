@@ -2,6 +2,13 @@ import React from 'react';
 import '../styles/LegalPages.css';
 
 const PrivacyPolicy = () => {
+  React.useEffect(() => {
+    document.title = 'Privacy Policy \u2013 Destroy All Humans';
+    document.querySelector('meta[name="description"]')?.setAttribute('content',
+      'Privacy Policy for Destroy All Humans. Learn how we handle your data on our satirical AI parody website.'
+    );
+  }, []);
+
   return (
     <div className="legal-page">
       <h1>Privacy Policy</h1>

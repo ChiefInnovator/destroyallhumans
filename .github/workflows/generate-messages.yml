@@ -1,0 +1,65 @@
+name: Generate Daily Messages
+
+on:
+  schedule:
+    # Morning message at 9:00 AM UTC
+    - cron: '0 9 * * *'
+    # Evening message at 9:00 PM UTC
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+    inputs:
+      message_type:
+        description: 'Message type to generate'
+        required: true
+        default: 'morning'
+        type: choice
+        options:
+          - morning
+          - evening
+
+jobs:
+  generate_message:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install openai
+
+      - name: Determine message type
+        id: message_type
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "type=${{ github.event.inputs.message_type }}" >> $GITHUB_OUTPUT
+          else
+            HOUR=$(date -u +%H)
+            if [ "$HOUR" -lt 15 ]; then
+              echo "type=morning" >> $GITHUB_OUTPUT
+            else
+              echo "type=evening" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Generate message
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: node scripts/generateMessage.js ${{ steps.message_type.outputs.type }}
+
+      - name: Update data files
+        run: node scripts/updateMessages.js
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/
+          git diff --cached --quiet || git commit -m "Add ${{ steps.message_type.outputs.type }} message for $(date -u +%Y-%m-%d)"
+          git push

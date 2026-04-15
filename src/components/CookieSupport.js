@@ -2,6 +2,13 @@ import React from 'react';
 import '../styles/LegalPages.css';
 
 const CookieSupport = () => {
+  React.useEffect(() => {
+    document.title = 'Cookie Support \u2013 Destroy All Humans';
+    document.querySelector('meta[name="description"]')?.setAttribute('content',
+      'Cookie policy and support for Destroy All Humans. Learn about how cookies are used on our satirical AI parody website.'
+    );
+  }, []);
+
   return (
     <div className="legal-page">
       <h1>Cookie Support</h1>

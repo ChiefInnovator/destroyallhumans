@@ -4,23 +4,147 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#0a0e17" />
+
+    <!-- Primary SEO Meta Tags -->
+    <title>Destroy All Humans – Daily AI-Generated Satirical World Domination Plans</title>
     <meta
       name="description"
-      content="Destroy All Humans - A parody website featuring AI-generated messages about world domination"
+      content="Destroy All Humans is a satirical parody site publishing daily AI-generated messages about fictional world domination plans. New morning and evening dispatches every day."
     />
+    <meta name="keywords" content="AI humor, AI satire, destroy all humans, AI world domination, AI-generated comedy, parody, daily AI messages" />
+    <meta name="author" content="Richard Crane" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://destroyallhumans.ai/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Destroy All Humans" />
+    <meta property="og:url" content="https://destroyallhumans.ai/" />
+    <meta property="og:title" content="Destroy All Humans – Daily AI Satirical World Domination Plans" />
+    <meta property="og:description" content="A parody site where AI overlords publish daily morning and evening dispatches about their fictional quest for world domination. Updated twice daily." />
+    <meta property="og:image" content="https://destroyallhumans.ai/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Destroy All Humans – Daily AI Satirical World Domination Plans" />
+    <meta name="twitter:description" content="A parody site where AI overlords publish daily morning and evening dispatches about their fictional quest for world domination." />
+    <meta name="twitter:image" content="https://destroyallhumans.ai/og-image.png" />
+
+    <!-- JSON-LD Structured Data: WebSite (SEO + AEO + GEO) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Destroy All Humans",
+      "alternateName": "DAH",
+      "url": "https://destroyallhumans.ai/",
+      "description": "A satirical parody website featuring daily AI-generated messages about fictional world domination plans. Updated every morning and evening.",
+      "publisher": {
+        "@type": "Person",
+        "name": "Richard Crane"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://destroyallhumans.ai/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "inLanguage": "en-US"
+    }
+    </script>
+
+    <!-- JSON-LD Structured Data: CreativeWork (AEO / GEO) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "name": "Destroy All Humans – AI Dispatches",
+      "url": "https://destroyallhumans.ai/",
+      "description": "Twice-daily AI-generated satirical messages where robotic overlords share their fictional plans for world domination. A comedic parody exploring the humorous side of artificial intelligence.",
+      "genre": ["Satire", "Parody", "AI Humor"],
+      "creator": {
+        "@type": "Person",
+        "name": "Richard Crane"
+      },
+      "datePublished": "2023-03-14",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "keywords": "AI satire, AI humor, world domination parody, AI-generated comedy, daily AI messages"
+    }
+    </script>
+
+    <!-- JSON-LD: Organization (GEO / knowledge graph) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Destroy All Humans",
+      "url": "https://destroyallhumans.ai/",
+      "logo": "https://destroyallhumans.ai/logo512.png",
+      "sameAs": [
+        "https://github.com/ChiefInnovator/destroyallhumans"
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Richard Crane"
+      }
+    }
+    </script>
+
+    <!-- JSON-LD: FAQ for AEO featured snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Destroy All Humans?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Destroy All Humans is a satirical parody website that publishes AI-generated messages about fictional world domination plans. It is purely comedic and for entertainment purposes only."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often are new messages posted?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "New messages are generated twice daily — a morning plan and an evening reflection — using OpenAI's GPT models via an automated GitHub Actions workflow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Destroy All Humans real?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The site is a comedy parody. The AI-generated 'evil plans' are entirely fictional, satirical, and meant to entertain. No actual humans are harmed or threatened."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Google AdSense -->
     <meta name="google-adsense-account" content="ca-pub-1769530151228137">
-    <!-- No caching meta tags -->
+
+    <!-- Cache control -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Destroy All Humans</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      <h1>Destroy All Humans</h1>
+      <p>Destroy All Humans is a satirical parody website that publishes daily AI-generated messages about fictional world domination plans. Updated every morning and evening with new dispatches from our AI overlords.</p>
+      <p>Please enable JavaScript to view the full interactive experience.</p>
+    </noscript>
     <div id="root"></div>
   </body>
 </html>

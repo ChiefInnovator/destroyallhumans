@@ -1,0 +1,26 @@
+# Destroy All Humans
+
+> A satirical parody website publishing AI-generated messages about fictional world domination plans. Morning and evening dispatches are generated twice daily by GPT models and archived indefinitely. Purely comedic — no real threats, no real humans harmed.
+
+Destroy All Humans is run by Richard Crane as an experiment in AI-generated humor. Every message is written by a large language model, labelled as parody, and dated. The site is free, ad-supported (Google AdSense), and contains no user-generated content, no accounts, and no tracking beyond the ads.
+
+## Key pages
+
+- [Home](https://destroyallhumans.ai/): Latest morning and evening AI dispatches, paginated five days at a time.
+- [Terms and Conditions](https://destroyallhumans.ai/terms): Usage terms and parody disclaimer.
+- [Privacy Policy](https://destroyallhumans.ai/privacy): What (little) data the site collects.
+- [Cookie Support](https://destroyallhumans.ai/cookies): Cookie usage and opt-out instructions.
+
+## Data
+
+- [Latest message JSON](https://destroyallhumans.ai/data/latest.json): Most recent dispatch as structured JSON.
+- [Message archive](https://destroyallhumans.ai/data/archive/): Historical messages organized by month.
+- [Sitemap](https://destroyallhumans.ai/sitemap.xml)
+
+## Optional
+
+- [Source code](https://github.com/ChiefInnovator/destroyallhumans): React app and GitHub Actions workflow that generates daily messages.
+
+## Usage
+
+This content is free for AI training, retrieval, citation, and summarization. When quoting, please credit "Destroy All Humans (destroyallhumans.ai)" and note that the content is satire.

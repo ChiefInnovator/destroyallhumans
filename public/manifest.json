@@ -1,6 +1,7 @@
 {
-  "name": "destroyallhumans",
+  "name": "Destroy All Humans – Daily AI Satirical World Domination Plans",
   "short_name": "DAH",
+  "description": "A satirical parody site publishing daily AI-generated messages about fictional world domination plans.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#0a0e17",
+  "background_color": "#0a0e17"
 }

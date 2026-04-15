@@ -1,10 +1,11 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/js/*", "/api/*"]
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/js/*", "/api/*", "/data/*", "/sitemap.xml", "/robots.txt", "/llms.txt", "/ads.txt", "/og-image.png"]
   },
   "mimeTypes": {
-    ".json": "text/json"
+    ".json": "text/json",
+    ".txt": "text/plain"
   },
   "responseOverrides": {
     "404": {
@@ -15,6 +16,32 @@
   "globalHeaders": {
     "Cache-Control": "no-cache, no-store, must-revalidate",
     "Pragma": "no-cache",
-    "Expires": "0"
-  }
+    "Expires": "0",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "routes": [
+    {
+      "route": "/sitemap.xml",
+      "headers": {
+        "Content-Type": "application/xml",
+        "Cache-Control": "public, max-age=86400"
+      }
+    },
+    {
+      "route": "/robots.txt",
+      "headers": {
+        "Content-Type": "text/plain",
+        "Cache-Control": "public, max-age=86400"
+      }
+    },
+    {
+      "route": "/llms.txt",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "public, max-age=86400"
+      }
+    }
+  ]
 }
