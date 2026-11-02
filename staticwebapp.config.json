@@ -1,10 +1,22 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/js/*", "/api/*", "/data/*", "/sitemap.xml", "/robots.txt", "/llms.txt", "/ads.txt", "/og-image.png"]
+    "exclude": [
+      "/static/*",
+      "/images/*.{png,jpg,gif}",
+      "/css/*",
+      "/js/*",
+      "/api/*",
+      "/data/*",
+      "/sitemap.xml",
+      "/robots.txt",
+      "/llms.txt",
+      "/ads.txt",
+      "/og-image.png"
+    ]
   },
   "mimeTypes": {
-    ".json": "text/json",
+    ".json": "application/json",
     ".txt": "text/plain"
   },
   "responseOverrides": {
@@ -22,6 +34,18 @@
     "Referrer-Policy": "strict-origin-when-cross-origin"
   },
   "routes": [
+    {
+      "route": "/static/*",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "route": "/data/*",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      }
+    },
     {
       "route": "/sitemap.xml",
       "headers": {

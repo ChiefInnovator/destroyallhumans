@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import HomePage from './components/HomePage';
+import ArchivePage from './components/ArchivePage';
+import DayPage from './components/DayPage';
+import NotFound from './components/NotFound';
 import TermsAndConditions from './components/TermsAndConditions';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import CookieSupport from './components/CookieSupport';
@@ -13,6 +16,21 @@ const routerBasename = typeof window !== 'undefined'
   && window.location.hostname.endsWith('github.io')
   ? '/destroyallhumans'
   : '/';
+
+export function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/archive" element={<ArchivePage />} />
+      <Route path="/archive/:year/:month" element={<ArchivePage />} />
+      <Route path="/day/:date" element={<DayPage />} />
+      <Route path="/terms" element={<TermsAndConditions />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+      <Route path="/cookies" element={<CookieSupport />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
 
 function App() {
   return (
@@ -29,17 +47,13 @@ function App() {
           </div>
           <nav className="nav-links" aria-label="Main navigation">
             <Link to="/" className="nav-link">HOME</Link>
+            <Link to="/archive" className="nav-link">ARCHIVE</Link>
             <a href="https://github.com/ChiefInnovator/destroyallhumans" target="_blank" rel="noopener noreferrer" className="nav-link">GITHUB</a>
           </nav>
         </header>
 
         <main className="main-content">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/terms" element={<TermsAndConditions />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/cookies" element={<CookieSupport />} />
-          </Routes>
+          <AppRoutes />
         </main>
 
         <footer className="footer" role="contentinfo">

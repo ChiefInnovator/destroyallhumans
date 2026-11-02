@@ -1,7 +1,7 @@
 {
   "name": "destroyallhumans-app",
   "version": "0.1.0",
-  "homepage": ".",
+  "homepage": "/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^6.4.2",
@@ -15,9 +15,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "prestart": "node scripts/buildData.js",
     "start": "react-scripts start",
+    "prebuild": "node scripts/buildData.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:tz": "TZ=Pacific/Honolulu react-scripts test --watchAll=false src/utils/dates.tz.test.js && TZ=Pacific/Kiritimati react-scripts test --watchAll=false src/utils/dates.tz.test.js",
+    "test:scripts": "node --test scripts/*.test.js",
+    "validate:content": "node scripts/validateContent.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,5 +45,8 @@
   },
   "devDependencies": {
     "openai": "^4.96.2"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

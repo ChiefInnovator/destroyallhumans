@@ -30,6 +30,7 @@ jobs:
       - name: Build
         env:
           PUBLIC_URL: /destroyallhumans
+          REACT_APP_ROBOTS: noindex, follow
           CI: 'false'
         run: npm run build
 

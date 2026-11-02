@@ -36,23 +36,23 @@ The router in [src/App.js](src/App.js) picks `basename` at runtime based on `win
 - [x] Legal pages (Terms, Privacy, Cookies)
 - [x] Copyright notice
 
-### 4. GitHub Actions — content generation
+### 4. Content
 
-- [x] [.github/workflows/generate-messages.yml](.github/workflows/generate-messages.yml) — twice daily (09:00 and 21:00 UTC)
-- [x] JSON storage under `public/data/`
-- [x] Scripts in [scripts/](scripts/)
+- [x] All messages in [content/messages.json](content/messages.json), 2023-03-14 to 2030-12-31
+- [x] [scripts/buildData.js](scripts/buildData.js) splits them into monthly JSON at build time; the browser hides future dates
+- [x] Persona by time of day (yellow morning, red evening)
+- [x] Scheduled generator removed (it truncated the data); see [docs/designs/system-design.md](docs/designs/system-design.md)
+- [ ] Rewrite the next batch (2026-11 to 2027-01) to `content/VOICE.md`
 
-### 5. OpenAI Integration
+### 5. CI
 
-- [x] [scripts/generateMessage.js](scripts/generateMessage.js)
-- [x] `OPENAI_API_KEY` stored as GitHub secret
-- [x] Persona selection by tone
+- [x] [.github/workflows/ci.yml](.github/workflows/ci.yml) — tests, time-zone tests, content rules (published messages frozen), build
 
 ### 6. Google AdSense
 
 - [x] Meta tag in [public/index.html](public/index.html)
 - [x] [ads.txt](ads.txt)
-- [x] Ad slot at top of page
+- [ ] Ad slot (not implemented; only the site-verification tag exists)
 
 ### 7. Deployment
 
@@ -66,7 +66,7 @@ The router in [src/App.js](src/App.js) picks `basename` at runtime based on `win
 - [x] `<title>`, description, keywords, canonical, robots meta
 - [x] Open Graph + Twitter card with 1200x630 `og-image.png`
 - [x] JSON-LD: `WebSite`, `CreativeWork`, `Organization`, `FAQPage`
-- [x] [public/sitemap.xml](public/sitemap.xml) — home + legal pages
+- [x] [public/sitemap.xml](public/sitemap.xml) — home, archive, legal pages
 - [x] [public/robots.txt](public/robots.txt) — broad AI crawler allowlist (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Applebot-Extended, CCBot, cohere-ai, Meta-ExternalAgent, etc.)
 - [x] [public/llms.txt](public/llms.txt) — llmstxt.org format summary + key links
 - [x] `text/plain` MIME + SPA exclude for `llms.txt`, `robots.txt`, `ads.txt` in [staticwebapp.config.json](staticwebapp.config.json)

@@ -42,3 +42,8 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
+.date-header a:hover,
+.date-header a:focus-visible {
+  color: var(--accent-cyan);
+}

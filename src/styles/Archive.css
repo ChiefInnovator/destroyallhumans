@@ -8,41 +8,6 @@
   color: var(--text-primary);
 }
 
-.archive-navigation {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-}
-
-@media (min-width: 768px) {
-  .archive-navigation {
-    flex-direction: row;
-  }
-}
-
-.year-selector,
-.month-selector {
-  flex: 1;
-}
-
-.year-selector h3,
-.month-selector h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--accent-cyan);
-  margin-bottom: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.year-buttons,
-.month-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
 .archive-button {
   padding: 0.6rem 1.25rem;
   background-color: transparent;
@@ -62,20 +27,82 @@
   box-shadow: var(--shadow-glow);
 }
 
-.archive-button.active {
-  background-color: var(--accent-cyan);
-  color: var(--background-darker);
-  border-color: var(--accent-cyan);
-  box-shadow: var(--shadow-glow);
-}
-
-.archived-messages {
-  margin-top: 2rem;
-}
-
 .no-messages {
   text-align: center;
   padding: 3rem 0;
   color: var(--text-secondary);
   font-size: 1rem;
+}
+
+/* Archive index: months grouped by year */
+.archive-year-group + .archive-year-group {
+  margin-top: 2rem;
+}
+
+.month-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 0.75rem;
+}
+
+.month-grid .archive-button {
+  display: block;
+  text-align: center;
+}
+
+/* Previous / next navigation on month and day pages */
+.pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.pager-link {
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+
+.pager-link:hover,
+.pager-link:focus-visible {
+  text-decoration: underline;
+}
+
+/* Classified and not-found states */
+.status-panel {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.status-title {
+  font-size: 2.5rem;
+  color: var(--accent-red);
+  text-shadow: var(--shadow-red-glow);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.status-text {
+  color: var(--text-secondary);
+  max-width: 40rem;
+  margin: 0 auto 2rem;
+}
+
+.status-link {
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  border: 1px solid var(--accent-cyan);
+  padding: 0.5rem 1rem;
+}
+
+.status-link:hover,
+.status-link:focus-visible {
+  background-color: var(--accent-cyan);
+  color: var(--background-darker);
+  box-shadow: var(--shadow-glow);
 }

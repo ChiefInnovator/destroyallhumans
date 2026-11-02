@@ -2,21 +2,16 @@
 
 ## High Priority
 
-- [ ] **Add `OPENAI_API_KEY` GitHub Secret** — Required for the `generate-messages.yml` workflow to run. Go to repo Settings → Secrets and Variables → Actions → New repository secret.
-- [ ] **Clean up `HomePage.css` light-theme remnants** — `src/styles/HomePage.css` still has hardcoded light colors (`#111827`, `#6b7280`, `#e5e7eb`) for `.tab`, `.tab.active`, `.page-title`, `.page-description` that partially conflict with `theme.css`. Unify to use CSS variables from `theme.css`.
+- [ ] **After the system-design PR reaches `main`:** delete deploy key `content-bot (generate-messages)` and secret `CONTENT_BOT_DEPLOY_KEY`, remove the DeployKey bypass from the `main` ruleset, and add `ci` as a required check on both rulesets.
 
 ## Medium Priority
 
-- [ ] **Add `build/` to `.gitignore`** — The `build/` directory is committed but is a stale artifact. CI rebuilds fresh on every deploy. Adding it to `.gitignore` avoids repo bloat.
-- [ ] **Remove redundant root `data/` directory** — `data/` at the repo root is a copy of `public/data/`. Scripts write to `public/data/`, so the root copy just causes confusion.
-- [ ] **Remove stale `src/App.css`** — Contains default CRA boilerplate (`.App`, `.App-logo`, `.App-header`) that is unused. The actual app styles are in `src/styles/App.css` and `src/styles/theme.css`.
 - [ ] **Remove redundant root-level static files** — `asset-manifest.json`, `index.html`, `manifest.json`, `ads.txt` exist at root but are duplicates of `public/` or `build/` files.
 
 ## Low Priority
 
 - [ ] **Add `og-image.png` fallback** — If a higher-quality branded OG image is desired, replace `public/og-image.png` with a professionally designed version.
 - [ ] **Update sitemap `<lastmod>` dates** — `public/sitemap.xml` has static dates. Consider generating it dynamically in CI or updating on each deploy.
-- [ ] **Pagination component** — `src/components/Pagination.js` and `src/styles/Pagination.css` exist but are not used by any page. Either integrate or remove.
 
 ## Completed (This Session)
 
