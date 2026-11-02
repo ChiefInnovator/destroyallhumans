@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import DailyMessages from './DailyMessages';
 import skullIcon from '../assets/images/skull-icon.svg';
-import { addMonths, localTodayKey, monthKey, msUntilEvening } from '../utils/dates';
+import {
+  addMonths, localTodayKey, monthKey, msUntilEvening, msUntilMidnight,
+} from '../utils/dates';
 import { visibleDays } from '../utils/messages';
 import { fetchMonth } from '../utils/data';
 import { usePageMeta } from '../utils/pageMeta';
@@ -16,10 +18,12 @@ const HomePage = () => {
   const [error, setError] = useState(null);
   const [now, setNow] = useState(() => new Date());
 
-  // Unseal tonight's report at 9:00 PM without a reload.
+  const today = localTodayKey(now);
+
+  // Unseal tonight's report at 9:00 PM, then roll over to the new day at midnight, without a reload.
   useEffect(() => {
-    const wait = msUntilEvening(now);
-    if (wait === null) return undefined;
+    const evening = msUntilEvening(now);
+    const wait = evening === null ? msUntilMidnight(now) : evening;
     const timer = setTimeout(() => setNow(new Date()), wait + 1000);
     return () => clearTimeout(timer);
   }, [now]);
@@ -31,7 +35,6 @@ const HomePage = () => {
 
   useEffect(() => {
     let cancelled = false;
-    const today = localTodayKey();
     const current = monthKey(today);
 
     const load = async () => {
@@ -51,7 +54,7 @@ const HomePage = () => {
 
     load();
     return () => { cancelled = true; };
-  }, []);
+  }, [today]);
 
   if (error) {
     return <div className="error">{error}</div>;

@@ -60,7 +60,7 @@ export const monthsBetween = (fromMonth, toMonth) => {
   return months;
 };
 
-export const isVisible = (key, todayKey) => key >= FIRST_DATE && key <= todayKey;
+export const isVisible = (key, todayKey) => key >= FIRST_DATE && key <= todayKey && key <= LAST_DATE;
 
 /** The evening report for a date is visible once its date has passed or it is 9:00 PM local time. */
 export const isEveningFiled = (key, now = new Date()) => {
@@ -74,6 +74,13 @@ export const msUntilEvening = (now = new Date()) => {
   at.setHours(EVENING_HOUR, 0, 0, 0);
   const ms = at - now;
   return ms > 0 ? ms : null;
+};
+
+/** Milliseconds until the next local midnight. */
+export const msUntilMidnight = (now = new Date()) => {
+  const at = new Date(now);
+  at.setHours(24, 0, 0, 0);
+  return at - now;
 };
 
 export const monthName = (monthNumber) =>

@@ -19,12 +19,6 @@
     ".json": "application/json",
     ".txt": "text/plain"
   },
-  "responseOverrides": {
-    "404": {
-      "rewrite": "/index.html",
-      "statusCode": 200
-    }
-  },
   "globalHeaders": {
     "Cache-Control": "no-cache, no-store, must-revalidate",
     "Pragma": "no-cache",

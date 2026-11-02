@@ -3,7 +3,7 @@
  * URLs are root-absolute so they resolve the same on nested routes like /day/2024-03-14.
  */
 
-export const dataUrl = (path) => `${process.env.PUBLIC_URL || ''}/data/${path}`;
+export const dataUrl = (path) => `${(process.env.PUBLIC_URL || '').replace(/\/$/, '')}/data/${path}`;
 
 /** Returns the month's messages. Throws Error('not-found') or Error('network'). */
 export const fetchMonth = async (month) => {

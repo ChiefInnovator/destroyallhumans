@@ -5,7 +5,7 @@ import Classified from './Classified';
 import NotFound from './NotFound';
 import skullIcon from '../assets/images/skull-icon.svg';
 import {
-  FIRST_MONTH, addMonths, formatMonth, isMonthKey, localTodayKey, monthKey, monthsBetween,
+  FIRST_MONTH, LAST_DATE, addMonths, formatMonth, isMonthKey, localTodayKey, monthKey, monthsBetween,
 } from '../utils/dates';
 import { visibleDays } from '../utils/messages';
 import { fetchMonth } from '../utils/data';
@@ -20,6 +20,12 @@ const PageTitle = ({ title, description }) => (
   </div>
 );
 
+/** The visitor's current month, capped at the last published month. */
+const publishedMonth = () => {
+  const today = localTodayKey();
+  return monthKey(today < LAST_DATE ? today : LAST_DATE);
+};
+
 /** /archive: every month from the first message to the visitor's current month. */
 const ArchiveIndex = () => {
   usePageMeta({
@@ -28,7 +34,7 @@ const ArchiveIndex = () => {
     path: '/archive',
   });
 
-  const months = monthsBetween(monthKey(localTodayKey()), FIRST_MONTH);
+  const months = monthsBetween(publishedMonth(), FIRST_MONTH);
   const years = months.reduce((acc, m) => {
     const year = m.slice(0, 4);
     (acc[year] = acc[year] || []).push(m);
@@ -62,7 +68,7 @@ const ArchiveIndex = () => {
 /** /archive/:year/:month: the visible days of one month, newest first. */
 const ArchiveMonth = ({ month }) => {
   const today = localTodayKey();
-  const currentMonth = monthKey(today);
+  const currentMonth = publishedMonth();
   const inRange = month >= FIRST_MONTH && month <= currentMonth;
   const [days, setDays] = useState(null);
   const [error, setError] = useState(null);

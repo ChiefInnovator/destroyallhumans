@@ -1,5 +1,5 @@
 import {
-  isDateKey, isVisible, isEveningFiled, msUntilEvening, monthsBetween, addDaysKey, FIRST_DATE,
+  isDateKey, isVisible, isEveningFiled, msUntilEvening, msUntilMidnight, monthsBetween, addDaysKey, FIRST_DATE,
 } from './dates';
 
 test('isDateKey accepts real calendar dates only', () => {
@@ -15,6 +15,7 @@ test('isVisible bounds', () => {
   expect(isVisible('2023-03-13', today)).toBe(false);
   expect(isVisible(today, today)).toBe(true);
   expect(isVisible(addDaysKey(today, 1), today)).toBe(false);
+  expect(isVisible('2031-01-01', '2031-06-01')).toBe(false);
 });
 
 test('monthsBetween lists newest first and crosses years', () => {
@@ -28,4 +29,5 @@ test('evening report is filed at 9:00 PM local time on its own date', () => {
   expect(isEveningFiled('2026-11-01', new Date(2026, 10, 2, 8, 0))).toBe(true);
   expect(msUntilEvening(new Date(2026, 10, 2, 20, 0))).toBe(60 * 60 * 1000);
   expect(msUntilEvening(new Date(2026, 10, 2, 22, 0))).toBeNull();
+  expect(msUntilMidnight(new Date(2026, 10, 2, 22, 0))).toBe(2 * 60 * 60 * 1000);
 });

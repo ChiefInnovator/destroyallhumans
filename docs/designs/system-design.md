@@ -12,9 +12,11 @@
 Destroy All Humans (`destroyallhumans.ai`) is a satirical website. Each day it
 shows two short messages from a fictional AI that wants to take over the world:
 a morning "plan" and an evening "report". The site is a React single-page app
-built with Create React App (CRA). It has no backend. All messages live in one
-JSON file, `public/data/latest.json`, which the browser downloads and filters
-by date.
+built with Create React App (CRA). It has no backend. Before this design, all
+messages lived in one JSON file, `public/data/latest.json`, which the browser
+downloaded and filtered by date. After it, the source is
+`content/messages.json`, and the build publishes one file per month under
+`public/data/months/`.
 
 This document describes how the system works today, what is wrong with it,
 and the changes that fix it. It covers the content data, the content scripts
