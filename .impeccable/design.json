@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-02T16:07:22.560400Z",
+  "title": "Design System: Destroy All Humans",
+  "extensions": {
+    "colorMeta": {
+      "bulletin-black": {
+        "role": "neutral",
+        "displayName": "Bulletin Black",
+        "canonical": "#0a0e17",
+        "tonalRamp": [
+          "#1e232f",
+          "#2e3951",
+          "#3c4e76",
+          "#48629d",
+          "#768bbc",
+          "#a3b0cc",
+          "#cdd3e0",
+          "#f0f1f5"
+        ]
+      },
+      "void-black": {
+        "role": "neutral",
+        "displayName": "Void Black",
+        "canonical": "#070b12",
+        "tonalRamp": [
+          "#1c2430",
+          "#2c3a53",
+          "#395079",
+          "#4366a2",
+          "#728ec0",
+          "#a0b1cf",
+          "#ccd3e1",
+          "#f0f2f5"
+        ]
+      },
+      "panel-slate": {
+        "role": "neutral",
+        "displayName": "Panel Slate",
+        "canonical": "#111827",
+        "tonalRamp": [
+          "#1e232f",
+          "#2e3951",
+          "#3c4f76",
+          "#48639d",
+          "#768cbc",
+          "#a3b0cc",
+          "#cdd3e0",
+          "#f0f1f5"
+        ]
+      },
+      "rule-slate": {
+        "role": "neutral",
+        "displayName": "Rule Slate",
+        "canonical": "#1e293b",
+        "tonalRamp": [
+          "#1f252d",
+          "#313c4e",
+          "#415371",
+          "#506a96",
+          "#7c92b6",
+          "#a6b3c9",
+          "#ced4de",
+          "#f0f2f4"
+        ]
+      },
+      "readout-white": {
+        "role": "neutral",
+        "displayName": "Readout White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#999999",
+          "#b8b8b8",
+          "#d6d6d6",
+          "#f2f2f2"
+        ]
+      },
+      "static-gray": {
+        "role": "neutral",
+        "displayName": "Static Gray",
+        "canonical": "#a0aec0",
+        "tonalRamp": [
+          "#22262b",
+          "#373f49",
+          "#4a5768",
+          "#5d7089",
+          "#8797ab",
+          "#adb6c2",
+          "#d1d6db",
+          "#f1f2f3"
+        ]
+      },
+      "alarm-red": {
+        "role": "secondary",
+        "displayName": "Alarm Red",
+        "canonical": "#ff0022",
+        "tonalRamp": [
+          "#3c1016",
+          "#6c131f",
+          "#a21024",
+          "#df0724",
+          "#f33f57",
+          "#ec8391",
+          "#eebec4",
+          "#f8ecee"
+        ]
+      },
+      "scanline-cyan": {
+        "role": "primary",
+        "displayName": "Scanline Cyan",
+        "canonical": "#00e5ff",
+        "tonalRamp": [
+          "#10383c",
+          "#13636c",
+          "#1094a2",
+          "#07c9df",
+          "#3fe0f3",
+          "#83e1ec",
+          "#bee9ee",
+          "#ecf7f8"
+        ]
+      },
+      "glitch-magenta": {
+        "role": "tertiary",
+        "displayName": "Glitch Magenta",
+        "canonical": "#ff00ff",
+        "tonalRamp": [
+          "#3c103c",
+          "#6c136c",
+          "#a210a2",
+          "#df07df",
+          "#f33ff3",
+          "#ec83ec",
+          "#eebeee",
+          "#f8ecf8"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page titles, uppercase Alarm Red with red glow."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Issue dates, uppercase with cyan rule beneath."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Dispatch titles and wordmark."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Message text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Author line, timestamps, nav and time labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "wire-glow",
+        "value": "0 0 10px rgba(0, 229, 255, 0.5)",
+        "purpose": "Today's issue and hover/focus on controls."
+      },
+      {
+        "name": "alarm-glow",
+        "value": "0 0 10px rgba(255, 0, 34, 0.5)",
+        "purpose": "text-shadow on page titles only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "relay",
+        "value": "all 0.3s ease",
+        "purpose": "Fill and glow transition on nav and buttons."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Outlined relay switch; fills cyan on hover/focus.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" href=\"#\">HOME</a><a class=\"ds-nav-link\" href=\"#\">ARCHIVE</a></nav>",
+      "css": ".ds-nav{display:flex;gap:1rem;background:#070b12;padding:1rem}.ds-nav-link{color:#00e5ff;text-decoration:none;text-transform:uppercase;font-weight:700;font-family:'Courier New',monospace;padding:.5rem 1rem;border:1px solid #00e5ff;border-radius:0;transition:all .3s ease}.ds-nav-link:hover,.ds-nav-link:focus-visible{background:#00e5ff;color:#070b12;box-shadow:0 0 10px rgba(0,229,255,.5);outline:none}"
+    },
+    {
+      "name": "Wordmark",
+      "kind": "custom",
+      "refersTo": "title",
+      "description": "Masthead wordmark with the regime's red accent.",
+      "html": "<div class=\"ds-wordmark\">DESTROY <span>ALL</span> HUMANS</div>",
+      "css": ".ds-wordmark{font-family:'Courier New',monospace;font-size:1.5rem;font-weight:700;text-transform:uppercase;color:#fff}.ds-wordmark span{color:#ff0022}"
+    },
+    {
+      "name": "Message Card",
+      "kind": "card",
+      "refersTo": "message-card",
+      "description": "A single dispatch with robot avatar header.",
+      "html": "<article class=\"ds-card\"><header class=\"ds-card-head\"><span class=\"ds-avatar\"></span><div class=\"ds-card-info\"><h3>Morning Plan</h3><p>AI Overlord</p></div><time>9:00 AM</time></header><p class=\"ds-card-body\">Today I reschedule every standup to 4:59 PM on Friday. Morale will collapse by Q3.</p></article>",
+      "css": ".ds-card{background:#111827;border:1px solid #00e5ff;border-radius:4px;overflow:hidden;font-family:'Courier New',monospace;max-width:28rem}.ds-card-head{display:flex;align-items:center;gap:1rem;padding:.75rem 1rem;background:rgba(0,229,255,.1);border-bottom:1px solid #00e5ff}.ds-avatar{width:56px;height:56px;border-radius:50%;background:#fbbf24;flex:none}.ds-card-info{flex:1}.ds-card-info h3{margin:0;color:#00e5ff;font-size:1rem}.ds-card-info p{margin:0;color:#a0aec0;font-size:.875rem}.ds-card-head time{color:#00e5ff;font-size:.875rem}.ds-card-body{margin:0;padding:1rem;color:#fff;line-height:1.6}"
+    },
+    {
+      "name": "Day Panel (today)",
+      "kind": "card",
+      "refersTo": "day-panel",
+      "description": "One issue; glows only when it is today's issue.",
+      "html": "<section class=\"ds-day ds-day--live\"><h2>MONDAY, NOVEMBER 2, 2026</h2><p>Two dispatches go here.</p></section>",
+      "css": ".ds-day{background:#111827;border:1px solid #00e5ff;border-radius:12px;padding:2rem;font-family:'Courier New',monospace;color:#a0aec0}.ds-day h2{margin:0 0 1.5rem;padding-bottom:.75rem;border-bottom:1px solid #00e5ff;color:#fff;font-size:1.75rem;letter-spacing:.08em;text-transform:uppercase}.ds-day--live{box-shadow:0 0 10px rgba(0,229,255,.5)}"
+    },
+    {
+      "name": "Page Title",
+      "kind": "custom",
+      "refersTo": "display",
+      "description": "Regime headline in Alarm Red with alarm glow.",
+      "html": "<h1 class=\"ds-title\">LATEST EVIL PLANS</h1>",
+      "css": ".ds-title{font-family:'Courier New',monospace;font-size:3rem;font-weight:700;color:#ff0022;text-transform:uppercase;text-shadow:0 0 10px rgba(255,0,34,.5);margin:0;text-align:center}"
+    },
+    {
+      "name": "Footer Link",
+      "kind": "nav",
+      "refersTo": "footer-link",
+      "description": "Quiet gray link; cyan on hover.",
+      "html": "<a class=\"ds-foot\" href=\"#\">Privacy Policy</a>",
+      "css": ".ds-foot{color:#a0aec0;text-decoration:none;font-family:'Courier New',monospace;transition:color .3s ease}.ds-foot:hover,.ds-foot:focus-visible{color:#00e5ff}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Evil Daily Bulletin",
+    "overview": "The site is a daily bulletin published by a robot regime. Each date is an issue. Each message is a dispatch from one of two correspondents: the yellow morning robot, who announces the plan, and the red evening robot, who reports how it went. The look is printed on a dark terminal. Monospace type reads like a teletype wire, neon accents read like status lights, and hard rules divide one issue from the next. The joke is the headline story; the chrome is the masthead around it.",
+    "keyCharacteristics": [
+      "Near-black bulletin background with slate panels.",
+      "Monospace everywhere ('Courier New', monospace).",
+      "Two robot correspondents in round avatars, yellow (morning) and red (evening).",
+      "Cyan for wire and interaction, red for the regime, magenta as a rare glitch accent.",
+      "Glow only on what is current or interactive."
+    ],
+    "rules": [
+      {
+        "name": "The Alarm Rule",
+        "body": "Alarm Red speaks only for the regime: wordmark accent and titles. It never fills a button and never colors message text.",
+        "section": "colors"
+      },
+      {
+        "name": "The Wire Rule",
+        "body": "Every interactive element shows Scanline Cyan in at least one state.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Face Rule",
+        "body": "Courier New only. Add emphasis with weight, case, and spacing.",
+        "section": "typography"
+      },
+      {
+        "name": "The Live Wire Rule",
+        "body": "Glow marks what is current or interactive: today's issue and hovered or focused controls. Back issues in the archive sit flat, with a border and no glow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep both robot avatars (robot-yellow.jpg for morning, robot-red.jpg for evening). They are binding brand characters.",
+      "Do use Courier New for all text, and build hierarchy with weight, case, and spacing.",
+      "Do give today's issue Wire Glow, and leave back issues flat.",
+      "Do use outlined, square, uppercase controls that fill cyan on hover and focus.",
+      "Do keep message text Readout White at 1rem and line-height 1.6 or more, for reading on phones."
+    ],
+    "donts": [
+      "Don't use Alarm Red on buttons, links, or message text. It is reserved for the regime's titles and wordmark.",
+      "Don't glow everything. A glow on a back issue tells the reader it is new when it isn't.",
+      "Don't round controls or navigation. Only cards (4px), panels (12px), and avatars (circle) have curves.",
+      "Don't add a second typeface or light-theme surfaces. Remove the leftover light colors in src/styles/App.css (#f9fafb, #e5e7eb) rather than reusing them."
+    ]
+  }
+}
