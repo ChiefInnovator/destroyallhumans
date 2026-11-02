@@ -1,51 +1,41 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import MessageCard from './MessageCard';
+import { formatLongDate, isEveningFiled, localTodayKey } from '../utils/dates';
 import '../styles/DailyMessages.css';
 
 /**
- * Component to display messages for a single day
+ * One day's issue: the morning plan and the evening report. `messages` is { morning, evening }.
+ * Today's issue is marked and glows; its evening report stays sealed until 9:00 PM local time.
  */
-const DailyMessages = ({ date, messages }) => {
-  const parseDate = (dateString) => {
-    if (!dateString || !/\d{4}-\d{2}-\d{2}/.test(dateString)) {
-      return null;
-    }
-
-    const [year, month, day] = dateString.split('-').map(Number);
-    return new Date(year, month - 1, day);
-  };
-
-  const dateObject = parseDate(date);
-  const formattedDate = dateObject
-    ? dateObject.toLocaleDateString('en-US', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })
-    : date;
-
-  const morningMessage = messages.find(msg => msg.time === 'morning');
-  const eveningMessage = messages.find(msg => msg.time === 'evening');
+const DailyMessages = ({ date, messages, linkHeading = true, headingLevel = 2, now = new Date() }) => {
+  const formattedDate = formatLongDate(date);
+  const { morning, evening } = messages;
+  const isToday = date === localTodayKey(now);
+  const sealEvening = !isEveningFiled(date, now);
+  const Heading = `h${headingLevel}`;
 
   return (
-    <div className="daily-messages">
-      <h2 className="date-header">{formattedDate}</h2>
+    <section className={`daily-messages${isToday ? ' daily-messages--today' : ''}`} aria-label={formattedDate}>
+      <Heading className="date-header">
+        {linkHeading ? <Link to={`/day/${date}`}>{formattedDate}</Link> : formattedDate}
+        {isToday && <span className="today-tag">Today&apos;s issue</span>}
+      </Heading>
       <div className="messages-container">
-        {morningMessage && (
+        {morning && (
           <div className="message-wrapper">
-            <h3 className="time-label">Morning Plan</h3>
-            <MessageCard message={morningMessage} />
+            <MessageCard message={morning} />
           </div>
         )}
-        {eveningMessage && (
+        {evening && (
           <div className="message-wrapper">
-            <h3 className="time-label">Evening Message</h3>
-            <MessageCard message={eveningMessage} />
+            {sealEvening
+              ? <MessageCard time="evening" date={date} sealed />
+              : <MessageCard message={evening} />}
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import HomePage from './components/HomePage';
+import ArchivePage from './components/ArchivePage';
+import DayPage from './components/DayPage';
+import NotFound from './components/NotFound';
 import TermsAndConditions from './components/TermsAndConditions';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import CookieSupport from './components/CookieSupport';
@@ -14,6 +17,21 @@ const routerBasename = typeof window !== 'undefined'
   ? '/destroyallhumans'
   : '/';
 
+export function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/archive" element={<ArchivePage />} />
+      <Route path="/archive/:year/:month" element={<ArchivePage />} />
+      <Route path="/day/:date" element={<DayPage />} />
+      <Route path="/terms" element={<TermsAndConditions />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+      <Route path="/cookies" element={<CookieSupport />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
+
 function App() {
   return (
     <Router basename={routerBasename}>
@@ -21,7 +39,7 @@ function App() {
         <header className="header" role="banner">
           <div className="logo">
             <Link to="/" aria-label="Destroy All Humans - Home">
-              <img src={`${process.env.PUBLIC_URL}/skull-logo.svg`} alt="Destroy All Humans skull logo" width="32" height="32" />
+              <img src={`${(process.env.PUBLIC_URL || '').replace(/\/$/, '')}/skull-logo.svg`} alt="Destroy All Humans skull logo" width="32" height="32" />
               <div className="logo-text">
                 DESTROY <span>ALL</span> HUMANS
               </div>
@@ -29,17 +47,12 @@ function App() {
           </div>
           <nav className="nav-links" aria-label="Main navigation">
             <Link to="/" className="nav-link">HOME</Link>
-            <a href="https://github.com/ChiefInnovator/destroyallhumans" target="_blank" rel="noopener noreferrer" className="nav-link">GITHUB</a>
+            <Link to="/archive" className="nav-link">ARCHIVE</Link>
           </nav>
         </header>
 
         <main className="main-content">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/terms" element={<TermsAndConditions />} />
-            <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/cookies" element={<CookieSupport />} />
-          </Routes>
+          <AppRoutes />
         </main>
 
         <footer className="footer" role="contentinfo">
@@ -47,6 +60,7 @@ function App() {
             <Link to="/terms" className="footer-link">Terms and Conditions</Link>
             <Link to="/privacy" className="footer-link">Privacy Policy</Link>
             <Link to="/cookies" className="footer-link">Cookie Support</Link>
+            <a href="https://github.com/ChiefInnovator/destroyallhumans" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
           </nav>
           <div className="copyright">
             © {new Date().getFullYear()} Richard Crane. All rights reserved.
