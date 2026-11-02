@@ -1,27 +1,43 @@
+/* One issue of the bulletin: a dated section, not a card around cards. */
 .daily-messages {
-  margin-bottom: 2.5rem;
-  padding: 2rem;
-  background-color: var(--background-card);
-  border-radius: 12px;
-  border: 1px solid var(--border-cyan);
-  box-shadow: var(--shadow-glow);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-dark);
+}
+
+.daily-messages + .daily-messages {
+  margin-top: 2.5rem;
 }
 
 .date-header {
-  font-size: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border-cyan);
+  margin: 0 0 1.25rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.date-header a {
+  text-decoration: underline;
+  text-decoration-color: var(--border-dark);
+  text-underline-offset: 0.3em;
+  text-decoration-thickness: 1px;
+}
+
+.date-header a:hover,
+.date-header a:focus-visible {
+  color: var(--accent-cyan);
+  text-decoration-color: var(--accent-cyan);
 }
 
 .messages-container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 @media (min-width: 768px) {
@@ -34,16 +50,25 @@
   flex: 1;
 }
 
-.time-label {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--accent-cyan);
-  margin-bottom: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+/* Glow marks what is live: only today's issue. */
+.daily-messages--today {
+  border-top-color: var(--accent-cyan);
 }
 
-.date-header a:hover,
-.date-header a:focus-visible {
-  color: var(--accent-cyan);
+.daily-messages--today .message-card {
+  box-shadow: var(--shadow-glow);
+}
+
+.today-tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--background-darker);
+  background-color: var(--accent-cyan);
+  padding: 0.2rem 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .date-header {
+    font-size: 1.1rem;
+  }
 }

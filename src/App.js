@@ -48,7 +48,6 @@ function App() {
           <nav className="nav-links" aria-label="Main navigation">
             <Link to="/" className="nav-link">HOME</Link>
             <Link to="/archive" className="nav-link">ARCHIVE</Link>
-            <a href="https://github.com/ChiefInnovator/destroyallhumans" target="_blank" rel="noopener noreferrer" className="nav-link">GITHUB</a>
           </nav>
         </header>
 
@@ -61,6 +60,7 @@ function App() {
             <Link to="/terms" className="footer-link">Terms and Conditions</Link>
             <Link to="/privacy" className="footer-link">Privacy Policy</Link>
             <Link to="/cookies" className="footer-link">Cookie Support</Link>
+            <a href="https://github.com/ChiefInnovator/destroyallhumans" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
           </nav>
           <div className="copyright">
             © {new Date().getFullYear()} Richard Crane. All rights reserved.

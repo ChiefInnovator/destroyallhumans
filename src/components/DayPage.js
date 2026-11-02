@@ -43,15 +43,15 @@ const Day = ({ date }) => {
   return (
     <div className="day-page">
       <nav className="pager" aria-label="Day navigation">
-        {prev >= FIRST_DATE ? <Link to={`/day/${prev}`} className="pager-link">&larr; Previous day</Link> : <span />}
+        {prev >= FIRST_DATE ? <Link to={`/day/${prev}`} className="pager-link">&larr; Prev</Link> : <span />}
         <Link to={`/archive/${month.slice(0, 4)}/${month.slice(5)}`} className="pager-link">
-          Back to {formatMonth(month)}
+          {formatMonth(month)}
         </Link>
-        {next <= today ? <Link to={`/day/${next}`} className="pager-link">Next day &rarr;</Link> : <span />}
+        {next <= today ? <Link to={`/day/${next}`} className="pager-link">Next &rarr;</Link> : <span />}
       </nav>
       {error && <div className="error">{error}</div>}
       {!error && !day && <div className="loading">Loading messages...</div>}
-      {day && <DailyMessages date={date} messages={day} linkHeading={false} />}
+      {day && <DailyMessages date={date} messages={day} linkHeading={false} headingLevel={1} />}
     </div>
   );
 };

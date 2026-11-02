@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-02T16:07:22.560400Z",
+  "generatedAt": "2026-11-02T17:04:27.137706+00:00",
   "title": "Design System: Destroy All Humans",
   "extensions": {
     "colorMeta": {
@@ -138,6 +138,36 @@
           "#eebeee",
           "#f8ecf8"
         ]
+      },
+      "plan-amber": {
+        "role": "persona",
+        "displayName": "Plan Amber",
+        "canonical": "#fbbf24",
+        "tonalRamp": [
+          "#3d2c03",
+          "#644905",
+          "#8c6607",
+          "#b48309",
+          "#f5b82c",
+          "#f8cd6b",
+          "#fbe1a9",
+          "#fef6e6"
+        ]
+      },
+      "report-red-text": {
+        "role": "persona",
+        "displayName": "Report Red Text",
+        "canonical": "#ff4d5e",
+        "tonalRamp": [
+          "#3d0007",
+          "#66000c",
+          "#8f0011",
+          "#b80016",
+          "#ff4d5e",
+          "#ff8590",
+          "#ffb8be",
+          "#ffeef0"
+        ]
       }
     },
     "typographyMeta": {
@@ -209,17 +239,9 @@
       "name": "Message Card",
       "kind": "card",
       "refersTo": "message-card",
-      "description": "A single dispatch with robot avatar header.",
-      "html": "<article class=\"ds-card\"><header class=\"ds-card-head\"><span class=\"ds-avatar\"></span><div class=\"ds-card-info\"><h3>Morning Plan</h3><p>AI Overlord</p></div><time>9:00 AM</time></header><p class=\"ds-card-body\">Today I reschedule every standup to 4:59 PM on Friday. Morale will collapse by Q3.</p></article>",
-      "css": ".ds-card{background:#111827;border:1px solid #00e5ff;border-radius:4px;overflow:hidden;font-family:'Courier New',monospace;max-width:28rem}.ds-card-head{display:flex;align-items:center;gap:1rem;padding:.75rem 1rem;background:rgba(0,229,255,.1);border-bottom:1px solid #00e5ff}.ds-avatar{width:56px;height:56px;border-radius:50%;background:#fbbf24;flex:none}.ds-card-info{flex:1}.ds-card-info h3{margin:0;color:#00e5ff;font-size:1rem}.ds-card-info p{margin:0;color:#a0aec0;font-size:.875rem}.ds-card-head time{color:#00e5ff;font-size:.875rem}.ds-card-body{margin:0;padding:1rem;color:#fff;line-height:1.6}"
-    },
-    {
-      "name": "Day Panel (today)",
-      "kind": "card",
-      "refersTo": "day-panel",
-      "description": "One issue; glows only when it is today's issue.",
-      "html": "<section class=\"ds-day ds-day--live\"><h2>MONDAY, NOVEMBER 2, 2026</h2><p>Two dispatches go here.</p></section>",
-      "css": ".ds-day{background:#111827;border:1px solid #00e5ff;border-radius:12px;padding:2rem;font-family:'Courier New',monospace;color:#a0aec0}.ds-day h2{margin:0 0 1.5rem;padding-bottom:.75rem;border-bottom:1px solid #00e5ff;color:#fff;font-size:1.75rem;letter-spacing:.08em;text-transform:uppercase}.ds-day--live{box-shadow:0 0 10px rgba(0,229,255,.5)}"
+      "description": "A single dispatch; amber for the morning plan, red for the evening report.",
+      "html": "<article class=\"ds-card ds-card--evening\"><header class=\"ds-card-head\"><span class=\"ds-avatar\"></span><div class=\"ds-card-info\"><h3>INCIDENT REPORT</h3><p>Damage Control</p></div><time>21:00</time></header><p class=\"ds-card-body\">The standup moved to 4:59 PM Friday. Humans attended anyway. Morale: unbroken. Recalibrating.</p></article>",
+      "css": ".ds-card{--p:#fbbf24;--pt:#fbbf24;--tint:rgba(251,191,36,.08);background:#111827;border:1px solid #1e293b;border-radius:4px;overflow:hidden;font-family:'Courier New',monospace;max-width:28rem}.ds-card--evening{--p:#ff0022;--pt:#ff4d5e;--tint:rgba(255,0,34,.08)}.ds-card-head{display:flex;align-items:center;gap:.875rem;padding:.75rem 1rem;background:var(--tint);border-bottom:1px solid var(--p)}.ds-avatar{width:56px;height:56px;border-radius:50%;background:#000;border:1px solid var(--p);flex:none}.ds-card-info{flex:1}.ds-card-info h3{margin:0;color:var(--pt);font-size:1rem;text-transform:uppercase;letter-spacing:.05em}.ds-card-info p{margin:0;color:#a0aec0;font-size:.875rem}.ds-card-head time{color:var(--pt);font-size:.875rem;font-variant-numeric:tabular-nums}.ds-card-body{margin:0;padding:1rem;color:#fff;line-height:1.6}"
     },
     {
       "name": "Page Title",
@@ -268,6 +290,11 @@
         "name": "The Live Wire Rule",
         "body": "Glow marks what is current or interactive: today's issue and hovered or focused controls. Back issues in the archive sit flat, with a border and no glow.",
         "section": "elevation"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "Morning cards are amber and evening cards are red. Never style both personas the same way.",
+        "section": "colors"
       }
     ],
     "dos": [
@@ -275,13 +302,15 @@
       "Do use Courier New for all text, and build hierarchy with weight, case, and spacing.",
       "Do give today's issue Wire Glow, and leave back issues flat.",
       "Do use outlined, square, uppercase controls that fill cyan on hover and focus.",
-      "Do keep message text Readout White at 1rem and line-height 1.6 or more, for reading on phones."
+      "Do keep message text Readout White at 1rem and line-height 1.6 or more, for reading on phones.",
+      "Do seal today's evening report until 9:00 PM local time."
     ],
     "donts": [
       "Don't use Alarm Red on buttons, links, or message text. It is reserved for the regime's titles and wordmark.",
       "Don't glow everything. A glow on a back issue tells the reader it is new when it isn't.",
       "Don't round controls or navigation. Only cards (4px), panels (12px), and avatars (circle) have curves.",
-      "Don't add a second typeface or light-theme surfaces. Remove the leftover light colors in src/styles/App.css (#f9fafb, #e5e7eb) rather than reusing them."
+      "Don't add a second typeface or light-theme surfaces.",
+      "Don't nest cards. Issues are sections; only dispatches are cards."
     ]
   }
 }

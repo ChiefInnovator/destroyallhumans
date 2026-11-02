@@ -55,6 +55,13 @@ test('home shows today and earlier days, but not tomorrow', async () => {
   expect(screen.queryByText('Tuesday, November 3, 2026')).not.toBeInTheDocument();
 });
 
+test("today's evening report stays sealed until 9:00 PM", async () => {
+  renderAt('/');
+  expect(await screen.findByText(/Report incoming at 9:00 PM/)).toBeInTheDocument();
+  expect(screen.queryByText('Evening report for 2026-11-02')).not.toBeInTheDocument();
+  expect(screen.getByText('Evening report for 2026-11-01')).toBeInTheDocument();
+});
+
 test('a future day is classified and fetches nothing', () => {
   renderAt('/day/2099-01-01');
   expect(screen.getByText('CLASSIFIED')).toBeInTheDocument();

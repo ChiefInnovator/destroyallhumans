@@ -1,10 +1,4 @@
 .archive-container {
-  padding: 2rem;
-  background-color: var(--background-darker);
-  border-radius: 12px;
-  border: 1px solid var(--border-cyan);
-  box-shadow: var(--shadow-glow);
-  margin-top: 3rem;
   color: var(--text-primary);
 }
 
@@ -12,18 +6,19 @@
   padding: 0.6rem 1.25rem;
   background-color: transparent;
   border: 1px solid var(--border-cyan);
-  border-radius: 999px;
+  border-radius: 0;
   cursor: pointer;
   transition: all 0.25s ease;
-  color: var(--text-secondary);
+  color: var(--accent-cyan);
   font-family: var(--font-mono);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
-.archive-button:hover {
-  color: var(--accent-cyan);
-  border-color: var(--accent-cyan);
+.archive-button:hover,
+.archive-button:focus-visible {
+  color: var(--background-darker);
+  background-color: var(--accent-cyan);
   box-shadow: var(--shadow-glow);
 }
 
@@ -53,15 +48,29 @@
 
 /* Previous / next navigation on month and day pages */
 .pager {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.pager > :last-child {
+  justify-self: end;
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .pager-link {
+    font-size: 0.8rem;
+    letter-spacing: 0;
+  }
 }
 
 .pager-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--accent-cyan);
   text-transform: uppercase;
   font-family: var(--font-mono);

@@ -94,9 +94,9 @@ const ArchiveMonth = ({ month }) => {
     <div className="archive-container">
       <PageTitle title={formatMonth(month)} />
       <nav className="pager" aria-label="Month navigation">
-        {prev >= FIRST_MONTH ? <Link to={monthLink(prev)} className="pager-link">&larr; {formatMonth(prev)}</Link> : <span />}
+        {prev >= FIRST_MONTH ? <Link to={monthLink(prev)} className="pager-link">&larr; {formatMonth(prev).split(' ')[0]}</Link> : <span />}
         <Link to="/archive" className="pager-link">All months</Link>
-        {next <= currentMonth ? <Link to={monthLink(next)} className="pager-link">{formatMonth(next)} &rarr;</Link> : <span />}
+        {next <= currentMonth ? <Link to={monthLink(next)} className="pager-link">{formatMonth(next).split(' ')[0]} &rarr;</Link> : <span />}
       </nav>
       {error && <div className="error">{error}</div>}
       {!error && !days && <div className="loading">Loading messages...</div>}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DailyMessages from './DailyMessages';
 import skullIcon from '../assets/images/skull-icon.svg';
-import { addMonths, localTodayKey, monthKey } from '../utils/dates';
+import { addMonths, localTodayKey, monthKey, msUntilEvening } from '../utils/dates';
 import { visibleDays } from '../utils/messages';
 import { fetchMonth } from '../utils/data';
 import { usePageMeta } from '../utils/pageMeta';
@@ -14,6 +14,15 @@ const DAYS_SHOWN = 5;
 const HomePage = () => {
   const [days, setDays] = useState(null);
   const [error, setError] = useState(null);
+  const [now, setNow] = useState(() => new Date());
+
+  // Unseal tonight's report at 9:00 PM without a reload.
+  useEffect(() => {
+    const wait = msUntilEvening(now);
+    if (wait === null) return undefined;
+    const timer = setTimeout(() => setNow(new Date()), wait + 1000);
+    return () => clearTimeout(timer);
+  }, [now]);
 
   usePageMeta({
     description: 'Read the latest AI-generated satirical dispatches about fictional world domination. New morning and evening messages every day from our AI overlords.',
@@ -58,13 +67,13 @@ const HomePage = () => {
         <img src={skullIcon} alt="" className="page-icon" />
         <h1 className="page-title">Latest Evil Plans</h1>
         <p className="page-description">
-          Last five days of scheming updates from our AI overlords.
+          Satire. A fictional AI posts its plan every morning and reports how it failed every night.
         </p>
       </div>
       {days.length > 0 ? (
         <div className="latest-messages-list">
           {days.map((day) => (
-            <DailyMessages key={day.date} date={day.date} messages={day} />
+            <DailyMessages key={day.date} date={day.date} messages={day} now={now} />
           ))}
         </div>
       ) : (

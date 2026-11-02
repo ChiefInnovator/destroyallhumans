@@ -11,6 +11,8 @@ colors:
   alarm-red: "#ff0022"
   scanline-cyan: "#00e5ff"
   glitch-magenta: "#ff00ff"
+  plan-amber: "#fbbf24"
+  report-red-text: "#ff4d5e"
 typography:
   display:
     fontFamily: "'Courier New', monospace"
@@ -62,10 +64,6 @@ components:
   nav-link-hover:
     backgroundColor: "{colors.scanline-cyan}"
     textColor: "{colors.void-black}"
-  day-panel:
-    backgroundColor: "{colors.panel-slate}"
-    rounded: "{rounded.lg}"
-    padding: "2rem"
   message-card:
     backgroundColor: "{colors.panel-slate}"
     textColor: "{colors.readout-white}"
@@ -129,6 +127,11 @@ A dark terminal palette, with three neon signals over near-black slate.
   page titles (with a red glow), and legal-page titles. Never used for
   controls or body text.
 
+### Persona Colors
+
+- **Plan Amber** (#fbbf24): the yellow morning robot. Header rule, avatar ring, title ("THE PLAN") and timestamp of morning cards, over an 8% amber tint.
+- **Alarm Red** (#ff0022) for the red evening robot: header rule and avatar ring of evening cards. Its small text (title "INCIDENT REPORT", timestamp) uses **Report Red Text** (#ff4d5e), because Alarm Red is only 4.3:1 on the tinted header.
+
 ### Tertiary
 
 - **Glitch Magenta** (#ff00ff): a rare accent for archive year labels. The
@@ -152,6 +155,9 @@ and titles. It never fills a button and never colors message text.
 
 **The Wire Rule.** Every interactive element shows Scanline Cyan in at
 least one state.
+
+**The Two Voices Rule.** Morning cards are amber and evening cards are red.
+Never style both personas the same way.
 
 ## Typography
 
@@ -233,30 +239,34 @@ Blunt relay switches.
 - **Mobile:** links stay inline next to the wordmark. Keep the label count
   to three or fewer.
 
-### Day Panel (Signature)
+### Day Section (Signature)
 
-One issue of the bulletin.
+One issue of the bulletin. It is a dated section, not a card around cards.
 
-- **Corner Style:** 12px.
-- **Background:** Panel Slate, with a 1px Scanline Cyan border.
-- **Shadow Strategy:** Wire Glow for today's issue; flat for older issues.
-- **Internal Padding:** 2rem.
-- **Heading:** Headline style, uppercase date, with a 1px cyan rule
-  beneath.
+- **Divider:** a 1px Rule Slate top border; Scanline Cyan for today's issue.
+- **Heading:** Headline style, uppercase date. It links to `/day/:date`
+  with a subtle underline that turns cyan on hover. On the day page, the
+  heading is the `h1`.
+- **Today:** a solid cyan "TODAY'S ISSUE" tag after the date, and Wire
+  Glow on today's cards only.
+- **Evening lock:** before 9:00 PM local time, today's evening card is
+  sealed. It has a dashed red border, a grayscale robot, and italic
+  "Report incoming at 9:00 PM" text.
 
 ### Message Card (Signature)
 
-A single dispatch.
+A single dispatch, in one of two persona voices.
 
-- **Corner Style:** 4px.
-- **Background:** Panel Slate. The header strip is tinted
-  `rgba(0, 229, 255, 0.1)`, with a cyan bottom rule.
+- **Corner Style:** 4px, with a 1px Rule Slate border.
 - **Header:**
-  - a 56px round robot avatar (yellow for morning, red for evening) on a
-    black backing;
-  - the title (Scanline Cyan) and the author "AI Overlord" (Static Gray);
-  - the time and date right-aligned in cyan.
-- **Body:** Body style, Readout White, 1rem padding.
+  - an 8% persona-tint strip with a 1px persona-colored bottom rule;
+  - a 56px round frame with a persona ring, cropped in on the robot's face
+    (`alt=""`);
+  - the uppercase title and the byline (Static Gray):
+    - morning: "THE PLAN", "Planning Unit";
+    - evening: "INCIDENT REPORT", "Damage Control";
+  - the time in tabular numerals: `09:00` or `21:00`.
+- **Body:** Body style, Readout White, 1rem padding, at most 65ch.
 
 ### Footer Links
 
@@ -272,6 +282,7 @@ A single dispatch.
 - **Do** use Courier New for all text, and build hierarchy with weight,
   case, and spacing.
 - **Do** give today's issue Wire Glow, and leave back issues flat.
+- **Do** seal today's evening report until 9:00 PM local time.
 - **Do** use outlined, square, uppercase controls that fill cyan on hover
   and focus.
 - **Do** keep message text Readout White at 1rem and line-height 1.6 or
@@ -285,6 +296,5 @@ A single dispatch.
   new when it isn't.
 - **Don't** round controls or navigation. Only cards (4px), panels (12px),
   and avatars (circle) have curves.
-- **Don't** add a second typeface or light-theme surfaces. Remove the
-  leftover light colors in `src/styles/App.css` (#f9fafb, #e5e7eb) rather
-  than reusing them.
+- **Don't** add a second typeface or light-theme surfaces.
+- **Don't** nest cards. Issues are sections; only dispatches are cards.

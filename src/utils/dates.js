@@ -5,6 +5,9 @@
 
 export const FIRST_DATE = '2023-03-14';
 export const FIRST_MONTH = FIRST_DATE.slice(0, 7);
+export const LAST_DATE = '2030-12-31';
+/** Local hour at which the evening report is "filed" (9:00 PM). */
+export const EVENING_HOUR = 21;
 
 const DATE_KEY = /^\d{4}-\d{2}-\d{2}$/;
 const MONTH_KEY = /^\d{4}-\d{2}$/;
@@ -58,6 +61,20 @@ export const monthsBetween = (fromMonth, toMonth) => {
 };
 
 export const isVisible = (key, todayKey) => key >= FIRST_DATE && key <= todayKey;
+
+/** The evening report for a date is visible once its date has passed or it is 9:00 PM local time. */
+export const isEveningFiled = (key, now = new Date()) => {
+  const today = localTodayKey(now);
+  return key < today || (key === today && now.getHours() >= EVENING_HOUR);
+};
+
+/** Milliseconds until 9:00 PM local time today, or null when it has passed. */
+export const msUntilEvening = (now = new Date()) => {
+  const at = new Date(now);
+  at.setHours(EVENING_HOUR, 0, 0, 0);
+  const ms = at - now;
+  return ms > 0 ? ms : null;
+};
 
 export const monthName = (monthNumber) =>
   new Date(2000, Number(monthNumber) - 1, 1).toLocaleString('en-US', { month: 'long' });
