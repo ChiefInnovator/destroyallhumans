@@ -1,0 +1,36 @@
+name: Branch Policy
+
+# Enforces the promotion flow: feature/* -> develop -> main.
+# Required status check "branch-policy" in the main and develop rulesets.
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+    branches: [main, develop]
+
+permissions: {}
+
+jobs:
+  branch-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source branch
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+          SAME_REPO: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        run: |
+          echo "PR: $HEAD -> $BASE"
+          if [ "$BASE" = "main" ]; then
+            if [ "$HEAD" != "develop" ] || [ "$SAME_REPO" != "true" ]; then
+              echo "::error::main only accepts pull requests from develop."
+              exit 1
+            fi
+          elif [ "$BASE" = "develop" ]; then
+            case "$HEAD" in
+              feature/*) ;;
+              *)
+                echo "::error::develop only accepts pull requests from feature/* branches."
+                exit 1
+                ;;
+            esac
+          fi
