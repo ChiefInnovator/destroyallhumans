@@ -62,6 +62,19 @@ test("today's evening report stays sealed until 9:00 PM", async () => {
   expect(screen.getByText('Evening report for 2026-11-01')).toBeInTheDocument();
 });
 
+test("today's day page unseals the evening report at 9:00 PM without a reload", async () => {
+  renderAt('/day/2026-11-02');
+  expect(await screen.findByText(/Report incoming at 9:00 PM/)).toBeInTheDocument();
+  await act(async () => { jest.advanceTimersByTime(9 * 60 * 60 * 1000 + 1000); });
+  expect(screen.getByText('Evening report for 2026-11-02')).toBeInTheDocument();
+  expect(screen.queryByText(/Report incoming at 9:00 PM/)).not.toBeInTheDocument();
+});
+
+test('legal pages set their own canonical URL', () => {
+  renderAt('/privacy');
+  expect(document.querySelector('link[rel="canonical"]').getAttribute('href')).toBe('https://destroyallhumans.ai/privacy');
+});
+
 test('a future day is classified and fetches nothing', () => {
   renderAt('/day/2099-01-01');
   expect(screen.getByText('CLASSIFIED')).toBeInTheDocument();

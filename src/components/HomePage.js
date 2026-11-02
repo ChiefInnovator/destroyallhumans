@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import DailyMessages from './DailyMessages';
 import skullIcon from '../assets/images/skull-icon.svg';
-import {
-  LAST_DATE, addMonths, localTodayKey, monthKey, msUntilEvening, msUntilMidnight,
-} from '../utils/dates';
+import { LAST_DATE, addMonths, localTodayKey, monthKey } from '../utils/dates';
+import { useClock } from '../utils/useClock';
 import { visibleDays } from '../utils/messages';
 import { fetchMonth } from '../utils/data';
 import { usePageMeta } from '../utils/pageMeta';
@@ -16,17 +15,8 @@ const DAYS_SHOWN = 5;
 const HomePage = () => {
   const [days, setDays] = useState(null);
   const [error, setError] = useState(null);
-  const [now, setNow] = useState(() => new Date());
-
+  const now = useClock();
   const today = localTodayKey(now);
-
-  // Unseal tonight's report at 9:00 PM, then roll over to the new day at midnight, without a reload.
-  useEffect(() => {
-    const evening = msUntilEvening(now);
-    const wait = evening === null ? msUntilMidnight(now) : evening;
-    const timer = setTimeout(() => setNow(new Date()), wait + 1000);
-    return () => clearTimeout(timer);
-  }, [now]);
 
   usePageMeta({
     description: 'Read the latest AI-generated satirical dispatches about fictional world domination. New morning and evening messages every day from our AI overlords.',

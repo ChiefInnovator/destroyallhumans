@@ -9,10 +9,12 @@ import {
 import { groupByDate } from '../utils/messages';
 import { fetchMonth } from '../utils/data';
 import { usePageMeta } from '../utils/pageMeta';
+import { useClock } from '../utils/useClock';
 import '../styles/Archive.css';
 
 const Day = ({ date }) => {
-  const today = localTodayKey();
+  const now = useClock();
+  const today = localTodayKey(now);
   const visible = isVisible(date, today);
   const [day, setDay] = useState(null);
   const [error, setError] = useState(null);
@@ -51,7 +53,7 @@ const Day = ({ date }) => {
       </nav>
       {error && <div className="error">{error}</div>}
       {!error && !day && <div className="loading">Loading messages...</div>}
-      {day && <DailyMessages date={date} messages={day} linkHeading={false} headingLevel={1} />}
+      {day && <DailyMessages date={date} messages={day} linkHeading={false} headingLevel={1} now={now} />}
     </div>
   );
 };

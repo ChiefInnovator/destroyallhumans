@@ -1,13 +1,13 @@
 import React from 'react';
+import { usePageMeta } from '../utils/pageMeta';
 import '../styles/LegalPages.css';
 
 const TermsAndConditions = () => {
-  React.useEffect(() => {
-    document.title = 'Terms and Conditions \u2013 Destroy All Humans';
-    document.querySelector('meta[name="description"]')?.setAttribute('content',
-      'Terms and Conditions for Destroy All Humans, a satirical AI parody website by Richard Crane.'
-    );
-  }, []);
+  usePageMeta({
+    title: 'Terms and Conditions \u2013 Destroy All Humans',
+    description: 'Terms and Conditions for Destroy All Humans, a satirical AI parody website by Richard Crane.',
+    path: '/terms',
+  });
 
   return (
     <div className="legal-page">

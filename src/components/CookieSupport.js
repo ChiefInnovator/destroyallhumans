@@ -1,13 +1,13 @@
 import React from 'react';
+import { usePageMeta } from '../utils/pageMeta';
 import '../styles/LegalPages.css';
 
 const CookieSupport = () => {
-  React.useEffect(() => {
-    document.title = 'Cookie Support \u2013 Destroy All Humans';
-    document.querySelector('meta[name="description"]')?.setAttribute('content',
-      'Cookie policy and support for Destroy All Humans. Learn about how cookies are used on our satirical AI parody website.'
-    );
-  }, []);
+  usePageMeta({
+    title: 'Cookie Support \u2013 Destroy All Humans',
+    description: 'Cookie policy and support for Destroy All Humans. Learn about how cookies are used on our satirical AI parody website.',
+    path: '/cookies',
+  });
 
   return (
     <div className="legal-page">

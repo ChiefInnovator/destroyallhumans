@@ -10,6 +10,7 @@ import {
 import { visibleDays } from '../utils/messages';
 import { fetchMonth } from '../utils/data';
 import { usePageMeta } from '../utils/pageMeta';
+import { useClock } from '../utils/useClock';
 import '../styles/Archive.css';
 
 const PageTitle = ({ title, description }) => (
@@ -67,7 +68,8 @@ const ArchiveIndex = () => {
 
 /** /archive/:year/:month: the visible days of one month, newest first. */
 const ArchiveMonth = ({ month }) => {
-  const today = localTodayKey();
+  const now = useClock();
+  const today = localTodayKey(now);
   const currentMonth = publishedMonth();
   const inRange = month >= FIRST_MONTH && month <= currentMonth;
   const [days, setDays] = useState(null);
@@ -107,7 +109,7 @@ const ArchiveMonth = ({ month }) => {
       {error && <div className="error">{error}</div>}
       {!error && !days && <div className="loading">Loading messages...</div>}
       {days && days.map((day) => (
-        <DailyMessages key={day.date} date={day.date} messages={day} />
+        <DailyMessages key={day.date} date={day.date} messages={day} now={now} />
       ))}
     </div>
   );
