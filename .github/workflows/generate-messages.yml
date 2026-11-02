@@ -25,6 +25,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Deploy key is a bypass actor on the main ruleset
+          ssh-key: ${{ secrets.CONTENT_BOT_DEPLOY_KEY }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
