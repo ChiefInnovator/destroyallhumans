@@ -485,7 +485,8 @@ After this, nothing pushes to `main` except merged PRs.
         *   `/static/*`: `Cache-Control: public, max-age=31536000,
             immutable`;
         *   `/data/*`: `Cache-Control: public, max-age=3600`.
-    *   Keep the global `no-cache` headers and `responseOverrides`.
+    *   Keep the global `no-cache` headers. Remove the `404` `responseOverrides`
+        entry so missing `/static` and `/data` files return a real 404.
 
 #### Front end
 

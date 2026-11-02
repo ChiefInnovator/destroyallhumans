@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DailyMessages from './DailyMessages';
 import skullIcon from '../assets/images/skull-icon.svg';
 import {
-  addMonths, localTodayKey, monthKey, msUntilEvening, msUntilMidnight,
+  LAST_DATE, addMonths, localTodayKey, monthKey, msUntilEvening, msUntilMidnight,
 } from '../utils/dates';
 import { visibleDays } from '../utils/messages';
 import { fetchMonth } from '../utils/data';
@@ -35,9 +35,10 @@ const HomePage = () => {
 
   useEffect(() => {
     let cancelled = false;
-    const current = monthKey(today);
+    const current = monthKey(today < LAST_DATE ? today : LAST_DATE);
 
     const load = async () => {
+      setError(null);
       try {
         const [thisMonth, lastMonth] = await Promise.all([
           fetchMonth(current),

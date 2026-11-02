@@ -26,3 +26,13 @@ test('throws network on a failed request', async () => {
   global.fetch = jest.fn(() => Promise.reject(new TypeError('offline')));
   await expect(fetchMonth('2026-11')).rejects.toThrow('network');
 });
+
+test('throws network on a corrupt JSON body', async () => {
+  global.fetch = jest.fn(() => Promise.resolve({
+    ok: true,
+    status: 200,
+    headers: { get: () => 'application/json' },
+    json: async () => { throw new SyntaxError('bad json'); },
+  }));
+  await expect(fetchMonth('2026-11')).rejects.toThrow('network');
+});

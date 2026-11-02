@@ -47,7 +47,7 @@ const Day = ({ date }) => {
         <Link to={`/archive/${month.slice(0, 4)}/${month.slice(5)}`} className="pager-link">
           {formatMonth(month)}
         </Link>
-        {next <= today ? <Link to={`/day/${next}`} className="pager-link">Next &rarr;</Link> : <span />}
+        {isVisible(next, today) ? <Link to={`/day/${next}`} className="pager-link">Next &rarr;</Link> : <span />}
       </nav>
       {error && <div className="error">{error}</div>}
       {!error && !day && <div className="loading">Loading messages...</div>}

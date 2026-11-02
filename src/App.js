@@ -39,7 +39,7 @@ function App() {
         <header className="header" role="banner">
           <div className="logo">
             <Link to="/" aria-label="Destroy All Humans - Home">
-              <img src={`${process.env.PUBLIC_URL}/skull-logo.svg`} alt="Destroy All Humans skull logo" width="32" height="32" />
+              <img src={`${(process.env.PUBLIC_URL || '').replace(/\/$/, '')}/skull-logo.svg`} alt="Destroy All Humans skull logo" width="32" height="32" />
               <div className="logo-text">
                 DESTROY <span>ALL</span> HUMANS
               </div>

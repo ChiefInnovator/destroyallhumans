@@ -103,6 +103,9 @@
 }
 
 .status-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--accent-cyan);
   text-transform: uppercase;
   border: 1px solid var(--accent-cyan);

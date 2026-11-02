@@ -21,6 +21,11 @@ export const fetchMonth = async (month) => {
   }
   if (!response.ok) throw new Error('network');
 
-  const data = await response.json();
+  let data;
+  try {
+    data = await response.json();
+  } catch (e) {
+    throw new Error('network');
+  }
   return data.messages || [];
 };
