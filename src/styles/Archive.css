@@ -62,7 +62,7 @@
 
 @media (max-width: 600px) {
   .pager-link {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     letter-spacing: 0;
   }
 }
@@ -89,7 +89,7 @@
 }
 
 .status-title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: var(--accent-red);
   text-shadow: var(--shadow-red-glow);
   text-transform: uppercase;

@@ -2,46 +2,42 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  color: #e0e0e0; /* Light gray base text color for better readability */
+  color: var(--text-primary);
 }
 
 .legal-page h1 {
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 700;
-  color: #ff0022; /* Red color matching the cyberpunk theme */
+  color: var(--accent-red);
   margin-bottom: 30px;
   text-align: center;
 }
 
 .legal-page section {
-  margin-bottom: 30px;
-  background-color: rgba(13, 17, 23, 0.7); /* Semi-transparent dark background */
-  padding: 20px;
-  border-radius: 8px;
-  border: 1px solid #1e2d3d;
+  margin-bottom: 2rem;
 }
 
 .legal-page h2 {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #00e5ff; /* Cyan color matching the cyberpunk theme */
+  color: var(--accent-cyan);
   margin-bottom: 15px;
-  border-bottom: 1px solid #2a3f50;
+  border-bottom: 1px solid var(--border-dark);
   padding-bottom: 8px;
 }
 
 .legal-page h3 {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 500;
-  color: #00e5ff; /* Cyan color matching the cyberpunk theme */
+  color: var(--accent-cyan);
   margin-bottom: 10px;
   margin-top: 20px;
 }
 
 .legal-page p {
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.6;
-  color: #e0e0e0; /* Light gray for better readability */
+  color: var(--text-primary);
   margin-bottom: 15px;
 }
 
@@ -51,25 +47,24 @@
 }
 
 .legal-page li {
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.6;
-  color: #e0e0e0; /* Light gray for better readability */
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .legal-page a {
-  color: #00e5ff; /* Cyan color matching the cyberpunk theme */
+  color: var(--accent-cyan);
   text-decoration: none;
 }
 
 .legal-page a:hover {
   text-decoration: underline;
-  color: #ff9cff; /* Light magenta on hover */
 }
 
 .last-updated {
-  font-size: 14px;
-  color: #888888; /* Medium gray */
+  font-size: 0.875rem;
+  color: var(--text-secondary);
   text-align: right;
   margin-top: 40px;
   font-style: italic;

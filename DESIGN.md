@@ -20,12 +20,22 @@ typography:
     fontWeight: 700
     lineHeight: 1.1
     letterSpacing: "0em"
+  display-sm:
+    fontFamily: "'Courier New', monospace"
+    fontSize: "2rem"
+    fontWeight: 700
+    lineHeight: 1.1
   headline:
     fontFamily: "'Courier New', monospace"
-    fontSize: "1.75rem"
+    fontSize: "1.5rem"
     fontWeight: 700
     lineHeight: 1.3
     letterSpacing: "0.08em"
+  subhead:
+    fontFamily: "'Courier New', monospace"
+    fontSize: "1.25rem"
+    fontWeight: 700
+    lineHeight: 1.3
   title:
     fontFamily: "'Courier New', monospace"
     fontSize: "1rem"
@@ -42,6 +52,12 @@ typography:
     fontWeight: 400
     lineHeight: 1.4
     letterSpacing: "0.05em"
+  caption:
+    fontFamily: "'Courier New', monospace"
+    fontSize: "0.75rem"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "0.1em"
 rounded:
   none: "0px"
   sm: "4px"
@@ -134,8 +150,7 @@ A dark terminal palette, with three neon signals over near-black slate.
 
 ### Tertiary
 
-- **Glitch Magenta** (#ff00ff): a rare accent for archive year labels. The
-  legal-link hover uses its light variant #ff9cff.
+- **Glitch Magenta** (#ff00ff): a rare accent for archive year labels.
 
 ### Neutral
 
@@ -171,14 +186,21 @@ weight, uppercase, and letter-spacing, not from a second family.
 
 - **Display** (700, 3rem, 1.1): page titles such as "Latest Evil Plans".
   Uppercase, Alarm Red, red glow.
-- **Headline** (700, 1.75rem, 1.3, 0.08em): issue dates ("MONDAY,
-  NOVEMBER 2, 2026"), uppercase, with a cyan rule beneath.
+- **Display Small** (700, 2rem): page titles on phones, the Classified and
+  404 titles, and legal-page titles.
+- **Headline** (700, 1.5rem, 1.3, 0.08em): issue dates ("MONDAY,
+  NOVEMBER 2, 2026"), uppercase. Steps down to 1rem on phones so a long
+  date stays on one line. Also the wordmark (1rem on phones) and legal
+  section headings.
+- **Subhead** (700, 1.25rem): archive year labels and legal subsections.
 - **Title** (700, 1rem): dispatch titles ("Morning Plan", "Evening
   Message") in Scanline Cyan. Also the wordmark at 1.5rem, uppercase.
 - **Body** (400, 1rem, 1.6): message text in Readout White. Measure stays
   under about 65 characters per card column.
 - **Label** (400, 0.875rem, 0.05em): author line, timestamps, copyright.
   Uppercase for nav and time labels.
+- **Caption** (0.75rem, 0.1em): the "TODAY'S ISSUE" tag and the pager on
+  phones.
 
 ### Named Rules
 
