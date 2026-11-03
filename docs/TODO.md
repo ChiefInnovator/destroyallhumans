@@ -3,7 +3,8 @@
 ## High Priority
 
 - [x] **After the system-design PR reached `main`:** deleted deploy key `content-bot (generate-messages)` and secret `CONTENT_BOT_DEPLOY_KEY`, removed the DeployKey bypass from the `main` ruleset, and added `ci` as a required check on both rulesets.
-- [ ] **Content rewrite (design PR 2)** — `content/VOICE.md`, `content/arcs.json`, the rewrite script and the 2026-11 to 2027-01 batch. Needs an owner model choice and an owner read of every rewritten message.
+- [x] **Content rewrite (design PR 2)** — `content/VOICE.md`, `content/arcs.json`, `scripts/rewriteContent.js`, and the 2026-11-05 to 2027-01-31 batch (written to the voice guide, not generated). The owner reads every message before the PR merges.
+- [ ] **Next content batch (2027-02 onward)** — add arcs to `content/arcs.json`, then pick a model with `node scripts/rewriteContent.js --month 2027-02 --model <name> --dry-run`.
 
 ## Medium Priority
 
@@ -11,7 +12,7 @@
 
 ## Low Priority
 
-- [ ] **Add `og-image.png` fallback** — If a higher-quality branded OG image is desired, replace `public/og-image.png` with a professionally designed version.
+- [x] **Branded `og-image.png`** — 1200×630 bulletin card with both robots and a sample plan and incident report.
 - [x] **Sitemap `<lastmod>` dates** — removed from the daily-changing `/` and `/archive` entries (they rely on `changefreq: daily`); legal pages keep their real dates.
 
 ## Completed (This Session)
