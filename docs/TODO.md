@@ -11,7 +11,7 @@
 
 ## Low Priority
 
-- [ ] **Add `og-image.png` fallback** — If a higher-quality branded OG image is desired, replace `public/og-image.png` with a professionally designed version.
+- [x] **Branded `og-image.png`** — 1200×630 bulletin card with both robots and a sample plan and incident report.
 - [x] **Sitemap `<lastmod>` dates** — removed from the daily-changing `/` and `/archive` entries (they rely on `changefreq: daily`); legal pages keep their real dates.
 
 ## Completed (This Session)
