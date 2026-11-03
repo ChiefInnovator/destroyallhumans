@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { buildPrompt, parseMonth, checkMessages, mergeMonth } = require('./lib/rewrite');
+const { buildPrompt, parseMonth, checkMessages, mergeMonth, toSource } = require('./lib/rewrite');
 
 const fixture = () => ['2026-11-04', '2026-11-05', '2026-11-06'].flatMap((date) => [
   { id: `m-${date}`, date, time: 'morning', content: `Plan for ${date}` },
@@ -52,4 +52,11 @@ test('buildPrompt includes the voice guide, the arc and the dates', () => {
   assert.match(user.content, /2026-11/);
   assert.match(user.content, /2026-11-04 morning: Plan for 2026-11-04/);
   assert.match(user.content, /2026-11-05\./);
+});
+
+test('toSource escapes non-ASCII like the stored file', () => {
+  const source = toSource([{ id: 'a', date: '2026-11-05', time: 'morning', content: 'It\u2019s 61\u00b0F 🤖' }]);
+  assert.match(source, /It\\u2019s 61\\u00b0F \\ud83e\\udd16/);
+  assert.equal(JSON.parse(source).messages[0].content, 'It\u2019s 61\u00b0F 🤖');
+  assert.ok(!source.endsWith('\n'));
 });

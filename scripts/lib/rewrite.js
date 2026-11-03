@@ -60,4 +60,11 @@ const mergeMonth = (allMessages, newMessages, firstEditableKey) => {
   return allMessages.map((m) => (updates.has(slotKey(m)) ? { ...m, content: updates.get(slotKey(m)) } : m));
 };
 
-module.exports = { buildPrompt, parseMonth, checkMessages, mergeMonth };
+/**
+ * Serializes messages the way content/messages.json is stored: 2-space indent, non-ASCII as
+ * lowercase \uXXXX escapes, no trailing newline. Untouched messages keep their exact bytes.
+ */
+const toSource = (messages) => JSON.stringify({ messages }, null, 2)
+  .replace(/[\u0080-\uffff]/g, (c) => `\\u${c.charCodeAt(0).toString(16).padStart(4, '0')}`);
+
+module.exports = { buildPrompt, parseMonth, checkMessages, mergeMonth, toSource };

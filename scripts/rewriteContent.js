@@ -8,7 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 const { loadMessages, validate, addDays, utcTodayKey } = require('./lib/content');
-const { buildPrompt, parseMonth, checkMessages, mergeMonth } = require('./lib/rewrite');
+const { buildPrompt, parseMonth, checkMessages, mergeMonth, toSource } = require('./lib/rewrite');
 
 const root = path.join(__dirname, '..');
 const messagesFile = path.join(root, 'content', 'messages.json');
@@ -44,6 +44,11 @@ const main = async () => {
     response_format: { type: 'json_object' },
   });
 
+  // The call can cross UTC midnight; a date that became published meanwhile must not be written.
+  if (addDays(utcTodayKey(), 2) !== firstEditableKey) {
+    throw new Error('The UTC date changed during the request, so the frozen window moved. Run again.');
+  }
+
   const fresh = parseMonth(response.choices[0].message.content, dates);
   const errors = checkMessages(fresh, all);
   const merged = mergeMonth(all, fresh, firstEditableKey);
@@ -54,7 +59,7 @@ const main = async () => {
     fresh.forEach((m) => console.log(`${m.date} ${m.time}: ${m.content}`));
     return;
   }
-  fs.writeFileSync(messagesFile, JSON.stringify({ messages: merged }, null, 2));
+  fs.writeFileSync(messagesFile, toSource(merged));
   console.log(`Rewrote ${fresh.length} messages for ${month}.`);
 };
 
