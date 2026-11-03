@@ -32,7 +32,7 @@
   height: 56px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: #000;
+  background-color: var(--background-darker);
   border: 1px solid var(--persona);
 }
 
