@@ -2,16 +2,17 @@
 
 ## High Priority
 
-- [ ] **After the system-design PR reaches `main`:** delete deploy key `content-bot (generate-messages)` and secret `CONTENT_BOT_DEPLOY_KEY`, remove the DeployKey bypass from the `main` ruleset, and add `ci` as a required check on both rulesets.
+- [x] **After the system-design PR reached `main`:** deleted deploy key `content-bot (generate-messages)` and secret `CONTENT_BOT_DEPLOY_KEY`, removed the DeployKey bypass from the `main` ruleset, and added `ci` as a required check on both rulesets.
+- [ ] **Content rewrite (design PR 2)** — `content/VOICE.md`, `content/arcs.json`, the rewrite script and the 2026-11 to 2027-01 batch. Needs an owner model choice and an owner read of every rewritten message.
 
 ## Medium Priority
 
-- [ ] **Remove redundant root-level static files** — `asset-manifest.json`, `index.html`, `manifest.json`, `ads.txt` exist at root but are duplicates of `public/` or `build/` files.
+- [x] **Remove redundant root-level static files** — no longer tracked.
 
 ## Low Priority
 
 - [ ] **Add `og-image.png` fallback** — If a higher-quality branded OG image is desired, replace `public/og-image.png` with a professionally designed version.
-- [ ] **Update sitemap `<lastmod>` dates** — `public/sitemap.xml` has static dates. Consider generating it dynamically in CI or updating on each deploy.
+- [x] **Sitemap `<lastmod>` dates** — removed from the daily-changing `/` and `/archive` entries (they rely on `changefreq: daily`); legal pages keep their real dates.
 
 ## Completed (This Session)
 

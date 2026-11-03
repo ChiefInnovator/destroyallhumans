@@ -5,7 +5,7 @@
 The site serves from **two places** simultaneously:
 
 - **Primary — Azure Static Web App** at [https://destroyallhumans.ai](https://destroyallhumans.ai) (custom domain).
-  Deployed by [.github/workflows/azure-static-web-apps-polite-sea-05966b00f.yml](.github/workflows/azure-static-web-apps-polite-sea-05966b00f.yml). SPA fallback + headers in [staticwebapp.config.json](staticwebapp.config.json). Built with `homepage: "."` so assets load from root.
+  Deployed by [.github/workflows/azure-static-web-apps-polite-sea-05966b00f.yml](.github/workflows/azure-static-web-apps-polite-sea-05966b00f.yml). SPA fallback + headers in [staticwebapp.config.json](staticwebapp.config.json). Built with `homepage: "/"` so assets load from root.
 - **Secondary — GitHub Pages** at [https://chiefinnovator.github.io/destroyallhumans/](https://chiefinnovator.github.io/destroyallhumans/).
   Deployed by [.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml) with `PUBLIC_URL=/destroyallhumans`. Pages source is "GitHub Actions" (no `gh-pages` branch, no committed build artifacts).
 

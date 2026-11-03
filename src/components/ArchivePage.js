@@ -22,8 +22,8 @@ const PageTitle = ({ title, description }) => (
 );
 
 /** The visitor's current month, capped at the last published month. */
-const publishedMonth = () => {
-  const today = localTodayKey();
+const publishedMonth = (now = new Date()) => {
+  const today = localTodayKey(now);
   return monthKey(today < LAST_DATE ? today : LAST_DATE);
 };
 
@@ -35,7 +35,8 @@ const ArchiveIndex = () => {
     path: '/archive',
   });
 
-  const months = monthsBetween(publishedMonth(), FIRST_MONTH);
+  const now = useClock();
+  const months = monthsBetween(publishedMonth(now), FIRST_MONTH);
   const years = months.reduce((acc, m) => {
     const year = m.slice(0, 4);
     (acc[year] = acc[year] || []).push(m);
@@ -70,7 +71,7 @@ const ArchiveIndex = () => {
 const ArchiveMonth = ({ month }) => {
   const now = useClock();
   const today = localTodayKey(now);
-  const currentMonth = publishedMonth();
+  const currentMonth = publishedMonth(now);
   const inRange = month >= FIRST_MONTH && month <= currentMonth;
   const [days, setDays] = useState(null);
   const [error, setError] = useState(null);
