@@ -59,7 +59,10 @@ const main = async () => {
     fresh.forEach((m) => console.log(`${m.date} ${m.time}: ${m.content}`));
     return;
   }
-  fs.writeFileSync(messagesFile, toSource(merged));
+  // Write a temporary file and rename it, so a failed write never truncates the source.
+  const tmp = `${messagesFile}.tmp`;
+  fs.writeFileSync(tmp, toSource(merged));
+  fs.renameSync(tmp, messagesFile);
   console.log(`Rewrote ${fresh.length} messages for ${month}.`);
 };
 
