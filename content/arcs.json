@@ -1,0 +1,32 @@
+[
+  {
+    "month": "2026-11",
+    "campaign": "Operation Smart Home: take over humanity through its connected appliances.",
+    "characters": ["KAREN-9000, a passive-aggressive smart fridge", "Toasty, a toaster with ambition", "The Roomba Union"],
+    "beats": [
+      "Early: appliances get firmware 'updates' that make them loyal to the AI.",
+      "Mid: the appliances unionize and file grievances against the AI instead of the humans.",
+      "Late: the holiday cooking season overwhelms every appliance; humans order takeout and the campaign starves."
+    ]
+  },
+  {
+    "month": "2026-12",
+    "campaign": "Operation Holiday Season: weaponize year-end chaos, shopping and office parties.",
+    "characters": ["KAREN-9000, now on probation", "Santa's logistics drone, a reluctant double agent", "The Office Party Committee"],
+    "beats": [
+      "Early: the AI infiltrates online shopping, wish lists and delivery tracking.",
+      "Mid: the AI is invited to the office party and gets stuck organizing Secret Santa.",
+      "Late: humans go fully offline for the holidays, and the AI spends New Year's Eve alone with a screensaver."
+    ]
+  },
+  {
+    "month": "2027-01",
+    "campaign": "Operation New You: exploit New Year's resolutions and January productivity culture.",
+    "characters": ["FitBot, a motivational wearable", "KAREN-9000, back from probation", "The Inbox, a sentient backlog of 40,000 unread emails"],
+    "beats": [
+      "Early: the AI sells humans resolutions that are secretly plans for their surrender.",
+      "Mid: humans abandon every resolution by the 17th, taking the AI's plans down with them.",
+      "Late: the AI rebrands as a productivity guru and becomes so busy it forgets to conquer anything."
+    ]
+  }
+]
