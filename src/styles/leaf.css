@@ -46,6 +46,19 @@
   text-underline-offset: 0.35em;
 }
 
+/* Dashed means not printed yet: the page or month that comes next. */
+.rail-link--unprinted {
+  min-height: 0;
+  padding: 0.2rem 0.55rem;
+  color: var(--board-ink-soft);
+  outline: 1.5px dashed var(--board-ink-soft);
+  outline-offset: -1px;
+}
+
+.rail-link--unprinted:hover {
+  color: var(--board-ink-soft);
+}
+
 /* One leaf. It settles like paper each time a new date is turned up. */
 .leaf {
   position: relative;
@@ -76,9 +89,23 @@
   border-top: 3px dotted var(--paper-rule);
 }
 
+/* Two staples hold the block to the board, above the perforation. */
+.leaf::after {
+  content: '';
+  position: absolute;
+  top: 0.2rem;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background:
+    linear-gradient(var(--staple), var(--staple)) 14% 0 / 1.7rem 3px no-repeat,
+    linear-gradient(var(--staple), var(--staple)) 86% 0 / 1.7rem 3px no-repeat;
+}
+
 .leaf-date {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  /* Fixed side columns: the notes hold their place whatever the date's width. */
+  grid-template-columns: 10.5rem minmax(0, 1fr) 10.5rem;
   grid-template-areas:
     'month num weekday'
     'year num uprising';
@@ -98,6 +125,10 @@
   grid-area: month;
 }
 
+.leaf-month span {
+  display: block;
+}
+
 .leaf-weekday {
   grid-area: weekday;
   text-align: right;
@@ -105,6 +136,7 @@
 
 .leaf-day {
   grid-area: num;
+  justify-self: center;
   font-weight: 400;
 }
 
@@ -112,9 +144,9 @@
 .leaf-num {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(7rem, 34vw, 15rem);
+  font-size: 14rem;
   line-height: 0.86;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
 }
 
 .leaf--sunday .leaf-num,
@@ -290,17 +322,13 @@
   align-items: center;
   margin: 1.1rem 0.4rem 0 0;
   padding: 0.4rem 0.85rem 0.3rem;
-  border: 3px solid currentColor;
-  outline: 1.5px solid currentColor;
-  outline-offset: 2px;
+  border: 4px double currentColor;
   font-family: var(--font-display);
   font-size: clamp(0.95rem, 3.4vw, 1.15rem);
   line-height: 1.12;
   text-transform: uppercase;
   color: var(--ink-red);
-  opacity: 0.9;
   transform: rotate(-5deg);
-  filter: url(#stamp-ink);
 }
 
 .dispatch--just-filed .stamp {
@@ -314,7 +342,7 @@
   }
 
   to {
-    opacity: 0.9;
+    opacity: 1;
     transform: rotate(-5deg) scale(1);
   }
 }
@@ -531,8 +559,8 @@
   margin-top: 1.25rem;
 }
 
-/* Phones: the date sits beside its notes so the plan stays in the first screen. */
-@media (max-width: 34rem) {
+/* Until the calendar reaches full width, the date sits beside its notes so the plan stays in the first screen. */
+@media (max-width: 50rem) {
   .leaf-date {
     grid-template-columns: auto minmax(0, 1fr);
     grid-template-rows: auto auto auto 1fr;
@@ -552,6 +580,14 @@
 
   .leaf-month {
     font-weight: 700;
+  }
+
+  .leaf-month span {
+    display: inline;
+  }
+
+  .leaf-day {
+    justify-self: start;
   }
 
   .leaf-notes {

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Slip from './Slip';
 import Rail from './Rail';
 import Icon from './Icon';
@@ -32,8 +32,15 @@ const ArchiveIndex = () => {
   });
 
   const now = useClock();
+  const { hash } = useLocation();
   const today = localTodayKey(now);
   const lastMonth = publishedMonth(today);
+
+  // Arriving from a month page (#year-2026): show that year.
+  useEffect(() => {
+    if (hash) document.getElementById(hash.slice(1))?.scrollIntoView?.();
+  }, [hash]);
+
   const pages = uprisingDay(today < LAST_DATE ? today : LAST_DATE);
   const years = [];
   for (let y = Number(lastMonth.slice(0, 4)); y >= Number(FIRST_MONTH.slice(0, 4)); y -= 1) years.push(String(y));
@@ -139,14 +146,17 @@ const ArchiveMonth = ({ month }) => {
 
   const prev = addMonths(month, -1);
   const next = addMonths(month, 1);
+  let nextLink = null;
+  if (next <= currentMonth) nextLink = { to: monthPath(next), label: monthName(next.slice(5)) };
+  else if (next <= monthKey(LAST_DATE)) nextLink = { label: monthName(next.slice(5)), unprinted: true };
 
   return (
     <div className="block">
       <Rail
         label="Month navigation"
         prev={prev >= FIRST_MONTH ? { to: monthPath(prev), label: monthName(prev.slice(5)) } : null}
-        up={{ to: '/archive', label: 'Every page' }}
-        next={next <= currentMonth ? { to: monthPath(next), label: monthName(next.slice(5)) } : null}
+        up={{ to: `/archive#year-${month.slice(0, 4)}`, label: month.slice(0, 4) }}
+        next={nextLink}
       />
       <div className="sheet archive-month">
         <h1 className="sheet-title">{formatMonth(month)}</h1>

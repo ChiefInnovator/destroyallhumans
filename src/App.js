@@ -50,7 +50,7 @@ export function Calendar({ children }) {
   const shift = now.getHours() >= EVENING_HOUR ? 'night' : 'day';
   const day = uprisingDay(today < LAST_DATE ? today : LAST_DATE);
 
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const navigation = useNavigationType();
 
   useEffect(() => {
@@ -58,21 +58,15 @@ export function Calendar({ children }) {
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', WALL[shift]);
   }, [shift]);
 
-  // A new page starts at its top; Back and Forward keep the browser's restored position.
+  // A new page starts at its top; Back and Forward keep the browser's restored position,
+  // and a link to a section (#year-2026) is left to scroll there.
   useEffect(() => {
-    if (navigation !== 'POP') window.scrollTo(0, 0);
-  }, [pathname, navigation]);
+    if (navigation !== 'POP' && !hash) window.scrollTo(0, 0);
+  }, [pathname, hash, navigation]);
 
   return (
     <div className="app">
       <a className="skip-link" href="#page">Skip to the page</a>
-      {/* Rubber-stamp ink: roughens the edges of the verdict stamp (see leaf.css). */}
-      <svg className="visually-hidden" width="0" height="0" aria-hidden="true" focusable="false">
-        <filter id="stamp-ink">
-          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="grain" />
-          <feDisplacementMap in="SourceGraphic" in2="grain" scale="2.2" />
-        </filter>
-      </svg>
       <div className="calendar">
         <header className="backer">
           <span className="backer-hole" aria-hidden="true" />

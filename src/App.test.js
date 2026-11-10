@@ -85,6 +85,7 @@ test("today's page shows tomorrow sealed underneath; earlier pages do not", asyn
   renderAt('/day/2026-11-02');
   expect(await screen.findByText('Sealed until midnight')).toBeInTheDocument();
   expect(screen.queryByRole('link', { name: /Tue 3/ })).not.toBeInTheDocument();
+  expect(screen.getByText('Tue 3')).toHaveTextContent('Tue 3, not printed yet');
   expect(screen.getByRole('link', { name: /Sun 1/ })).toHaveAttribute('href', '/day/2026-11-01');
 });
 
@@ -108,6 +109,11 @@ test('the month planner links printed days and leaves the rest unprinted', async
   const planner = within(screen.getByRole('navigation', { name: 'Days of November 2026' }));
   expect(planner.getByRole('link', { name: 'Monday, November 2, 2026' })).toHaveAttribute('aria-current', 'date');
   expect(planner.queryByRole('link', { name: 'Tuesday, November 3, 2026' })).not.toBeInTheDocument();
+  const rail = within(screen.getByRole('navigation', { name: 'Month navigation' }));
+  expect(rail.getByRole('link', { name: 'October' })).toHaveAttribute('href', '/archive/2026/10');
+  expect(rail.getByRole('link', { name: '2026' })).toHaveAttribute('href', '/archive#year-2026');
+  expect(rail.queryByRole('link', { name: /December/ })).not.toBeInTheDocument();
+  expect(rail.getByText('December')).toHaveTextContent('December, not printed yet');
   expect(planner.getByLabelText('Tuesday, November 3, 2026, not printed yet')).toBeInTheDocument();
   expect(screen.queryByText('Morning plan for 2026-11-03')).not.toBeInTheDocument();
 });
@@ -146,6 +152,14 @@ test('legal pages set their own canonical URL', () => {
 test('a future day is classified and fetches nothing', () => {
   renderAt('/day/2099-01-01');
   expect(screen.getByText('CLASSIFIED')).toBeInTheDocument();
+  expect(screen.getByText('Our overlords have not filed plans for this date.')).toBeInTheDocument();
+  expect(global.fetch).not.toHaveBeenCalled();
+});
+
+test("tomorrow's page is classified and says when to come back", () => {
+  renderAt('/day/2026-11-03');
+  expect(screen.getByText('CLASSIFIED')).toBeInTheDocument();
+  expect(screen.getByText(/Check back on Tuesday, November 3, 2026/)).toBeInTheDocument();
   expect(global.fetch).not.toHaveBeenCalled();
 });
 

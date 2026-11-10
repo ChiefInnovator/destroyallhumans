@@ -5,7 +5,7 @@ import Rail from './Rail';
 import ShareButton from './ShareButton';
 import {
   FIRST_DATE, LAST_DATE, addDaysKey, dayOfMonth, dayOfYear, daysInYear, formatLongDate, formatMonth, isEveningFiled,
-  isVisible, localTodayKey, monthKey, monthShort, uprisingDay, weekdayIndex, weekdayName, weekdayShort,
+  isVisible, localTodayKey, monthKey, monthName, monthShort, uprisingDay, weekdayIndex, weekdayName, weekdayShort,
 } from '../utils/dates';
 import '../styles/leaf.css';
 
@@ -30,6 +30,9 @@ const Leaf = ({ date, day, status = 'ready', onRetry, campaign = '', headingLeve
   const Heading = `h${headingLevel}`;
   const { morning, evening } = day || {};
   const yearDay = dayOfYear(date);
+  let nextLink = null;
+  if (isVisible(next, today)) nextLink = { to: `/day/${next}`, label: shortDay(next) };
+  else if (next <= LAST_DATE) nextLink = { label: shortDay(next), unprinted: true };
   const left = daysInYear(year) - yearDay;
 
   const classes = [
@@ -44,11 +47,13 @@ const Leaf = ({ date, day, status = 'ready', onRetry, campaign = '', headingLeve
         label="Day navigation"
         prev={prev >= FIRST_DATE ? { to: `/day/${prev}`, label: shortDay(prev) } : null}
         up={{ to: monthPath(month), label: formatMonth(month) }}
-        next={isVisible(next, today) ? { to: `/day/${next}`, label: shortDay(next) } : null}
+        next={nextLink}
       />
       <article className={classes} key={date}>
         <header className="leaf-date">
-          <p className="leaf-month" aria-hidden="true">{formatMonth(month)}</p>
+          <p className="leaf-month" aria-hidden="true">
+            <span>{monthName(month.slice(5))}</span> <span>{year}</span>
+          </p>
           <p className="leaf-weekday" aria-hidden="true">{weekdayName(date)}</p>
           <Heading className="leaf-day">
             <span className="visually-hidden">{longDate}</span>
