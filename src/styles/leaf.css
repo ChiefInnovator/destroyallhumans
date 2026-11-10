@@ -23,7 +23,7 @@
   align-items: center;
   gap: 0.4rem;
   min-height: 2.75rem;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
@@ -208,7 +208,7 @@
 
 .dispatch--evening .dispatch-band {
   background-color: var(--ink-red);
-  color: #ffffff;
+  color: var(--on-red);
 }
 
 /* The robot signs its band; the portrait breaks out of it. */
@@ -372,16 +372,17 @@
   gap: 0.5rem;
   min-height: 2.75rem;
   margin-left: auto;
-  padding: 0.5rem 1rem;
+  padding: 0.55rem 1.1rem;
   border: 0;
   background-color: var(--ink);
   color: var(--paper);
   font-weight: 700;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .share-button:hover {
   background-color: var(--ink-red);
+  color: var(--on-red);
 }
 
 .share-button:focus-visible {
@@ -510,6 +511,7 @@
   font-family: var(--font-display);
   font-size: 3.1rem;
   line-height: 0.86;
+  letter-spacing: -0.04em;
   transition: color 0.2s ease;
 }
 
@@ -543,7 +545,7 @@
   padding-top: 0.75rem;
   border-top: 3px dotted var(--paper-rule);
   font-family: var(--font-typed);
-  font-size: 1rem;
+  font-size: 1.0625rem;
   line-height: 1.45;
   color: var(--ink-red-text);
   text-wrap: pretty;

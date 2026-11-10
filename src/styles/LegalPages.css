@@ -2,8 +2,8 @@
 .legal-page h1 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(1.9rem, 7vw, 3rem);
-  line-height: 1.05;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  line-height: 1.02;
   text-transform: uppercase;
   text-wrap: balance;
 }
