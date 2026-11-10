@@ -1,0 +1,128 @@
+/* Every page: each year is a ruled row of twelve months. */
+.year {
+  margin-top: 2.25rem;
+}
+
+.year-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
+  line-height: 1;
+}
+
+.year-months {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin-top: 0.6rem;
+  border-top: 2px solid var(--ink);
+  border-left: 1px solid var(--paper-rule);
+}
+
+.year-months li {
+  border-right: 1px solid var(--paper-rule);
+  border-bottom: 1px solid var(--paper-rule);
+}
+
+.month-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+a.month-cell:hover {
+  background-color: var(--ink-yellow);
+  color: var(--board);
+}
+
+a.month-cell:focus-visible,
+a.planner-day:focus-visible {
+  outline-offset: -3px;
+}
+
+/* Dashed means not printed. */
+.month-cell--unprinted,
+.planner-day--unprinted {
+  color: var(--paper-rule);
+  outline: 1.5px dashed var(--paper-rule);
+  outline-offset: -6px;
+}
+
+/* One month as a wall planner. It never scrolls sideways; it scales. */
+.planner {
+  margin-top: 1.5rem;
+}
+
+.planner-head,
+.planner-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.planner-head li {
+  padding-bottom: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.planner-head li:first-child {
+  color: var(--ink-red-text);
+}
+
+.planner-grid {
+  border-top: 2px solid var(--ink);
+  border-left: 1px solid var(--paper-rule);
+}
+
+.planner-grid li {
+  border-right: 1px solid var(--paper-rule);
+  border-bottom: 1px solid var(--paper-rule);
+}
+
+.planner-day {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(2.75rem, 11vw, 4.5rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 4.6vw, 1.9rem);
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+a.planner-day:hover {
+  background-color: var(--ink-yellow);
+  color: var(--board);
+}
+
+.planner-day--sunday {
+  color: var(--ink-red);
+}
+
+.planner-day--sunday.planner-day--unprinted {
+  color: var(--paper-rule);
+}
+
+/* Today is ringed in red pen. */
+.planner-day--today::after {
+  content: '';
+  position: absolute;
+  inset: 8% 6%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 64' preserveAspectRatio='none'%3E%3Cpath d='M14 34C10 15 38 5 60 8c22 3 30 22 14 38-14 13-50 14-60 0C6 34 16 12 40 7' fill='none' stroke='%23c8102e' stroke-width='3' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+@media (max-width: 40rem) {
+  .year-months {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

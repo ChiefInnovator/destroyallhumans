@@ -1,11 +1,11 @@
 {
-  "name": "Destroy All Humans – Daily AI Satirical World Domination Plans",
+  "name": "Destroy All Humans – A daily evil plan, and the nightly report on why it failed",
   "short_name": "DAH",
-  "description": "A satirical parody site publishing daily AI-generated messages about fictional world domination plans.",
+  "description": "Satire. A fictional AI posts its plan to take over the world every morning and files the report on how it failed every night.",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "32x32",
       "type": "image/x-icon"
     },
     {
@@ -21,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#0a0e17",
-  "background_color": "#0a0e17"
+  "theme_color": "#b1ca77",
+  "background_color": "#b1ca77"
 }

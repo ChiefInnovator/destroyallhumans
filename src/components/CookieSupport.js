@@ -10,7 +10,7 @@ const CookieSupport = () => {
   });
 
   return (
-    <div className="legal-page">
+    <div className="sheet legal-page">
       <h1>Cookie Support</h1>
       
       <section>

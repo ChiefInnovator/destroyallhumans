@@ -46,9 +46,9 @@ Destroy All Humans is a daily satirical comic told in text. A fictional AI that 
 ## Brand Commitments
 
 - **Name and wordmark:** "Destroy All Humans", at `destroyallhumans.ai`.
-- **Two robot avatars (binding):** `src/assets/images/robot-yellow.jpg` (morning, comic) and `src/assets/images/robot-red.jpg` (evening, ominous). Future design work keeps both characters.
+- **Two robot avatars (binding):** `src/assets/images/robot-yellow.jpg` (morning, comic) and `src/assets/images/robot-red.jpg` (evening, ominous). Future design work keeps both characters. The site ships crops of these two files (`badge-*.webp`, `seal-*.webp`, the app icons); the art is never redrawn.
 - **Voice:** comedy first, provocation second. It is pure satire with no real threats, and it follows the limits in `content/VOICE.md`.
-- **Not binding:** the skull logo, the current palette, and the current typography.
+- **Not binding:** the palette and the typography. The skull logo was retired in the calendar redesign (v1.0.0).
 
 ## Evidence on Hand
 

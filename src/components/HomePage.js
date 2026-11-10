@@ -1,81 +1,83 @@
-import React, { useState, useEffect } from 'react';
-import DailyMessages from './DailyMessages';
-import skullIcon from '../assets/images/skull-icon.svg';
-import { LAST_DATE, addMonths, localTodayKey, monthKey } from '../utils/dates';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import Leaf, { monthPath } from './Leaf';
+import Slip from './Slip';
+import { LAST_DATE, addMonths, formatMonth, localTodayKey, monthKey } from '../utils/dates';
 import { useClock } from '../utils/useClock';
 import { visibleDays } from '../utils/messages';
-import { fetchMonth } from '../utils/data';
+import { fetchMonthData } from '../utils/data';
 import { usePageMeta } from '../utils/pageMeta';
 
 const DAYS_SHOWN = 5;
 
-/**
- * Home page: the visitor's local today and the days before it.
- */
+/** Home: today's page of the calendar, then the pages torn off before it. */
 const HomePage = () => {
-  const [days, setDays] = useState(null);
-  const [error, setError] = useState(null);
+  const [loaded, setLoaded] = useState(null);
+  const [error, setError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const now = useClock();
   const today = localTodayKey(now);
+  const latest = today < LAST_DATE ? today : LAST_DATE;
+  const current = monthKey(latest);
 
   usePageMeta({
-    description: 'Read the latest AI-generated satirical dispatches about fictional world domination. New morning and evening messages every day from our AI overlords.',
+    description: 'Satire. A fictional AI posts its plan to take over the world every morning and files the report on how it failed every night.',
     path: '/',
   });
 
   useEffect(() => {
     let cancelled = false;
-    const current = monthKey(today < LAST_DATE ? today : LAST_DATE);
+    setError(false);
 
-    const load = async () => {
-      setError(null);
-      try {
-        const [thisMonth, lastMonth] = await Promise.all([
-          fetchMonth(current),
-          fetchMonth(addMonths(current, -1)).catch((e) => {
-            if (e.message === 'not-found') return [];
-            throw e;
-          }),
-        ]);
-        if (!cancelled) setDays(visibleDays([...lastMonth, ...thisMonth], today, DAYS_SHOWN));
-      } catch (err) {
-        if (!cancelled) setError('Failed to load messages. Please try again later.');
-      }
-    };
+    Promise.all([
+      fetchMonthData(current),
+      fetchMonthData(addMonths(current, -1)).catch((e) => {
+        if (e.message === 'not-found') return { messages: [], campaign: '' };
+        throw e;
+      }),
+    ])
+      .then(([thisMonth, lastMonth]) => {
+        if (cancelled) return;
+        setLoaded({
+          days: visibleDays([...lastMonth.messages, ...thisMonth.messages], today, DAYS_SHOWN),
+          campaigns: { [current]: thisMonth.campaign, [addMonths(current, -1)]: lastMonth.campaign },
+        });
+      })
+      .catch(() => { if (!cancelled) setError(true); });
 
-    load();
     return () => { cancelled = true; };
-  }, [today]);
+  }, [today, current, attempt]);
 
-  if (error) {
-    return <div className="error">{error}</div>;
+  const retry = useCallback(() => setAttempt((n) => n + 1), []);
+
+  if (error || !loaded) {
+    return <Leaf date={latest} status={error ? 'error' : 'loading'} onRetry={retry} now={now} />;
   }
 
-  if (!days) {
-    return <div className="loading">Loading messages...</div>;
+  const [top, ...earlier] = loaded.days;
+  if (!top) {
+    return <Leaf date={latest} status="ready" day={{}} now={now} />;
   }
 
   return (
-    <div className="home-page-content">
-      <div className="page-title-container">
-        <img src={skullIcon} alt="" className="page-icon" />
-        <h1 className="page-title">Latest Evil Plans</h1>
-        <p className="page-description">
-          Satire. A fictional AI posts its plan every morning and reports how it failed every night.
-        </p>
-      </div>
-      {days.length > 0 ? (
-        <div className="latest-messages-list">
-          {days.map((day) => (
-            <DailyMessages key={day.date} date={day.date} messages={day} now={now} />
-          ))}
-        </div>
-      ) : (
-        <div className="no-messages">
-          <p>No messages found for the last 5 days. Our AI overlords must be plotting in secret.</p>
-        </div>
+    <>
+      <Leaf date={top.date} day={top} campaign={loaded.campaigns[monthKey(top.date)]} now={now} />
+      <p className="premise">
+        Satire. A fictional AI posts its plan every morning and reports how it failed every night.
+      </p>
+      {earlier.length > 0 && (
+        <section className="torn" aria-labelledby="torn-title">
+          <h2 id="torn-title" className="wall-title">Torn off earlier</h2>
+          <div className="slips">
+            {earlier.map((day) => <Slip key={day.date} day={day} now={now} />)}
+          </div>
+          <p className="torn-more">
+            <Link to={monthPath(current)} className="wall-link">All of {formatMonth(current)}</Link>
+            <Link to="/archive" className="wall-link">Every page since 2023</Link>
+          </p>
+        </section>
       )}
-    </div>
+    </>
   );
 };
 

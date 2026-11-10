@@ -1,311 +1,393 @@
-/* Cyberpunk theme for Destroy All Humans website */
+/*
+ * Destroy All Humans: the regime's page-a-day calendar, hanging on the break-room wall.
+ * Wall, board and paper are the three surfaces. Paper prints in three inks only:
+ * black, report red and plan yellow.
+ */
 :root {
-  --background-dark: #0a0e17;
-  --background-darker: #070b12;
-  --background-card: #111827;
-  --text-primary: #ffffff;
-  --text-secondary: #a0aec0;
-  --accent-red: #ff0022;
-  --accent-cyan: #00e5ff;
-  --accent-magenta: #ff00ff;
-  --accent-green: #00ff66;
-  --accent-amber: #fbbf24;
-  --border-cyan: #00e5ff;
-  --border-dark: #1e293b;
-  --shadow-glow: 0 0 10px rgba(0, 229, 255, 0.5);
-  --shadow-red-glow: 0 0 10px rgba(255, 0, 34, 0.5);
-  --font-mono: 'Courier New', monospace;
+  /* Wall: the sage green of the robot badge's outline. */
+  --wall: #b1ca77;
+  --wall-ink: #1b2311;
+  --wall-ink-soft: #3a4823;
+  --wall-shadow: rgba(27, 35, 17, 0.34);
+
+  /* Backer board: the black ground the robot art is drawn on. */
+  --board: #000000;
+  --board-ink: #f3f1ea;
+  --board-rule: #2b2b2b;
+  --badge-pink: #fa6783;
+  --badge-yellow: #ffcc00;
+
+  /* Paper and its three inks. */
+  --paper: #fcfcf9;
+  --paper-under: #ecebe3;
+  --paper-rule: #b9b8ad;
+  --ink: #151515;
+  --ink-soft: #57564f;
+  --ink-red: #c8102e;
+  --ink-red-text: #a80d26;
+  --ink-yellow: #ffcc00;
+
+  --font-display: 'Bowlby One', 'Arial Black', sans-serif;
+  --font-text: 'Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif;
+  --font-typed: 'Courier Prime', 'Courier New', monospace;
+
+  --calendar-width: 46rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
+}
+
+/* Night shift: after 9:00 PM the lights are off and the red robot has the board. */
+:root[data-shift='night'] {
+  --wall: #14251b;
+  --wall-ink: #e3ebcf;
+  --wall-ink-soft: #a9b98a;
+  --wall-shadow: rgba(0, 0, 0, 0.6);
+}
+
+html {
+  background-color: var(--wall);
+  scrollbar-color: var(--wall-ink-soft) var(--wall);
+  transition: background-color 0.8s ease;
 }
 
 body {
-  background-color: var(--background-dark);
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
+  background-color: var(--wall);
+  color: var(--wall-ink);
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+::selection {
+  background-color: var(--ink-yellow);
+  color: var(--board);
+}
+
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.icon {
+  flex: none;
+  width: 1.15em;
+  height: 1.15em;
 }
 
 .app {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  padding: 0 var(--gutter);
 }
 
-/* Header styles */
-.header {
-  background-color: var(--background-darker);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border-dark);
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -4rem;
+  z-index: 2;
+  padding: 0.6rem 0.9rem;
+  background-color: var(--ink);
+  color: var(--paper);
+  font-weight: 700;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+.skip-link:focus {
+  top: 0.75rem;
 }
 
-.logo a {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.logo img {
-  height: 2rem;
-}
-
-.logo-text {
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.logo-text span {
-  color: var(--accent-red);
-}
-
-.nav-links {
-  display: flex;
-  gap: 1rem;
-}
-
-.nav-link {
-  color: var(--accent-cyan);
-  text-decoration: none;
-  text-transform: uppercase;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--accent-cyan);
-  transition: all 0.3s ease;
-}
-
-.nav-link:hover {
-  background-color: var(--accent-cyan);
-  color: var(--background-darker);
-  box-shadow: var(--shadow-glow);
-}
-
-/* Promo banner */
-/* Main content */
-.main-content {
-  flex: 1;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+/* The calendar: one object, hung from a nail. */
+.calendar {
   width: 100%;
+  max-width: var(--calendar-width);
+  margin: clamp(1.25rem, 4vw, 2.5rem) auto 0;
+  flex: 1;
 }
 
-/* Page title */
-.page-title-container {
-  text-align: center;
-  margin-bottom: 3rem;
+.backer {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(0.75rem, 4vw, 2rem);
+  padding: clamp(1.4rem, 4vw, 2rem) clamp(1rem, 4vw, 2rem) clamp(0.9rem, 3vw, 1.5rem);
+  background-color: var(--board);
+  color: var(--board-ink);
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0 22px 30px -18px var(--wall-shadow);
 }
 
-.page-icon {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 1rem;
+/* The hole the nail goes through. */
+.backer-hole {
+  position: absolute;
+  top: 0.55rem;
+  left: 50%;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-left: -0.4rem;
+  border-radius: 50%;
+  background-color: var(--wall);
+  box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.45);
+  transition: background-color 0.8s ease;
 }
 
-.page-title {
-  font-size: 3rem;
-  color: var(--accent-red);
-  text-transform: uppercase;
-  margin: 0;
-  text-shadow: var(--shadow-red-glow);
+.backer-badge {
+  display: block;
+  width: clamp(5.75rem, 24vw, 10.5rem);
 }
 
-.page-description {
-  color: var(--text-secondary);
-  max-width: 800px;
-  margin: 1rem auto;
-  text-align: center;
+.backer-badge img {
+  width: 100%;
+  height: auto;
 }
 
-.latest-messages-list {
+.backer-badge:focus-visible,
+.backer-link:focus-visible {
+  outline-color: var(--badge-yellow);
+}
+
+.tally {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0.15rem;
 }
 
+/* Pink over yellow, the way the badge letters its own name. */
+.tally-day {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 9vw, 4.25rem);
+  line-height: 1;
+  color: var(--badge-pink);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
 
-/* Message cards */
+.tally-rest {
+  font-family: var(--font-display);
+  font-size: clamp(0.82rem, 3.1vw, 1.3rem);
+  line-height: 1.25;
+  color: var(--badge-yellow);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
 
-/* Footer */
+.backer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 clamp(0.9rem, 4vw, 1.5rem);
+  margin-top: clamp(0.25rem, 1.5vw, 0.9rem);
+}
+
+.backer-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.35em;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.backer-link:hover {
+  text-decoration-color: var(--board-ink);
+}
+
+.backer-link[aria-current='page'] {
+  text-decoration-color: var(--badge-yellow);
+}
+
+.page:focus {
+  outline: none;
+}
+
+/* A plain sheet of calendar paper, for everything that is not a dated leaf. */
+.sheet {
+  background-color: var(--paper);
+  color: var(--ink);
+  padding: clamp(1.5rem, 5vw, 2.75rem) clamp(1.1rem, 5vw, 2.5rem);
+  box-shadow: 0 22px 30px -18px var(--wall-shadow);
+}
+
+.sheet-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  line-height: 1.02;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.sheet-lede {
+  margin-top: 0.6rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Dashed means not printed yet. */
+.sheet--unprinted {
+  background-color: transparent;
+  color: var(--wall-ink);
+  border: 2px dashed var(--wall-ink-soft);
+  border-top: 0;
+  box-shadow: none;
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.1rem;
+}
+
+.status-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 6.5vw, 2.75rem);
+  line-height: 1.08;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.status-stamp {
+  display: inline-block;
+  padding: 0.3rem 0.9rem 0.2rem;
+  border: 4px double currentColor;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 9vw, 3.5rem);
+  line-height: 1.1;
+  color: var(--ink-red-text);
+  transform: rotate(-3deg);
+  transform-origin: left center;
+}
+
+:root[data-shift='night'] .status-stamp {
+  color: var(--badge-pink);
+}
+
+.status-text {
+  max-width: 34rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+/* Buttons are printed blocks of ink. */
+.ink-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 1.1rem;
+  border: 0;
+  background-color: var(--wall-ink);
+  color: var(--wall);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sheet:not(.sheet--unprinted) .ink-button {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+
+.ink-button:hover {
+  background-color: var(--ink-red);
+  color: #ffffff;
+}
+
+.sheet:not(.sheet--unprinted) .ink-button:hover {
+  background-color: var(--ink-red);
+  color: #ffffff;
+}
+
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  border: 0;
+  background: none;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+}
+
+.text-button:hover {
+  color: var(--ink-red-text);
+}
+
+/* Writing on the wall itself. */
+.wall-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.wall-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--wall-ink-soft);
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.wall-link:hover {
+  text-decoration-color: currentColor;
+}
+
 .footer {
-  background-color: var(--background-darker);
-  padding: 1.5rem;
-  text-align: center;
-  border-top: 1px solid var(--border-dark);
+  width: 100%;
+  max-width: var(--calendar-width);
+  margin: clamp(3rem, 9vw, 5rem) auto 0;
+  padding: 1.25rem 0 2rem;
+  border-top: 2px solid var(--wall-ink-soft);
 }
 
 .footer-links {
   display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0 1.5rem;
 }
 
-.footer-link {
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.footer-link:hover {
-  color: var(--accent-cyan);
+.footer .wall-link {
+  font-weight: 600;
 }
 
 .copyright {
-  color: var(--text-secondary);
+  margin-top: 0.5rem;
   font-size: 0.875rem;
+  color: var(--wall-ink-soft);
 }
 
-/* Archive styles */
-.archive-container {
-  padding: 1rem;
-}
-
-.archive-year {
-  color: var(--accent-magenta);
-  margin: 1.5rem 0 1rem;
-  font-size: 1.25rem;
-}
-
-.archive-months {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
-}
-
-.archive-month {
-  background-color: var(--background-card);
-  border: 1px solid var(--border-cyan);
-  padding: 0.75rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.archive-month:hover {
-  box-shadow: var(--shadow-glow);
-}
-
-/* Legal pages */
-.legal-page {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: var(--background-card);
-  border: 1px solid var(--border-dark);
-  border-radius: 4px;
-}
-
-.legal-title {
-  color: var(--accent-cyan);
-  margin-bottom: 1.5rem;
-}
-
-.legal-section {
-  margin-bottom: 2rem;
-}
-
-.legal-section-title {
-  color: var(--accent-cyan);
-  margin-bottom: 1rem;
-}
-
-/* Ad space */
-.ad-space {
-  background-color: rgba(0, 229, 255, 0.05);
-  border: 1px dashed var(--border-cyan);
-  padding: 1rem;
-  text-align: center;
-  margin-bottom: 2rem;
-  color: var(--text-secondary);
-}
-
-/* Browser surfaces */
-::selection {
-  background-color: var(--accent-cyan);
-  color: var(--background-darker);
-}
-
-a:focus-visible,
-button:focus-visible {
-  outline: 2px solid var(--accent-cyan);
-  outline-offset: 3px;
-}
-
-.nav-link:focus-visible {
-  background-color: var(--accent-cyan);
-  color: var(--background-darker);
-  box-shadow: var(--shadow-glow);
-}
-
-.footer-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-}
-
-.footer-link:focus-visible {
-  color: var(--accent-cyan);
-}
-
-.footer-links {
-  flex-wrap: wrap;
-}
-
-/* Phones: one-line wordmark, compact title block so today's plan sits near the top */
-@media (max-width: 600px) {
-  .header {
-    padding: 0.75rem 1rem;
-    gap: 0.75rem;
-  }
-
-  .logo-text {
-    font-size: 1rem;
-    white-space: nowrap;
-  }
-
-  .logo a {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.logo img {
-    height: 1.5rem;
-    width: 1.5rem;
-  }
-
-  .nav-links {
-    gap: 0.5rem;
-  }
-
-  .nav-link {
-    padding: 0.6rem 0.6rem;
-    font-size: 0.875rem;
-  }
-
-  .main-content {
-    padding: 1rem;
-  }
-
-  .page-title-container {
-    margin-bottom: 1.5rem;
-  }
-
-  .page-icon {
-    display: none;
-  }
-
-  .page-title {
-    font-size: 2rem;
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body,
+  .backer-hole {
+    transition: none;
   }
 }

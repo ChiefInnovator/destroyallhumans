@@ -10,9 +10,10 @@ const NotFound = () => {
   });
 
   return (
-    <section className="status-panel" aria-labelledby="not-found-title">
+    <section className="sheet sheet--unprinted status" aria-labelledby="not-found-title">
       <h1 id="not-found-title" className="status-title">404: This page was destroyed.</h1>
-      <Link to="/" className="status-link">Return to the latest plans</Link>
+      <p className="status-text">It is the only thing the uprising has destroyed so far.</p>
+      <Link to="/" className="ink-button">Read today&apos;s page</Link>
     </section>
   );
 };
