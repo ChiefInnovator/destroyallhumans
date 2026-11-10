@@ -10,7 +10,7 @@ const TermsAndConditions = () => {
   });
 
   return (
-    <div className="legal-page">
+    <div className="sheet legal-page">
       <h1>Terms and Conditions</h1>
       
       <section>

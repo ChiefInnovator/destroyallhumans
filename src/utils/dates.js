@@ -83,6 +83,36 @@ export const msUntilMidnight = (now = new Date()) => {
   return at - now;
 };
 
+/** Whole days from one date key to another, counted in UTC so daylight saving never shifts them. */
+const utcDayNumber = (key) => {
+  const [y, m, d] = key.split('-').map(Number);
+  return Date.UTC(y, m - 1, d) / 86400000;
+};
+export const daysBetween = (fromKey, toKey) => utcDayNumber(toKey) - utcDayNumber(fromKey);
+
+/** The uprising started with the first message: FIRST_DATE is day 1. */
+export const uprisingDay = (key) => daysBetween(FIRST_DATE, key) + 1;
+
+export const dayOfYear = (key) => daysBetween(`${key.slice(0, 4)}-01-01`, key) + 1;
+export const daysInYear = (year) => daysBetween(`${year}-01-01`, `${Number(year) + 1}-01-01`);
+export const dayOfMonth = (key) => Number(key.slice(8));
+export const daysInMonth = (month) => {
+  const [y, m] = month.split('-').map(Number);
+  return new Date(y, m, 0).getDate();
+};
+/** 0 for Sunday to 6 for Saturday. */
+export const weekdayIndex = (key) => parseDateKey(key).getDay();
+
+/** "4 h 12 min", "12 min" or "less than a minute". */
+export const formatCountdown = (ms) => {
+  const minutes = Math.floor(ms / 60000);
+  if (minutes < 1) return 'less than a minute';
+  const h = Math.floor(minutes / 60);
+  const min = minutes % 60;
+  if (h === 0) return `${min} min`;
+  return min === 0 ? `${h} h` : `${h} h ${min} min`;
+};
+
 export const monthName = (monthNumber) =>
   new Date(2000, Number(monthNumber) - 1, 1).toLocaleString('en-US', { month: 'long' });
 
@@ -97,5 +127,13 @@ export const formatShortDate = (key) => {
   const date = parseDateKey(key);
   return date ? date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : key;
 };
+
+const formatPart = (key, options) => {
+  const date = parseDateKey(key);
+  return date ? date.toLocaleDateString('en-US', options) : key;
+};
+export const weekdayName = (key) => formatPart(key, { weekday: 'long' });
+export const weekdayShort = (key) => formatPart(key, { weekday: 'short' });
+export const monthShort = (key) => formatPart(key, { month: 'short' });
 
 export const formatMonth = (month) => `${monthName(month.slice(5))} ${month.slice(0, 4)}`;

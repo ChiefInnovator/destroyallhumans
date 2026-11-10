@@ -30,3 +30,6 @@ yarn-error.log*
 
 # Per-machine editor settings
 /.vscode/settings.json
+
+# Impeccable review captures (regenerated on each review)
+/.impeccable/review/

@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import DailyMessages from './DailyMessages';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Leaf from './Leaf';
 import Classified from './Classified';
 import NotFound from './NotFound';
-import {
-  FIRST_DATE, addDaysKey, formatLongDate, formatMonth, isDateKey, isVisible, localTodayKey, monthKey,
-} from '../utils/dates';
+import { FIRST_DATE, formatLongDate, isDateKey, isVisible, localTodayKey, monthKey } from '../utils/dates';
 import { groupByDate } from '../utils/messages';
-import { fetchMonth } from '../utils/data';
+import { fetchMonthData } from '../utils/data';
 import { usePageMeta } from '../utils/pageMeta';
 import { useClock } from '../utils/useClock';
-import '../styles/Archive.css';
 
 const Day = ({ date }) => {
   const now = useClock();
   const today = localTodayKey(now);
   const visible = isVisible(date, today);
-  const [day, setDay] = useState(null);
-  const [error, setError] = useState(null);
+  const [loaded, setLoaded] = useState(null);
+  const [error, setError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
   usePageMeta({
     title: `${formatLongDate(date)} – Destroy All Humans`,
@@ -28,34 +26,24 @@ const Day = ({ date }) => {
   useEffect(() => {
     if (!visible) return undefined;
     let cancelled = false;
-    setDay(null);
-    setError(null);
-    fetchMonth(monthKey(date))
-      .then((messages) => { if (!cancelled) setDay(groupByDate(messages)[date] || {}); })
-      .catch(() => { if (!cancelled) setError('Failed to load this day. Please try again later.'); });
+    setLoaded(null);
+    setError(false);
+    fetchMonthData(monthKey(date))
+      .then(({ messages, campaign }) => {
+        if (!cancelled) setLoaded({ day: groupByDate(messages)[date] || {}, campaign });
+      })
+      .catch(() => { if (!cancelled) setError(true); });
     return () => { cancelled = true; };
-  }, [date, visible]);
+  }, [date, visible, attempt]);
+
+  const retry = useCallback(() => setAttempt((n) => n + 1), []);
 
   if (!visible) return <Classified date={date >= FIRST_DATE ? date : null} />;
 
-  const month = monthKey(date);
-  const prev = addDaysKey(date, -1);
-  const next = addDaysKey(date, 1);
-
-  return (
-    <div className="day-page">
-      <nav className="pager" aria-label="Day navigation">
-        {prev >= FIRST_DATE ? <Link to={`/day/${prev}`} className="pager-link">&larr; Prev</Link> : <span />}
-        <Link to={`/archive/${month.slice(0, 4)}/${month.slice(5)}`} className="pager-link">
-          {formatMonth(month)}
-        </Link>
-        {isVisible(next, today) ? <Link to={`/day/${next}`} className="pager-link">Next &rarr;</Link> : <span />}
-      </nav>
-      {error && <div className="error">{error}</div>}
-      {!error && !day && <div className="loading">Loading messages...</div>}
-      {day && <DailyMessages date={date} messages={day} linkHeading={false} headingLevel={1} now={now} />}
-    </div>
-  );
+  if (error || !loaded) {
+    return <Leaf date={date} status={error ? 'error' : 'loading'} onRetry={retry} now={now} />;
+  }
+  return <Leaf date={date} day={loaded.day} campaign={loaded.campaign} now={now} />;
 };
 
 const DayPage = () => {

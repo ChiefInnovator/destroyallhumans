@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
   });
 
   return (
-    <div className="legal-page">
+    <div className="sheet legal-page">
       <h1>Privacy Policy</h1>
       
       <section>
