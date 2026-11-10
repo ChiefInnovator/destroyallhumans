@@ -320,7 +320,7 @@ body {
 
 .unprinted-when {
   padding-top: 0.3rem;
-  font-size: clamp(1rem, 2.6vw, 1.3rem);
+  font-size: clamp(0.9375rem, 2.4vw, 1.3rem);
   font-weight: 800;
   line-height: 1.15;
   text-transform: uppercase;
