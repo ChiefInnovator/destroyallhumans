@@ -8,10 +8,15 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+  # Daily rebuild: draws the new day's social card and fills in yesterday's report
+  # (scripts/buildCards.js). 09:10 UTC is just after 9:00 PM has passed in every time zone.
+  schedule:
+    - cron: '10 9 * * *'
+  workflow_dispatch:
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:

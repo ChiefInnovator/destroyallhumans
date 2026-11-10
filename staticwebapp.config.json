@@ -8,6 +8,7 @@
       "/js/*",
       "/api/*",
       "/data/*",
+      "/og/*",
       "/sitemap.xml",
       "/robots.txt",
       "/llms.txt",
@@ -36,6 +37,12 @@
     },
     {
       "route": "/data/*",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      }
+    },
+    {
+      "route": "/og/*",
       "headers": {
         "Cache-Control": "public, max-age=3600"
       }
