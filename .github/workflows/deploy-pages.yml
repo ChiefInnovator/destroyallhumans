@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Daily rebuild, in step with the Azure deploy (see scripts/buildCards.js).
+  schedule:
+    - cron: '10 9 * * *'
   workflow_dispatch:
 
 permissions:

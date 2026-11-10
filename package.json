@@ -1,6 +1,6 @@
 {
   "name": "destroyallhumans-app",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "homepage": "/",
   "private": true,
   "dependencies": {
@@ -21,6 +21,7 @@
     "start": "react-scripts start",
     "prebuild": "node scripts/buildData.js",
     "build": "react-scripts build",
+    "postbuild": "node scripts/buildCards.js",
     "test": "react-scripts test",
     "test:tz": "TZ=Pacific/Honolulu react-scripts test --watchAll=false src/utils/dates.tz.test.js && TZ=Pacific/Kiritimati react-scripts test --watchAll=false src/utils/dates.tz.test.js",
     "test:scripts": "node --test scripts/*.test.js",
@@ -46,7 +47,10 @@
     ]
   },
   "devDependencies": {
-    "openai": "^4.96.2"
+    "@fontsource/libre-franklin": "^5.3.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "openai": "^4.96.2",
+    "satori": "^0.63.2"
   },
   "engines": {
     "node": ">=20"
