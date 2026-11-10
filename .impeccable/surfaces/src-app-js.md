@@ -17,7 +17,7 @@ Constraints: both robot avatars stay; evening report sealed until 21:00 local; f
 
 THESIS: The site is the regime's page-a-day tear-off calendar. One leaf per date. Refuses the feed of social-post cards on a dark neon terminal.
 
-OWN-WORLD: Break-room wall in the badge's sage green (night-shift bottle green after 21:00). Black backer board carrying the real robot badge. White paper leaves printed in three spot inks only: black, report red, plan yellow. Perforations, staples, torn stubs. Bowlby One numerals, Libre Franklin text, Courier Prime for the typed incident report.
+OWN-WORLD: Break-room wall in the badge's sage green (night-shift bottle green after 21:00). Black backer board carrying the real robot badge. White paper leaves printed in three spot inks only: black, report red, plan yellow. Perforations and torn edges. Bowlby One numerals, Libre Franklin text, Courier Prime for the typed incident report.
 
 STORY: A visitor sees today's date, reads the plan, sees the report is due at 21:00 (or reads it), learns the uprising has failed every day so far, shares the leaf.
 

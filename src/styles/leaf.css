@@ -46,6 +46,21 @@
   text-underline-offset: 0.35em;
 }
 
+/* On the narrowest phones the month is abbreviated so the three labels keep their gaps. */
+.rail-short {
+  display: none;
+}
+
+@media (max-width: 22rem) {
+  .rail-long {
+    display: none;
+  }
+
+  .rail-short {
+    display: inline;
+  }
+}
+
 /* Dashed means not printed yet: the page or month that comes next. */
 .rail-link--unprinted {
   min-height: 0;
@@ -87,19 +102,6 @@
   left: 0;
   right: 0;
   border-top: 3px dotted var(--paper-rule);
-}
-
-/* Two staples hold the block to the board, above the perforation. */
-.leaf::after {
-  content: '';
-  position: absolute;
-  top: 0.2rem;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background:
-    linear-gradient(var(--staple), var(--staple)) 14% 0 / 1.7rem 3px no-repeat,
-    linear-gradient(var(--staple), var(--staple)) 86% 0 / 1.7rem 3px no-repeat;
 }
 
 .leaf-date {

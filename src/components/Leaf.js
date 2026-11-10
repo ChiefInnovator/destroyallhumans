@@ -46,7 +46,7 @@ const Leaf = ({ date, day, status = 'ready', onRetry, campaign = '', headingLeve
       <Rail
         label="Day navigation"
         prev={prev >= FIRST_DATE ? { to: `/day/${prev}`, label: shortDay(prev) } : null}
-        up={{ to: monthPath(month), label: formatMonth(month) }}
+        up={{ to: monthPath(month), label: formatMonth(month), shortLabel: `${monthShort(date)} ${year}` }}
         next={nextLink}
       />
       <article className={classes} key={date}>

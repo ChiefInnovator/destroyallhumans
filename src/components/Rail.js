@@ -4,7 +4,8 @@ import Icon from './Icon';
 
 /**
  * The strip that holds the leaves to the backer board: previous, up and next.
- * Each of `prev`, `up` and `next` is { to, label } or null. A `next` of { label, unprinted: true }
+ * Each of `prev`, `up` and `next` is { to, label } or null. `up` may add a `shortLabel` for the
+ * narrowest phones. A `next` of { label, unprinted: true }
  * is the page that comes next but is not printed yet: shown dashed, not linked.
  */
 const Next = ({ next }) => {
@@ -24,7 +25,13 @@ const Rail = ({ label, prev, up, next }) => (
     {prev
       ? <Link to={prev.to} className="rail-link"><Icon name="left" />{prev.label}</Link>
       : <span />}
-    {up ? <Link to={up.to} className="rail-link rail-link--up">{up.label}</Link> : <span />}
+    {up ? (
+      <Link to={up.to} className="rail-link rail-link--up">
+        {up.shortLabel
+          ? <><span className="rail-long">{up.label}</span><span className="rail-short">{up.shortLabel}</span></>
+          : up.label}
+      </Link>
+    ) : <span />}
     <Next next={next} />
   </nav>
 );
