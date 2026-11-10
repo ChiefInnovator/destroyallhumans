@@ -27,6 +27,8 @@ const HomePage = () => {
 
   useEffect(() => {
     let cancelled = false;
+    // Start clean: after midnight the new date's page shows as loading, not yesterday's content.
+    setLoaded(null);
     setError(false);
 
     Promise.all([

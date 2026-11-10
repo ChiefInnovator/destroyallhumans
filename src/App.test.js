@@ -81,6 +81,21 @@ test("today's day page unseals the evening report at 9:00 PM without a reload", 
   expect(screen.queryByText(/Report incoming at 9:00 PM/)).not.toBeInTheDocument();
 });
 
+test('at midnight the home page turns to the new date and never shows the old one as today', async () => {
+  jest.setSystemTime(new Date(2026, 10, 1, 23, 59, 30));
+  renderAt('/');
+  expect(await screen.findByText('Evening report for 2026-11-01')).toBeInTheDocument();
+  expect(screen.getByRole('heading', { level: 1, name: 'Sunday, November 1, 2026' })).toBeInTheDocument();
+
+  let release;
+  global.fetch = jest.fn(() => new Promise((resolve) => { release = resolve; }));
+  await act(async () => { jest.advanceTimersByTime(60 * 1000); });
+  expect(screen.getByRole('heading', { level: 1, name: 'Monday, November 2, 2026' })).toBeInTheDocument();
+  expect(screen.getByText(/Fetching the plan/)).toBeInTheDocument();
+  expect(screen.queryByText('Evening report for 2026-11-01')).not.toBeInTheDocument();
+  expect(release).toBeDefined();
+});
+
 test("today's page shows tomorrow sealed underneath; earlier pages do not", async () => {
   renderAt('/day/2026-11-02');
   expect(await screen.findByText('Sealed until midnight')).toBeInTheDocument();
@@ -114,7 +129,7 @@ test('the month planner links printed days and leaves the rest unprinted', async
   expect(rail.getByRole('link', { name: '2026' })).toHaveAttribute('href', '/archive#year-2026');
   expect(rail.queryByRole('link', { name: /December/ })).not.toBeInTheDocument();
   expect(rail.getByText('December')).toHaveTextContent('December, not printed yet');
-  expect(planner.getByLabelText('Tuesday, November 3, 2026, not printed yet')).toBeInTheDocument();
+  expect(planner.getByText('Tuesday, November 3, 2026, not printed')).toBeInTheDocument();
   expect(screen.queryByText('Morning plan for 2026-11-03')).not.toBeInTheDocument();
 });
 
@@ -122,7 +137,9 @@ test('every page lists printed months as links and the rest as plain text', () =
   renderAt('/archive');
   expect(screen.getByRole('link', { name: 'November 2026' })).toHaveAttribute('href', '/archive/2026/11');
   expect(screen.queryByRole('link', { name: 'December 2026' })).not.toBeInTheDocument();
+  expect(screen.getByText('December 2026, not printed')).toBeInTheDocument();
   expect(screen.queryByRole('link', { name: 'February 2023' })).not.toBeInTheDocument();
+  expect(screen.getByText('February 2023, not printed')).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'March 2023' })).toBeInTheDocument();
 });
 

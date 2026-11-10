@@ -62,7 +62,12 @@ const ArchiveIndex = () => {
                 <li key={m}>
                   {printed
                     ? <Link to={monthPath(m)} className="month-cell" aria-label={formatMonth(m)}>{monthName(n).slice(0, 3)}</Link>
-                    : <span className="month-cell month-cell--unprinted">{monthName(n).slice(0, 3)}</span>}
+                    : (
+                      <span className="month-cell month-cell--unprinted">
+                        <span aria-hidden="true">{monthName(n).slice(0, 3)}</span>
+                        <span className="visually-hidden">{formatMonth(m)}, not printed</span>
+                      </span>
+                    )}
                 </li>
               );
             })}
@@ -99,8 +104,9 @@ const MonthGrid = ({ month, today }) => {
                   {dayOfMonth(date)}
                 </Link>
               ) : (
-                <span className={`${classes} planner-day--unprinted`} aria-label={`${formatLongDate(date)}, not printed yet`}>
-                  {dayOfMonth(date)}
+                <span className={`${classes} planner-day--unprinted`}>
+                  <span aria-hidden="true">{dayOfMonth(date)}</span>
+                  <span className="visually-hidden">{formatLongDate(date)}, not printed</span>
                 </span>
               )}
             </li>
