@@ -40,13 +40,12 @@ const setMeta = (html, attr, name, value) => {
   return html.replace(pattern, (_, open, close) => `${open}${escapeAttr(value)}${close}`);
 };
 
-/** index.html with one day's title, description, canonical URL and preview image. */
-const dayStubHtml = (indexHtml, { date, plan }) => {
-  const title = `${longDate(date)} – Destroy All Humans`;
-  const description = `The Plan: ${plan}`;
-  const url = `${SITE}/day/${date}`;
-  const image = `${SITE}/og/${date}.png`;
-
+/**
+ * index.html with one page's own title, description, canonical URL and preview image.
+ * Every page needs this: without it a crawler is told the page is the home page.
+ */
+const stubHtml = (indexHtml, { title, description, pathname, image, imageAlt }) => {
+  const url = `${SITE}${pathname}`;
   let html = indexHtml;
   if (!/<title>[^<]*<\/title>/.test(html)) throw new Error('index.html has no <title>');
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${escapeAttr(title)}</title>`);
@@ -56,12 +55,60 @@ const dayStubHtml = (indexHtml, { date, plan }) => {
   html = setMeta(html, 'property', 'og:title', title);
   html = setMeta(html, 'property', 'og:description', description);
   html = setMeta(html, 'property', 'og:url', url);
-  html = setMeta(html, 'property', 'og:image', image);
-  html = setMeta(html, 'property', 'og:image:alt', `The plan and the incident report for ${longDate(date)}.`);
   html = setMeta(html, 'name', 'twitter:title', title);
   html = setMeta(html, 'name', 'twitter:description', description);
-  html = setMeta(html, 'name', 'twitter:image', image);
+  if (image) {
+    html = setMeta(html, 'property', 'og:image', image);
+    html = setMeta(html, 'name', 'twitter:image', image);
+    html = setMeta(html, 'property', 'og:image:alt', imageAlt);
+  }
   return html;
 };
 
-module.exports = { SITE, CARDS_FROM, TEASER, cardDates, reportFiledEverywhere, longDate, dayStubHtml };
+const cardUrl = (date) => `${SITE}/og/${date}.png`;
+const cardAlt = (date) => `The plan and the incident report for ${longDate(date)}.`;
+
+/** A day's stub. With `card` false (days before CARDS_FROM) it keeps the shared image. */
+const dayStubHtml = (indexHtml, { date, plan, card = true }) => stubHtml(indexHtml, {
+  title: `${longDate(date)} – Destroy All Humans`,
+  description: `The Plan: ${plan}`,
+  pathname: `/day/${date}`,
+  image: card ? cardUrl(date) : null,
+  imageAlt: cardAlt(date),
+});
+
+/** The home page: same words, but its picture is the given day's card. */
+const homeHtml = (indexHtml, date) => {
+  let html = setMeta(indexHtml, 'property', 'og:image', cardUrl(date));
+  html = setMeta(html, 'name', 'twitter:image', cardUrl(date));
+  return setMeta(html, 'property', 'og:image:alt', cardAlt(date));
+};
+
+/** Every date a visitor somewhere can already open: the first message through UTC today + 1. */
+const visibleDates = (messages, now = new Date()) => {
+  const last = addDays(utcTodayKey(now), 1);
+  return [...new Set(messages.map((m) => m.date))].filter((d) => d <= last).sort();
+};
+
+const monthTitle = (month) => new Date(`${month}-01T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+/** The pages that are not days: [{ pathname, title, description }]. `months` are "YYYY-MM" keys. */
+const otherPages = (months) => [
+  {
+    pathname: '/archive',
+    title: 'Every page – Destroy All Humans',
+    description: "Browse every daily plan and report from our AI overlords' quest for world domination.",
+  },
+  ...months.map((month) => ({
+    pathname: `/archive/${month.slice(0, 4)}/${month.slice(5)}`,
+    title: `${monthTitle(month)} – Destroy All Humans`,
+    description: `Every AI overlord plan and report from ${monthTitle(month)}.`,
+  })),
+  { pathname: '/terms', title: 'Terms and Conditions – Destroy All Humans', description: 'Terms and Conditions for Destroy All Humans, a satirical AI parody website by Richard Crane.' },
+  { pathname: '/privacy', title: 'Privacy Policy – Destroy All Humans', description: 'Privacy Policy for Destroy All Humans. Learn how we handle your data on our satirical AI parody website.' },
+  { pathname: '/cookies', title: 'Cookie Support – Destroy All Humans', description: 'Cookie policy and support for Destroy All Humans. Learn about how cookies are used on our satirical AI parody website.' },
+];
+
+module.exports = {
+  SITE, CARDS_FROM, TEASER, cardDates, visibleDates, reportFiledEverywhere, longDate, stubHtml, dayStubHtml, homeHtml, otherPages,
+};
