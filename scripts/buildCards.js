@@ -1,14 +1,17 @@
 /**
- * Draws one social card per day (build/og/YYYY-MM-DD.png) and writes an HTML stub per day
- * (build/day/YYYY-MM-DD/index.html) whose preview tags point at it. Runs after `npm run build`
+ * Draws one social card per day (build/og/YYYY-MM-DD.png) and writes an HTML stub for every page
+ * (each day, each archive page, the legal pages) carrying that page's own preview tags; the home
+ * page's picture becomes today's card. Runs after `npm run build`
  * (npm postbuild hook). A day's report appears on its card only once 9:00 PM has passed everywhere;
  * until then the card shows a teaser, so the daily scheduled deploy fills it in the next day.
  */
 
 const fs = require('fs');
 const path = require('path');
-const { loadMessages, FIRST_DATE } = require('./lib/content');
-const { cardDates, reportFiledEverywhere, dayStubHtml, longDate, TEASER } = require('./lib/cards');
+const { loadMessages, FIRST_DATE, utcTodayKey } = require('./lib/content');
+const {
+  CARDS_FROM, TEASER, cardDates, visibleDates, reportFiledEverywhere, dayStubHtml, homeHtml, stubHtml, otherPages, longDate,
+} = require('./lib/cards');
 
 const root = path.join(__dirname, '..');
 const defaultBuildDir = path.join(root, 'build');
@@ -140,11 +143,24 @@ const buildCards = async ({ buildDir, messages, now = new Date() }) => {
     fs.writeFileSync(path.join(buildDir, 'og', `${date}.png`), png);
     bytes += png.length;
 
-    const stubDir = path.join(buildDir, 'day', date);
-    fs.mkdirSync(stubDir, { recursive: true });
-    fs.writeFileSync(path.join(stubDir, 'index.html'), dayStubHtml(indexHtml, { date, plan }));
   }
-  return { dates, bytes };
+
+  // A stub for every page a visitor can open, so each one previews as itself, never as the home page.
+  const writeStub = (pathname, html) => {
+    const dir = path.join(buildDir, ...pathname.split('/').filter(Boolean));
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, 'index.html'), html);
+  };
+  const days = visibleDates(messages, now);
+  days.forEach((date) => writeStub(`/day/${date}`, dayStubHtml(indexHtml, { date, plan: byDate[date].morning, card: date >= CARDS_FROM })));
+  const pages = otherPages([...new Set(days.map((d) => d.slice(0, 7)))]);
+  pages.forEach((page) => writeStub(page.pathname, stubHtml(indexHtml, page)));
+
+  // The home page shows today's card (UTC), so its preview is never a stale day.
+  const today = utcTodayKey(now);
+  if (dates.includes(today)) fs.writeFileSync(path.join(buildDir, 'index.html'), homeHtml(indexHtml, today));
+
+  return { dates, bytes, stubs: days.length + pages.length };
 };
 
 const main = async () => {
@@ -153,9 +169,9 @@ const main = async () => {
     process.exit(1);
   }
   const messages = loadMessages(path.join(root, 'content/messages.json'));
-  const { dates, bytes } = await buildCards({ buildDir: defaultBuildDir, messages });
+  const { dates, bytes, stubs } = await buildCards({ buildDir: defaultBuildDir, messages });
   const span = dates.length ? `${dates[0]} to ${dates[dates.length - 1]}` : 'none';
-  console.log(`buildCards: ${dates.length} cards (${span}), ${(bytes / 1048576).toFixed(1)} MB`);
+  console.log(`buildCards: ${dates.length} cards (${span}), ${(bytes / 1048576).toFixed(1)} MB; ${stubs} page stubs`);
 };
 
 if (require.main === module) {

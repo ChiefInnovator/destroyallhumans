@@ -34,8 +34,20 @@ test('a build writes a 1200x630 card and a stub for each day in range, from the 
   assert.match(stub, /property="og:image" content="https:\/\/destroyallhumans\.ai\/og\/2026-11-06\.png"/);
   assert.match(stub, /content="The Plan: Plan for 2026-11-06 with &quot;quotes&quot; &amp; more\."/);
   assert.match(stub, /<div id="root"><\/div>/);
-  assert.ok(!fs.existsSync(path.join(dir, 'day', '2026-11-04')));
   assert.ok(!fs.existsSync(path.join(dir, 'day', '2026-11-08')));
+
+  // A day before the cards start still previews as itself, with the shared image.
+  const old = fs.readFileSync(path.join(dir, 'day', '2026-11-04', 'index.html'), 'utf8');
+  assert.match(old, /property="og:url" content="https:\/\/destroyallhumans\.ai\/day\/2026-11-04"/);
+  assert.match(old, /property="og:image" content="https:\/\/destroyallhumans\.ai\/og-image\.png"/);
+
+  // Archive and legal pages get stubs; the home page's picture is today's card.
+  for (const p of ['archive', 'archive/2026/11', 'terms', 'privacy', 'cookies']) {
+    assert.ok(fs.existsSync(path.join(dir, p, 'index.html')), p);
+  }
+  const home = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
+  assert.match(home, /property="og:image" content="https:\/\/destroyallhumans\.ai\/og\/2026-11-06\.png"/);
+  assert.match(home, /property="og:url" content="https:\/\/destroyallhumans\.ai\/"/);
 });
 
 test("a day's card changes when its report is filed, and not after", async () => {
