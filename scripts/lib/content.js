@@ -32,6 +32,16 @@ const groupByMonth = (messages) => messages.reduce((acc, m) => {
 
 const slotKey = (m) => `${m.date}/${m.time}`;
 
+/** The short name of a month's story arc: "Operation Smart Home: take over..." gives "Operation Smart Home". */
+const campaignName = (campaign) => (typeof campaign === 'string' ? campaign.split(':')[0].trim() : '');
+
+/** { 'YYYY-MM': 'Operation Smart Home' } from the entries of content/arcs.json. */
+const campaignsByMonth = (arcs) => (Array.isArray(arcs) ? arcs : []).reduce((acc, arc) => {
+  const name = campaignName(arc && arc.campaign);
+  if (arc && typeof arc.month === 'string' && name) acc[arc.month] = name;
+  return acc;
+}, {});
+
 /** Returns a list of human-readable rule violations; empty when the data is valid. */
 const validate = (messages) => {
   const errors = [];
@@ -106,6 +116,8 @@ module.exports = {
   utcTodayKey,
   isDateKey,
   groupByMonth,
+  campaignName,
+  campaignsByMonth,
   validate,
   frozenViolations,
 };

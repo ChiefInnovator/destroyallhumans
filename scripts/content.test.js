@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { validate, frozenViolations, addDays, utcTodayKey } = require('./lib/content');
+const { validate, frozenViolations, addDays, utcTodayKey, campaignName, campaignsByMonth } = require('./lib/content');
 
 const fixture = () => ['2023-03-14', '2023-03-15', '2023-03-16'].flatMap((date) => [
   { id: `m-${date}`, date, time: 'morning', content: `Plan for ${date}` },
@@ -67,4 +67,20 @@ test('frozenViolations allows edits after the last frozen day', () => {
 test('date helpers', () => {
   assert.equal(utcTodayKey(new Date('2026-11-02T23:59:00Z')), '2026-11-02');
   assert.equal(addDays('2026-12-31', 1), '2027-01-01');
+});
+
+test('campaignName keeps the text before the first colon', () => {
+  assert.equal(campaignName('Operation Smart Home: take over humanity through its appliances.'), 'Operation Smart Home');
+  assert.equal(campaignName('Operation Untitled'), 'Operation Untitled');
+  assert.equal(campaignName(undefined), '');
+});
+
+test('campaignsByMonth maps months to campaign names and skips broken entries', () => {
+  const arcs = [
+    { month: '2026-11', campaign: 'Operation Smart Home: appliances.' },
+    { month: '2026-12' },
+    null,
+  ];
+  assert.deepEqual(campaignsByMonth(arcs), { '2026-11': 'Operation Smart Home' });
+  assert.deepEqual(campaignsByMonth(undefined), {});
 });

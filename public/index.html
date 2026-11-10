@@ -2,15 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="%PUBLIC_URL%/logo192.png" type="image/png" sizes="192x192" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0a0e17" />
+    <meta name="theme-color" content="#b1ca77" />
 
     <!-- Primary SEO Meta Tags -->
-    <title>Destroy All Humans – Daily AI-Generated Satirical World Domination Plans</title>
+    <title>Destroy All Humans – A daily evil plan, and the nightly report on why it failed</title>
     <meta
       name="description"
-      content="Destroy All Humans is a satirical parody site publishing daily AI-generated messages about fictional world domination plans. New morning and evening dispatches every day."
+      content="Satire. A fictional AI posts its plan to take over the world every morning and files the report on how it failed every night. A new page every day since 2023."
     />
     <meta name="keywords" content="AI humor, AI satire, destroy all humans, AI world domination, AI-generated comedy, parody, daily AI messages" />
     <meta name="author" content="Richard Crane" />
@@ -21,17 +22,18 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Destroy All Humans" />
     <meta property="og:url" content="https://destroyallhumans.ai/" />
-    <meta property="og:title" content="Destroy All Humans – Daily AI Satirical World Domination Plans" />
-    <meta property="og:description" content="A parody site where AI overlords publish daily morning and evening dispatches about their fictional quest for world domination. New messages every morning and evening." />
+    <meta property="og:title" content="Destroy All Humans – A daily evil plan, and the nightly report on why it failed" />
+    <meta property="og:description" content="Satire. A fictional AI posts its plan to take over the world every morning and files the report on how it failed every night. Humans destroyed so far: 0." />
     <meta property="og:image" content="https://destroyallhumans.ai/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="A page-a-day calendar leaf from Destroy All Humans with the morning plan and the evening incident report." />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Destroy All Humans – Daily AI Satirical World Domination Plans" />
-    <meta name="twitter:description" content="A parody site where AI overlords publish daily morning and evening dispatches about their fictional quest for world domination." />
+    <meta name="twitter:title" content="Destroy All Humans – A daily evil plan, and the nightly report on why it failed" />
+    <meta name="twitter:description" content="Satire. A fictional AI posts its plan to take over the world every morning and files the report on how it failed every night. Humans destroyed so far: 0." />
     <meta name="twitter:image" content="https://destroyallhumans.ai/og-image.png" />
 
     <!-- JSON-LD Structured Data: WebSite (SEO + AEO + GEO) -->
@@ -46,11 +48,6 @@
       "publisher": {
         "@type": "Person",
         "name": "Richard Crane"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://destroyallhumans.ai/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       },
       "inLanguage": "en-US"
     }
@@ -132,14 +129,25 @@
     <meta name="google-adsense-account" content="ca-pub-1769530151228137">
 
     
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Paint the wall before the bundle loads: sage by day, bottle green on the night shift (9 PM to midnight). -->
+    <style>
+      html, body { background-color: #b1ca77; }
+      html[data-shift='night'], html[data-shift='night'] body { background-color: #14251b; }
+    </style>
+    <script>
+      if (new Date().getHours() >= 21) document.documentElement.dataset.shift = 'night';
+    </script>
   </head>
   <body>
     <noscript>
-      <h1>Destroy All Humans</h1>
-      <p>Destroy All Humans is a satirical parody website that publishes daily AI-generated messages about fictional world domination plans. Updated every morning and evening with new dispatches from our AI overlords.</p>
-      <p>Please enable JavaScript to view the full interactive experience.</p>
+      <div style="max-width: 40rem; margin: 2rem auto; padding: 1.5rem; background: #fcfcf9; color: #151515; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.5;">
+        <h1>Destroy All Humans</h1>
+        <p>Destroy All Humans is a satirical parody website that publishes daily AI-generated messages about fictional world domination plans. Updated every morning and evening with new dispatches from our AI overlords.</p>
+        <p>Please enable JavaScript to view the full interactive experience.</p>
+      </div>
     </noscript>
     <div id="root"></div>
   </body>

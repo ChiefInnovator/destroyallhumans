@@ -1,14 +1,28 @@
 import { useEffect } from 'react';
 
-const SITE = 'https://destroyallhumans.ai';
-const DEFAULT_TITLE = 'Destroy All Humans – Daily AI-Generated Satirical World Domination Plans';
+export const SITE = 'https://destroyallhumans.ai';
+const DEFAULT_TITLE = 'Destroy All Humans – A daily evil plan, and the nightly report on why it failed';
 
-/** Sets the document title, meta description and canonical URL for the current page. */
+const setContent = (selector, value) => {
+  document.querySelector(selector)?.setAttribute('content', value);
+};
+
+/**
+ * Sets the document title, meta description and canonical URL for the current page, and keeps the
+ * Open Graph and Twitter copies in step for crawlers that run scripts.
+ */
 export const usePageMeta = ({ title, description, path }) => {
   useEffect(() => {
-    document.title = title || DEFAULT_TITLE;
+    const pageTitle = title || DEFAULT_TITLE;
+    const url = `${SITE}${path}`;
+    document.title = pageTitle;
+    setContent('meta[property="og:title"]', pageTitle);
+    setContent('meta[name="twitter:title"]', pageTitle);
+    setContent('meta[property="og:url"]', url);
     if (description) {
-      document.querySelector('meta[name="description"]')?.setAttribute('content', description);
+      setContent('meta[name="description"]', description);
+      setContent('meta[property="og:description"]', description);
+      setContent('meta[name="twitter:description"]', description);
     }
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
@@ -16,6 +30,6 @@ export const usePageMeta = ({ title, description, path }) => {
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', `${SITE}${path}`);
+    canonical.setAttribute('href', url);
   }, [title, description, path]);
 };

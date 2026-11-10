@@ -5,8 +5,8 @@
 
 export const dataUrl = (path) => `${(process.env.PUBLIC_URL || '').replace(/\/$/, '')}/data/${path}`;
 
-/** Returns the month's messages. Throws Error('not-found') or Error('network'). */
-export const fetchMonth = async (month) => {
+/** Returns { messages, campaign } for the month. Throws Error('not-found') or Error('network'). */
+export const fetchMonthData = async (month) => {
   let response;
   try {
     response = await fetch(dataUrl(`months/${month}.json`));
@@ -27,5 +27,8 @@ export const fetchMonth = async (month) => {
   } catch (e) {
     throw new Error('network');
   }
-  return data.messages || [];
+  return { messages: (data && data.messages) || [], campaign: (data && data.campaign) || '' };
 };
+
+/** Returns the month's messages. Throws Error('not-found') or Error('network'). */
+export const fetchMonth = async (month) => (await fetchMonthData(month)).messages;
