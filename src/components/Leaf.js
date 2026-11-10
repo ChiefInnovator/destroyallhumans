@@ -14,7 +14,8 @@ const count = (n) => n.toLocaleString('en-US');
 const shortDay = (key) => `${weekdayShort(key)} ${dayOfMonth(key)}`;
 
 /**
- * One page of the calendar: the date, the morning plan and the evening report.
+ * One page of the calendar: a date line, then the morning plan and the evening report, which
+ * lead the page. They sit side by side when the leaf is wide enough and stack when it is not.
  * `day` is { morning, evening } once loaded. `status` is 'loading', 'error' or 'ready'.
  * Today's report stays sealed until 9:00 PM local time, and tomorrow's page shows underneath.
  */
@@ -51,19 +52,17 @@ const Leaf = ({ date, day, status = 'ready', onRetry, campaign = '', headingLeve
       />
       <article className={classes} key={date}>
         <header className="leaf-date">
-          <p className="leaf-month" aria-hidden="true">
-            <span>{monthName(month.slice(5))}</span> <span>{year}</span>
-          </p>
-          <p className="leaf-weekday" aria-hidden="true">{weekdayName(date)}</p>
           <Heading className="leaf-day">
             <span className="visually-hidden">{longDate}</span>
             <span className="leaf-num" aria-hidden="true">{dayOfMonth(date)}</span>
           </Heading>
-          <ul className="leaf-notes leaf-notes--year">
+          <p className="leaf-when" aria-hidden="true">
+            <span className="leaf-weekday">{weekdayName(date)}</span>
+            <span className="leaf-month">{monthName(month.slice(5))} {year}</span>
+          </p>
+          <ul className="leaf-notes">
             <li>Day {yearDay} of {daysInYear(year)}</li>
             <li>{left === 0 ? `Last day of ${year}` : `${left} ${left === 1 ? 'day' : 'days'} left in ${year}`}</li>
-          </ul>
-          <ul className="leaf-notes leaf-notes--uprising">
             <li>Uprising, day {count(uprisingDay(date))}</li>
             {campaign && <li>{campaign}</li>}
           </ul>
@@ -80,11 +79,15 @@ const Leaf = ({ date, day, status = 'ready', onRetry, campaign = '', headingLeve
           <p className="leaf-status">Nothing was filed for this date.</p>
         )}
 
-        {status === 'ready' && morning && (
-          <Dispatch message={morning} time="morning" date={date} headingLevel={headingLevel + 1} />
-        )}
-        {status === 'ready' && evening && (
-          <Dispatch message={evening} time="evening" date={date} sealed={sealed} headingLevel={headingLevel + 1} />
+        {status === 'ready' && (morning || evening) && (
+          <div className="spread">
+            {morning && (
+              <Dispatch message={morning} time="morning" date={date} headingLevel={headingLevel + 1} />
+            )}
+            {evening && (
+              <Dispatch message={evening} time="evening" date={date} sealed={sealed} headingLevel={headingLevel + 1} />
+            )}
+          </div>
         )}
 
         <footer className="leaf-foot">
