@@ -64,7 +64,7 @@ git clone https://github.com/ChiefInnovator/destroyallhumans.git
 cd destroyallhumans
 npm install
 npm start                 # Dev server on http://localhost:3000 (runs buildData first)
-npm run build             # Production build → build/
+npm run build             # Production build → build/ (then draws the social cards)
 npm test                  # Jest (React + utils)
 npm run test:tz           # Date logic in UTC-10 and UTC+14
 npm run test:scripts      # node:test for scripts/
@@ -77,6 +77,14 @@ npm run validate:content  # Data rules for content/messages.json
 - Before each build, `scripts/buildData.js` writes one file per month to `public/data/months/`. A month with a story arc in `content/arcs.json` also carries its campaign name, which is printed on that month's pages. The browser loads the months it needs and hides dates after the visitor's local today, so new days appear without a deploy.
 - Messages dated on or before UTC today + 1 are already visible somewhere and are **frozen**: `ci` fails any PR that changes them or removes a date.
 - Future messages are rewritten in reviewed batches; see [docs/designs/system-design.md](docs/designs/system-design.md).
+
+## Social cards
+
+- After each build, `scripts/buildCards.js` draws a 1200×630 card per day to `build/og/YYYY-MM-DD.png` (with `satori` and `resvg`, no browser) and writes `build/day/YYYY-MM-DD/index.html`, a copy of `index.html` whose preview tags point at that card. Link-preview crawlers do not run the app, so they need the tags in the file they fetch.
+- Cards run from 2026-11-05 (the first day written to the voice guide) through UTC today + 1. Older days keep the shared `og-image.png`.
+- A card shows the report only once 9:00 PM has passed in every time zone; until then it shows "Report incoming at 9:00 PM."
+- Both deploy workflows also run daily at 09:10 UTC, so each new day gets its card and yesterday's gets its report. GitHub pauses scheduled workflows after 60 days without repository activity; re-enable them in the Actions tab if that happens.
+- Cost: none. It is static files plus GitHub Actions minutes, which are free for public repositories. Cards are about 150 kB each (roughly 55 MB a year); the Azure Static Web Apps Free plan allows 250 MB per app.
 
 ## Branch Flow
 
