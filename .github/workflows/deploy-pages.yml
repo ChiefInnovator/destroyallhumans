@@ -5,6 +5,7 @@ on:
     branches: [main]
   # Daily rebuild, in step with the Azure deploy (see scripts/buildCards.js).
   schedule:
+    - cron: '10 0 * * *' # UTC midnight: the home page's preview turns to the new day
     - cron: '10 9 * * *'
   workflow_dispatch:
 

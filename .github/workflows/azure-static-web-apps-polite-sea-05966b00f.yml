@@ -11,6 +11,7 @@ on:
   # Daily rebuild: draws the new day's social card and fills in yesterday's report
   # (scripts/buildCards.js). 09:10 UTC is just after 9:00 PM has passed in every time zone.
   schedule:
+    - cron: '10 0 * * *' # UTC midnight: the home page's preview turns to the new day
     - cron: '10 9 * * *'
   workflow_dispatch:
 
