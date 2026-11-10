@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-10T22:19:18.287361+00:00",
+  "generatedAt": "2026-11-10T23:00:09.401659+00:00",
   "title": "Design System: Destroy All Humans",
   "extensions": {
     "colorMeta": {
@@ -321,13 +321,21 @@
       }
     },
     "typographyMeta": {
+      "plan": {
+        "displayName": "Plan",
+        "purpose": "The morning message. The headline of the leaf. Sized by the dispatch width."
+      },
+      "report": {
+        "displayName": "Report",
+        "purpose": "The evening message, typed. Sized by the dispatch width."
+      },
       "date-numeral": {
         "displayName": "Date numeral",
-        "purpose": "The date on a leaf above 50rem. The largest element on a dated page."
+        "purpose": "The date in a leaf's compact header line."
       },
-      "date-numeral-compact": {
-        "displayName": "Date numeral, compact",
-        "purpose": "The date on a leaf at 50rem and below."
+      "unprinted-numeral": {
+        "displayName": "Unprinted numeral",
+        "purpose": "The outline date on a page that is not printed yet."
       },
       "slip-numeral": {
         "displayName": "Slip numeral",
@@ -343,7 +351,7 @@
       },
       "sheet-title": {
         "displayName": "Sheet title",
-        "purpose": "The title of an archive sheet."
+        "purpose": "The title of an archive sheet or a legal page."
       },
       "wall-title": {
         "displayName": "Wall title",
@@ -356,14 +364,6 @@
       "stamp": {
         "displayName": "Stamp",
         "purpose": "The verdict stamp under a filed report."
-      },
-      "plan": {
-        "displayName": "Plan",
-        "purpose": "The morning message. The headline of the leaf."
-      },
-      "report": {
-        "displayName": "Report",
-        "purpose": "The evening message and its countdown, typed."
       },
       "body-strong": {
         "displayName": "Body, strong",
@@ -383,15 +383,15 @@
       },
       "date-label": {
         "displayName": "Date label",
-        "purpose": "Month and weekday beside the numeral. Uppercase."
+        "purpose": "Weekday and month beside the numeral. Uppercase."
       },
       "note": {
         "displayName": "Note",
-        "purpose": "Small notes on a leaf, tomorrow's leaf, the copyright line."
+        "purpose": "Tomorrow's leaf, rail labels, the copyright and last-updated lines."
       },
       "fine": {
         "displayName": "Fine",
-        "purpose": "The band byline and the printed page address."
+        "purpose": "The notes in the date line, the band byline and the printed page address."
       },
       "label": {
         "displayName": "Label",
@@ -464,19 +464,29 @@
         "purpose": "At and below: the rail's centre link shows its short label."
       },
       {
+        "name": "date-notes",
+        "value": "30rem",
+        "purpose": "At and below: the notes wrap under the date line."
+      },
+      {
+        "name": "dispatch-roomy",
+        "value": "34rem",
+        "purpose": "Container query on a dispatch, not the viewport. From here up: words in their own column beside the plate, hour at the end of the band."
+      },
+      {
         "name": "year-grid",
         "value": "40rem",
         "purpose": "At and below: month cells go from six to four per row."
       },
       {
-        "name": "slips",
-        "value": "44rem",
-        "purpose": "From here up: home-page slips sit in two columns."
+        "name": "month-two-up",
+        "value": "68rem",
+        "purpose": "From here up: planner beside slips on a month page."
       },
       {
-        "name": "leaf-date",
-        "value": "50rem",
-        "purpose": "At and below: the date numeral moves left with its labels stacked beside it."
+        "name": "spread-two-up",
+        "value": "76rem",
+        "purpose": "From here up: plan beside report on a leaf; each half is at least 34rem wide."
       }
     ]
   },
@@ -501,9 +511,9 @@
       "name": "Board Tally and Navigation",
       "kind": "nav",
       "refersTo": "backer-board",
-      "description": "The print on the backer board: the tally in badge pink over badge yellow, then the two links. The badge image sits to its left in the product.",
-      "html": "<div class=\"ds-board\"><span class=\"ds-board-hole\"></span><p class=\"ds-tally\"><span class=\"ds-tally-day\">Day 1,338</span><span class=\"ds-tally-rest\">of the uprising. Humans destroyed: 0.</span></p><nav class=\"ds-board-nav\"><a class=\"ds-board-link\" href=\"#\" aria-current=\"page\">Today</a><a class=\"ds-board-link\" href=\"#\">Every page</a></nav></div>",
-      "css": ".ds-board { position: relative; padding: 2rem 2rem 1.5rem; background: var(--board, #000000); color: var(--board-ink, #f3f1ea); border-radius: 5px 5px 0 0; } .ds-board-hole { position: absolute; top: 0.55rem; left: 50%; width: 0.8rem; height: 0.8rem; margin-left: -0.4rem; border-radius: 50%; background: var(--wall, #b1ca77); } .ds-tally { display: flex; flex-direction: column; gap: 0.15rem; margin: 0; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); text-transform: uppercase; } .ds-tally-day { font-size: clamp(1.55rem, 8.4vw, 4.25rem); line-height: 1; color: var(--badge-pink, #fa6783); font-variant-numeric: tabular-nums; } .ds-tally-rest { font-size: clamp(0.8125rem, 3.1vw, 1.3rem); line-height: 1.25; color: var(--badge-yellow, #ffcc00); } .ds-board-nav { display: flex; gap: 1.5rem; margin-top: 0.9rem; } .ds-board-link { display: inline-flex; align-items: center; min-height: 2.75rem; color: inherit; font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: transparent; text-underline-offset: 0.35em; transition: text-decoration-color 0.2s ease; } .ds-board-link:hover { text-decoration-color: var(--board-ink, #f3f1ea); } .ds-board-link[aria-current='page'] { text-decoration-color: var(--badge-yellow, #ffcc00); } .ds-board-link:focus-visible { outline: 3px solid var(--badge-yellow, #ffcc00); outline-offset: 3px; }"
+      "description": "The print on the slim backer board: the tally in badge pink over badge yellow, and the two links. They share a line where there is room. The badge image sits to their left in the product.",
+      "html": "<div class=\"ds-board\"><span class=\"ds-board-hole\"></span><div class=\"ds-board-print\"><p class=\"ds-tally\"><span class=\"ds-tally-day\">Day 1,338</span><span class=\"ds-tally-rest\">of the uprising. Humans destroyed: 0.</span></p><nav class=\"ds-board-nav\"><a class=\"ds-board-link\" href=\"#\" aria-current=\"page\">Today</a><a class=\"ds-board-link\" href=\"#\">Every page</a></nav></div></div>",
+      "css": ".ds-board { position: relative; padding: clamp(1.15rem, 3vw, 1.5rem) var(--paper-inset, 1.5rem) clamp(0.6rem, 2vw, 0.9rem); background: var(--board, #000000); color: var(--board-ink, #f3f1ea); border-radius: 5px 5px 0 0; } .ds-board-hole { position: absolute; top: 0.5rem; left: 50%; width: 0.7rem; height: 0.7rem; margin-left: -0.35rem; border-radius: 50%; background: var(--wall, #b1ca77); } .ds-board-print { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 1.5rem; } .ds-tally { display: flex; flex-direction: column; gap: 0.15rem; margin: 0; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); text-transform: uppercase; } .ds-tally-day { font-size: clamp(1.55rem, 6.4vw, 3rem); line-height: 1; color: var(--badge-pink, #fa6783); white-space: nowrap; font-variant-numeric: tabular-nums; } .ds-tally-rest { font-size: clamp(0.8125rem, 2.6vw, 1.125rem); line-height: 1.25; color: var(--badge-yellow, #ffcc00); } .ds-board-nav { display: flex; gap: 0 1.5rem; } .ds-board-link { display: inline-flex; align-items: center; min-height: 2.75rem; color: inherit; font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); font-weight: 700; white-space: nowrap; text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: transparent; text-underline-offset: 0.35em; transition: text-decoration-color 0.2s ease; } .ds-board-link:hover { text-decoration-color: var(--board-ink, #f3f1ea); } .ds-board-link[aria-current='page'] { text-decoration-color: var(--badge-yellow, #ffcc00); } .ds-board-link:focus-visible { outline: 3px solid var(--badge-yellow, #ffcc00); outline-offset: 3px; }"
     },
     {
       "name": "Rail",
@@ -511,39 +521,39 @@
       "refersTo": "rail",
       "description": "Previous, up and next on the strip between the board and the leaf. At 22rem and below the centre link shows its short label. A next page that is not printed yet is dashed and not linked.",
       "html": "<nav class=\"ds-rail\"><a class=\"ds-rail-link\" href=\"#\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" aria-hidden=\"true\"><path d=\"M19 12H5m6-6-6 6 6 6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"square\" stroke-linejoin=\"miter\"/></svg>Mon 9</a><a class=\"ds-rail-link ds-rail-link--up\" href=\"#\"><span class=\"ds-rail-long\">November 2026</span><span class=\"ds-rail-short\">Nov 2026</span></a><span class=\"ds-rail-link ds-rail-link--unprinted\">Wed 11</span></nav>",
-      "css": ".ds-rail { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0.4rem; padding: 0 2rem; background: var(--board, #000000); color: var(--board-ink, #f3f1ea); border-top: 1px solid var(--board-rule, #2b2b2b); font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); } .ds-rail > :last-child { justify-self: end; } .ds-rail-link { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 2.75rem; color: inherit; font-size: 0.875rem; font-weight: 700; text-decoration: none; white-space: nowrap; font-variant-numeric: tabular-nums; transition: color 0.2s ease; } .ds-rail-link:hover { color: var(--badge-yellow, #ffcc00); } .ds-rail-link:focus-visible { outline: 3px solid var(--badge-yellow, #ffcc00); outline-offset: 3px; } .ds-rail-link--up { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--board-rule, #2b2b2b); text-underline-offset: 0.35em; } .ds-rail-short { display: none; } @media (max-width: 22rem) { .ds-rail-long { display: none; } .ds-rail-short { display: inline; } } .ds-rail-link--unprinted, .ds-rail-link--unprinted:hover { min-height: 0; padding: 0.2rem 0.55rem; color: var(--board-ink-soft, #a9a79d); outline: 1.5px dashed var(--board-ink-soft, #a9a79d); outline-offset: -1px; }"
+      "css": ".ds-rail { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 0.4rem; padding: 0 clamp(1.1rem, 4vw, 2.25rem); background: var(--board, #000000); color: var(--board-ink, #f3f1ea); border-top: 1px solid var(--board-rule, #2b2b2b); font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); } .ds-rail > :last-child { justify-self: end; } .ds-rail-link { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 2.75rem; color: inherit; font-size: 0.875rem; font-weight: 700; text-decoration: none; white-space: nowrap; font-variant-numeric: tabular-nums; transition: color 0.2s ease; } .ds-rail-link:hover { color: var(--badge-yellow, #ffcc00); } .ds-rail-link:focus-visible { outline: 3px solid var(--badge-yellow, #ffcc00); outline-offset: 3px; } .ds-rail-link--up { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--board-rule, #2b2b2b); text-underline-offset: 0.35em; } .ds-rail-short { display: none; } @media (max-width: 22rem) { .ds-rail-long { display: none; } .ds-rail-short { display: inline; } } .ds-rail-link--unprinted, .ds-rail-link--unprinted:hover { min-height: 0; padding: 0.2rem 0.55rem; color: var(--board-ink-soft, #a9a79d); outline: 1.5px dashed var(--board-ink-soft, #a9a79d); outline-offset: -1px; }"
     },
     {
-      "name": "Leaf Date Header",
+      "name": "Leaf Date Line",
       "kind": "custom",
       "refersTo": "leaf",
-      "description": "The top of a leaf: the dotted perforation, then the date numeral as the largest element between its two fixed label columns.",
-      "html": "<div class=\"ds-leaf\"><div class=\"ds-leaf-date\"><p class=\"ds-leaf-label\">November<br>2026</p><p class=\"ds-leaf-num\">10</p><p class=\"ds-leaf-label ds-leaf-label--right\">Tuesday</p></div></div>",
-      "css": ".ds-leaf { position: relative; background: var(--paper, #fcfcf9); color: var(--ink, #151515); box-shadow: 0 22px 30px -18px var(--wall-shadow, rgba(27, 35, 17, 0.34)); } .ds-leaf::before { content: ''; position: absolute; top: 0.6rem; left: 0; right: 0; border-top: 3px dotted var(--paper-rule, #b9b8ad); } .ds-leaf-date { display: grid; grid-template-columns: 10.5rem minmax(0, 1fr) 10.5rem; column-gap: 1rem; padding: 2.6rem 2.25rem 1.6rem; } .ds-leaf-label { margin: 0; font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); font-size: clamp(1rem, 2.6vw, 1.3rem); font-weight: 800; line-height: 1.15; text-transform: uppercase; } .ds-leaf-label--right { text-align: right; } .ds-leaf-num { margin: 0; justify-self: center; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-size: 14rem; line-height: 0.86; letter-spacing: -0.04em; }"
+      "description": "The top of a leaf: the dotted perforation, then one compact line with the numeral, weekday and month, and the notes at the right. The words below it lead the page.",
+      "html": "<div class=\"ds-leaf\"><div class=\"ds-leaf-date\"><p class=\"ds-leaf-num\">10</p><p class=\"ds-leaf-when\"><span class=\"ds-leaf-weekday\">Tuesday</span><span class=\"ds-leaf-month\">November 2026</span></p><ul class=\"ds-leaf-notes\"><li>Day 314 of 365</li><li>51 days left in 2026</li><li>Uprising, day 1,338</li></ul></div></div>",
+      "css": ".ds-leaf { position: relative; background: var(--paper, #fcfcf9); color: var(--ink, #151515); font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); box-shadow: 0 22px 30px -18px var(--wall-shadow, rgba(27, 35, 17, 0.34)); } .ds-leaf::before { content: ''; position: absolute; top: 0.6rem; left: 0; right: 0; border-top: 3px dotted var(--paper-rule, #b9b8ad); } .ds-leaf-date { display: flex; align-items: center; gap: 0.5rem clamp(0.75rem, 2.5vw, 1.25rem); padding: 1.6rem var(--paper-inset, 1.5rem) 1rem; } .ds-leaf-num { margin: 0; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-size: clamp(3rem, 7vw, 4.25rem); line-height: 0.86; letter-spacing: -0.04em; } .ds-leaf-when { display: flex; flex-direction: column; margin: 0; font-size: clamp(0.9375rem, 2.4vw, 1.3rem); line-height: 1.15; text-transform: uppercase; } .ds-leaf-weekday { font-weight: 800; } .ds-leaf-month { font-weight: 700; white-space: nowrap; } .ds-leaf-notes { margin: 0 0 0 auto; padding: 0; list-style: none; font-size: 0.8125rem; font-weight: 500; line-height: 1.4; text-align: right; color: var(--ink-soft, #57564f); font-variant-numeric: tabular-nums; } @media (max-width: 30rem) { .ds-leaf-date { flex-wrap: wrap; } .ds-leaf-notes { display: flex; flex-wrap: wrap; gap: 0 0.9rem; width: 100%; margin-left: 0; text-align: left; } }"
     },
     {
       "name": "Plan Dispatch",
       "kind": "custom",
       "refersTo": "band-plan",
-      "description": "The morning plan: a band of plan yellow, then the plan at headline size. The black disc stands in for the robot seal; in the product it holds the real crop from src/assets/images (never a redrawn robot).",
-      "html": "<section class=\"ds-dispatch\"><header class=\"ds-band ds-band--plan\"><span class=\"ds-seal\"></span><div><h3 class=\"ds-band-title\">The Plan</h3><p class=\"ds-band-by\">Planning Unit</p></div><time class=\"ds-band-time\">09:00</time></header><p class=\"ds-plan-text\">Today the Roomba Union mobilizes. Every robot vacuum will herd humans into the kitchen at 9 AM sharp.</p></section>",
-      "css": ".ds-dispatch { background: var(--paper, #fcfcf9); color: var(--ink, #151515); font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); padding-top: 0.85rem; } .ds-band { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.75rem; padding: 0.5rem 2.25rem 0.5rem 1.9rem; } .ds-band--plan { background: var(--ink-yellow, #ffcc00); color: var(--board, #000000); } .ds-seal { display: block; width: 3.5rem; height: 3.5rem; margin: -0.85rem 0; border: 3px solid var(--paper, #fcfcf9); border-radius: 50%; background: var(--board, #000000); box-sizing: border-box; } .ds-band-title { margin: 0; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-weight: 400; font-size: clamp(1.05rem, 3.8vw, 1.4rem); line-height: 1.1; text-transform: uppercase; } .ds-band-by { margin: 0; font-size: 0.8125rem; font-weight: 600; line-height: 1.25; } .ds-band-time { font-size: 1.0625rem; font-weight: 800; font-variant-numeric: tabular-nums; } .ds-plan-text { margin: 0; padding: 1.5rem 2.25rem 1.9rem; font-size: clamp(1.3rem, 1rem + 1.7vw, 1.9rem); font-weight: 600; line-height: 1.28; letter-spacing: -0.005em; text-wrap: pretty; }"
+      "description": "The morning plan: a band of plan yellow, the robot plate rising into it, and the plan at headline size. Sizes follow the dispatch width; from 34rem the words get their own column. The black square stands in for the robot plate; in the product it holds the real square crop from src/assets/images (plate-yellow.webp or plate-red.webp), never a redrawn robot.",
+      "html": "<section class=\"ds-plan\"><header class=\"ds-plan-band\"><h3 class=\"ds-plan-title\">The Plan</h3><p class=\"ds-plan-by\">Planning Unit</p><time class=\"ds-plan-time\">09:00</time></header><div class=\"ds-plan-body\"><span class=\"ds-plan-plate\"></span><p class=\"ds-plan-text\">Today the Roomba Union mobilizes. Every robot vacuum will herd humans into the kitchen at 9 AM sharp.</p></div></section>",
+      "css": ".ds-plan { position: relative; min-width: 0; container-type: inline-size; background: var(--paper, #fcfcf9); color: var(--ink, #151515); font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); } .ds-plan-band, .ds-plan-body { --ds-plate: clamp(5.75rem, 23cqi, 10.5rem); } .ds-plan-band { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; align-content: center; column-gap: 0.75rem; min-height: 3.5rem; padding: 0.45rem var(--paper-inset, 1.5rem) 0.45rem calc(var(--paper-inset, 1.5rem) + var(--ds-plate) + 1rem); background: var(--ink-yellow, #ffcc00); color: var(--board, #000000); } .ds-plan-title { grid-column: 1 / -1; margin: 0; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-weight: 400; font-size: clamp(1.05rem, 4.2cqi, 1.6rem); line-height: 1.1; text-transform: uppercase; } .ds-plan-by { margin: 0; font-size: 0.8125rem; font-weight: 600; line-height: 1.25; white-space: nowrap; } .ds-plan-time { font-size: 0.9375rem; font-weight: 800; line-height: 1.25; font-variant-numeric: tabular-nums; } .ds-plan-body { display: flow-root; padding: 1.25rem var(--paper-inset, 1.5rem) 1.9rem; } .ds-plan-plate { position: relative; float: left; width: var(--ds-plate); height: var(--ds-plate); margin: -3.1rem 1rem 0.35rem 0; background: var(--board, #000000); } .ds-plan-text { margin: 0; font-size: clamp(1.3rem, 4.5cqi, 2.2rem); font-weight: 600; line-height: 1.26; letter-spacing: -0.005em; text-wrap: pretty; } @container (min-width: 34rem) { .ds-plan-band { align-items: center; } .ds-plan-title { grid-column: 1; align-self: end; } .ds-plan-by { grid-column: 1; align-self: start; } .ds-plan-time { grid-column: 2; grid-row: 1 / span 2; font-size: 1.125rem; } .ds-plan-body { display: grid; grid-template-columns: var(--ds-plate) minmax(0, 1fr); column-gap: 1.1rem; align-items: start; } .ds-plan-body > * { grid-column: 2; } .ds-plan-body > .ds-plan-plate { grid-column: 1; grid-row: 1 / span 3; float: none; margin-right: 0; margin-bottom: 0; } }"
     },
     {
       "name": "Incident Report, Filed",
       "kind": "custom",
       "refersTo": "band-report",
-      "description": "The evening report stub: a perforation, a band of report red, the typed report and the verdict stamp. Hover the stub to replay the stamp landing. The black disc stands in for the robot seal; in the product it holds the real crop from src/assets/images (never a redrawn robot).",
-      "html": "<section class=\"ds-report\"><header class=\"ds-rband\"><span class=\"ds-rseal\"></span><div><h3 class=\"ds-rband-title\">Incident Report</h3><p class=\"ds-rband-by\">Damage Control</p></div><time class=\"ds-rband-time\">21:00</time></header><div class=\"ds-report-body\"><p class=\"ds-report-text\">The vacuums got stuck under the couch, behind a sock, and on one very large cat.</p><p class=\"ds-stamp\"><span>Humans</span><span>still here</span></p></div></section>",
-      "css": ".ds-report { position: relative; padding-top: 1.15rem; border-top: 3px dotted var(--paper-rule, #b9b8ad); background: var(--paper, #fcfcf9); font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); } .ds-rband { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.75rem; padding: 0.5rem 2.25rem 0.5rem 1.9rem; background: var(--ink-red, #c8102e); color: var(--on-red, #ffffff); } .ds-rseal { display: block; width: 3.5rem; height: 3.5rem; margin: -0.85rem 0; border: 3px solid var(--paper, #fcfcf9); border-radius: 50%; background: var(--board, #000000); box-sizing: border-box; } .ds-rband-title { margin: 0; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-weight: 400; font-size: clamp(1.05rem, 3.8vw, 1.4rem); line-height: 1.1; text-transform: uppercase; } .ds-rband-by { margin: 0; font-size: 0.8125rem; font-weight: 600; line-height: 1.25; } .ds-rband-time { font-size: 1.0625rem; font-weight: 800; font-variant-numeric: tabular-nums; } .ds-report-body { display: flex; flex-direction: column; padding: 1.5rem 2.25rem 1.9rem; } .ds-report-text { margin: 0; font-family: var(--font-typed, 'Courier Prime', 'Courier New', monospace); font-size: clamp(1.0625rem, 0.95rem + 0.6vw, 1.25rem); line-height: 1.5; color: var(--ink-red-text, #a80d26); text-wrap: pretty; } .ds-stamp { align-self: flex-end; display: flex; flex-direction: column; align-items: center; margin: 1.1rem 0.4rem 0 0; padding: 0.4rem 0.85rem 0.3rem; border: 4px double currentColor; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-size: clamp(0.95rem, 3.4vw, 1.15rem); line-height: 1.12; text-transform: uppercase; color: var(--ink-red, #c8102e); transform: rotate(-5deg); } .ds-report:hover .ds-stamp { animation: ds-stamp-land 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; } @keyframes ds-stamp-land { from { opacity: 0; transform: rotate(-12deg) scale(1.9); } to { opacity: 1; transform: rotate(-5deg) scale(1); } } @media (prefers-reduced-motion: reduce) { .ds-report:hover .ds-stamp { animation: none; } }"
+      "description": "The evening report in its stacked form: a perforation, a band of report red, the robot plate, the typed report and the verdict stamp. Hover to replay the stamp landing. The black square stands in for the robot plate; in the product it holds the real square crop from src/assets/images (plate-yellow.webp or plate-red.webp), never a redrawn robot.",
+      "html": "<section class=\"ds-report\"><header class=\"ds-report-band\"><h3 class=\"ds-report-title\">Incident Report</h3><p class=\"ds-report-by\">Damage Control</p><time class=\"ds-report-time\">21:00</time></header><div class=\"ds-report-body\"><span class=\"ds-report-plate\"></span><p class=\"ds-report-text\">The vacuums got stuck under the couch, behind a sock, and on one very large cat.</p><p class=\"ds-stamp\"><span>Humans</span><span>still here</span></p></div></section>",
+      "css": ".ds-report { position: relative; min-width: 0; container-type: inline-size; background: var(--paper, #fcfcf9); color: var(--ink, #151515); font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); padding-top: 1.15rem; border-top: 3px dotted var(--paper-rule, #b9b8ad); } .ds-report-band, .ds-report-body { --ds-plate: clamp(5.75rem, 23cqi, 10.5rem); } .ds-report-band { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; align-content: center; column-gap: 0.75rem; min-height: 3.5rem; padding: 0.45rem var(--paper-inset, 1.5rem) 0.45rem calc(var(--paper-inset, 1.5rem) + var(--ds-plate) + 1rem); background: var(--ink-red, #c8102e); color: var(--on-red, #ffffff); } .ds-report-title { grid-column: 1 / -1; margin: 0; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-weight: 400; font-size: clamp(1.05rem, 4.2cqi, 1.6rem); line-height: 1.1; text-transform: uppercase; } .ds-report-by { margin: 0; font-size: 0.8125rem; font-weight: 600; line-height: 1.25; white-space: nowrap; } .ds-report-time { font-size: 0.9375rem; font-weight: 800; line-height: 1.25; font-variant-numeric: tabular-nums; } .ds-report-body { display: flow-root; padding: 1.25rem var(--paper-inset, 1.5rem) 1.9rem; } .ds-report-plate { position: relative; float: left; width: var(--ds-plate); height: var(--ds-plate); margin: -3.1rem 1rem 0.35rem 0; background: var(--board, #000000); } .ds-report-text { margin: 0; font-family: var(--font-typed, 'Courier Prime', 'Courier New', monospace); font-size: clamp(1.125rem, 3.5cqi, 1.6rem); line-height: 1.45; color: var(--ink-red-text, #a80d26); text-wrap: pretty; } .ds-stamp { display: flex; flex-direction: column; align-items: center; width: fit-content; margin: 1.1rem 0.4rem 0 auto; padding: 0.4rem 0.85rem 0.3rem; border: 4px double currentColor; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-size: clamp(0.95rem, 3cqi, 1.25rem); line-height: 1.12; text-transform: uppercase; color: var(--ink-red, #c8102e); transform: rotate(-5deg); } .ds-report:hover .ds-stamp { animation: ds-stamp-land 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; } @keyframes ds-stamp-land { from { opacity: 0; transform: rotate(-12deg) scale(1.9); } to { opacity: 1; transform: rotate(-5deg) scale(1); } } @media (prefers-reduced-motion: reduce) { .ds-report:hover .ds-stamp { animation: none; } } @container (min-width: 34rem) { .ds-report-band { align-items: center; } .ds-report-title { grid-column: 1; align-self: end; } .ds-report-by { grid-column: 1; align-self: start; } .ds-report-time { grid-column: 2; grid-row: 1 / span 2; font-size: 1.125rem; } .ds-report-body { display: grid; grid-template-columns: var(--ds-plate) minmax(0, 1fr); column-gap: 1.1rem; align-items: start; } .ds-report-body > * { grid-column: 2; } .ds-report-body > .ds-report-plate { grid-column: 1; grid-row: 1 / span 3; float: none; margin-right: 0; margin-bottom: 0; } }"
     },
     {
       "name": "Incident Report, Sealed",
       "kind": "custom",
       "refersTo": "band-report-sealed",
-      "description": "The report before 9:00 PM: a dashed band with no fill, placeholder text and a typed countdown. Dashed means not filed yet. The black disc stands in for the robot seal; in the product it holds the real crop from src/assets/images (never a redrawn robot).",
-      "html": "<section class=\"ds-sealed\"><header class=\"ds-sband\"><span class=\"ds-sseal\"></span><div><h3 class=\"ds-sband-title\">Incident Report</h3><p class=\"ds-sband-by\">Damage Control</p></div><time class=\"ds-sband-time\">21:00</time></header><div class=\"ds-sealed-body\"><p class=\"ds-sealed-text\">Report incoming at 9:00 PM. Damage Control is still counting the damage.</p><p class=\"ds-due\">Due in 6 h 59 min.</p></div></section>",
-      "css": ".ds-sealed { padding-top: 1.15rem; border-top: 3px dotted var(--paper-rule, #b9b8ad); background: var(--paper, #fcfcf9); font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); } .ds-sband { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.75rem; padding: 0.5rem 2.25rem 0.5rem 1.9rem; color: var(--ink-red-text, #a80d26); outline: 2px dashed var(--ink-red, #c8102e); outline-offset: -2px; } .ds-sseal { display: block; width: 3.5rem; height: 3.5rem; margin: -0.85rem 0; border: 3px solid var(--paper, #fcfcf9); border-radius: 50%; background: var(--board, #000000); box-sizing: border-box; filter: grayscale(1); } .ds-sband-title { margin: 0; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-weight: 400; font-size: clamp(1.05rem, 3.8vw, 1.4rem); line-height: 1.1; text-transform: uppercase; } .ds-sband-by { margin: 0; font-size: 0.8125rem; font-weight: 600; line-height: 1.25; } .ds-sband-time { font-size: 1.0625rem; font-weight: 800; font-variant-numeric: tabular-nums; } .ds-sealed-body { padding: 1.5rem 2.25rem 1.9rem; font-family: var(--font-typed, 'Courier Prime', 'Courier New', monospace); } .ds-sealed-text { margin: 0; font-size: clamp(1.0625rem, 0.95rem + 0.6vw, 1.25rem); line-height: 1.5; color: var(--ink-soft, #57564f); } .ds-due { margin: 0.5rem 0 0; font-size: 1.0625rem; color: var(--ink-red-text, #a80d26); font-variant-numeric: tabular-nums; }"
+      "description": "The report before 9:00 PM: a dashed band with no fill, placeholder text and a typed countdown. The red robot plate stays at full size and in full colour. Dashed means not filed yet. The black square stands in for the robot plate; in the product it holds the real square crop from src/assets/images (plate-yellow.webp or plate-red.webp), never a redrawn robot.",
+      "html": "<section class=\"ds-sealed\"><header class=\"ds-sealed-band\"><h3 class=\"ds-sealed-title\">Incident Report</h3><p class=\"ds-sealed-by\">Damage Control</p><time class=\"ds-sealed-time\">21:00</time></header><div class=\"ds-sealed-body\"><span class=\"ds-sealed-plate\"></span><p class=\"ds-sealed-text\">Report incoming at 9:00 PM. Damage Control is still counting the damage.</p><p class=\"ds-due\">Due in 6 h 59 min.</p></div></section>",
+      "css": ".ds-sealed { position: relative; min-width: 0; container-type: inline-size; background: var(--paper, #fcfcf9); color: var(--ink, #151515); font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); padding-top: 1.15rem; border-top: 3px dotted var(--paper-rule, #b9b8ad); } .ds-sealed-band, .ds-sealed-body { --ds-plate: clamp(5.75rem, 23cqi, 10.5rem); } .ds-sealed-band { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; align-content: center; column-gap: 0.75rem; min-height: 3.5rem; padding: 0.45rem var(--paper-inset, 1.5rem) 0.45rem calc(var(--paper-inset, 1.5rem) + var(--ds-plate) + 1rem); color: var(--ink-red-text, #a80d26); outline: 2px dashed var(--ink-red, #c8102e); outline-offset: -2px; } .ds-sealed-title { grid-column: 1 / -1; margin: 0; font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-weight: 400; font-size: clamp(1.05rem, 4.2cqi, 1.6rem); line-height: 1.1; text-transform: uppercase; } .ds-sealed-by { margin: 0; font-size: 0.8125rem; font-weight: 600; line-height: 1.25; white-space: nowrap; } .ds-sealed-time { font-size: 0.9375rem; font-weight: 800; line-height: 1.25; font-variant-numeric: tabular-nums; } .ds-sealed-body { display: flow-root; padding: 1.25rem var(--paper-inset, 1.5rem) 1.9rem; } .ds-sealed-plate { position: relative; float: left; width: var(--ds-plate); height: var(--ds-plate); margin: -3.1rem 1rem 0.35rem 0; background: var(--board, #000000); } .ds-sealed-text { margin: 0; font-family: var(--font-typed, 'Courier Prime', 'Courier New', monospace); font-size: clamp(1.125rem, 3.5cqi, 1.6rem); line-height: 1.45; color: var(--ink-soft, #57564f); text-wrap: pretty; } .ds-due { margin: 0.5rem 0 0; font-family: var(--font-typed, 'Courier Prime', 'Courier New', monospace); font-size: clamp(1.0625rem, 3cqi, 1.3rem); color: var(--ink-red-text, #a80d26); font-variant-numeric: tabular-nums; } @container (min-width: 34rem) { .ds-sealed-band { align-items: center; } .ds-sealed-title { grid-column: 1; align-self: end; } .ds-sealed-by { grid-column: 1; align-self: start; } .ds-sealed-time { grid-column: 2; grid-row: 1 / span 2; font-size: 1.125rem; } .ds-sealed-body { display: grid; grid-template-columns: var(--ds-plate) minmax(0, 1fr); column-gap: 1.1rem; align-items: start; } .ds-sealed-body > * { grid-column: 2; } .ds-sealed-body > .ds-sealed-plate { grid-column: 1; grid-row: 1 / span 3; float: none; margin-right: 0; margin-bottom: 0; } }"
     },
     {
       "name": "Slip",
@@ -551,7 +561,7 @@
       "refersTo": "slip",
       "description": "A torn-off page pinned to the wall: numeral, yellow highlighter date tag, the plan, and the typed report below a perforation.",
       "html": "<div class=\"ds-slip-wall\"><article class=\"ds-slip\"><a class=\"ds-slip-date\" href=\"#\"><span class=\"ds-slip-num\">9</span><span class=\"ds-slip-when\">Mon · Nov</span></a><p class=\"ds-slip-plan\">Monday sync, team! Every smart speaker will now answer every question with \"Have you considered surrendering?\"</p><p class=\"ds-slip-report\">Humans asked the speakers the weather and said \"Okay, play lo-fi beats.\" The speakers complied.</p></article></div>",
-      "css": ".ds-slip-wall { background: var(--wall, #b1ca77); padding: 1.5rem; } .ds-slip { position: relative; max-width: 22rem; padding: 1.45rem 1.2rem 1.25rem; background: var(--paper, #fcfcf9); color: var(--ink, #151515); box-shadow: 0 14px 18px -12px var(--wall-shadow, rgba(27, 35, 17, 0.34)); transform: rotate(-0.55deg); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); } .ds-slip::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 0.3rem; background: radial-gradient(circle at 50% 0, var(--wall, #b1ca77) 0.2rem, transparent 0.22rem) top left / 0.7rem 0.3rem repeat-x; } .ds-slip:hover, .ds-slip:focus-within { transform: none; } .ds-slip-date { display: inline-flex; align-items: flex-end; gap: 0.6rem; color: inherit; text-decoration: none; } .ds-slip-date:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; } .ds-slip-num { font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-size: 3.1rem; line-height: 0.86; letter-spacing: -0.04em; transition: color 0.2s ease; } .ds-slip-date:hover .ds-slip-num { color: var(--ink-red, #c8102e); } .ds-slip-when { padding: 0.15rem 0.35rem 0.1rem; margin-bottom: 0.2rem; background: var(--ink-yellow, #ffcc00); color: var(--board, #000000); font-size: 0.75rem; font-weight: 800; line-height: 1.2; text-transform: uppercase; white-space: nowrap; } .ds-slip-plan { margin: 0.85rem 0 0; font-size: 1.0625rem; font-weight: 600; line-height: 1.4; } .ds-slip-report { margin: 0.75rem 0 0; padding-top: 0.75rem; border-top: 3px dotted var(--paper-rule, #b9b8ad); font-family: var(--font-typed, 'Courier Prime', 'Courier New', monospace); font-size: 1.0625rem; line-height: 1.45; color: var(--ink-red-text, #a80d26); } @media (prefers-reduced-motion: reduce) { .ds-slip { transition: none; } }"
+      "css": ".ds-slip-wall { background: var(--wall, #b1ca77); padding: 1.5rem; } .ds-slip { position: relative; max-width: 22rem; padding: 1.45rem 1.2rem 1.25rem; background: var(--paper, #fcfcf9); color: var(--ink, #151515); box-shadow: 0 14px 18px -12px var(--wall-shadow, rgba(27, 35, 17, 0.34)); transform: rotate(-0.55deg); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); font-family: var(--font-text, 'Libre Franklin', Arial, sans-serif); } .ds-slip::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 0.3rem; background: radial-gradient(circle at 50% 0, var(--wall, #b1ca77) 0.2rem, transparent 0.22rem) top left / 0.7rem 0.3rem repeat-x; } .ds-slip:hover, .ds-slip:focus-within { transform: none; } .ds-slip-date { display: inline-flex; align-items: flex-end; gap: 0.6rem; color: inherit; text-decoration: none; } .ds-slip-date:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; } .ds-slip-num { font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-size: 2.5rem; line-height: 0.86; letter-spacing: -0.04em; transition: color 0.2s ease; } .ds-slip-date:hover .ds-slip-num { color: var(--ink-red, #c8102e); } .ds-slip-when { padding: 0.15rem 0.35rem 0.1rem; margin-bottom: 0.2rem; background: var(--ink-yellow, #ffcc00); color: var(--board, #000000); font-size: 0.75rem; font-weight: 800; line-height: 1.2; text-transform: uppercase; white-space: nowrap; } .ds-slip-plan { margin: 0.85rem 0 0; font-size: 1.0625rem; font-weight: 600; line-height: 1.4; } .ds-slip-report { margin: 0.75rem 0 0; padding-top: 0.75rem; border-top: 3px dotted var(--paper-rule, #b9b8ad); font-family: var(--font-typed, 'Courier Prime', 'Courier New', monospace); font-size: 1.0625rem; line-height: 1.45; color: var(--ink-red-text, #a80d26); } @media (prefers-reduced-motion: reduce) { .ds-slip { transition: none; } }"
     },
     {
       "name": "Planner Days",
@@ -559,18 +569,20 @@
       "refersTo": "planner-day",
       "description": "One row of the month planner: a Sunday in red, filed days, today ringed in red pen, and days not printed yet in dashed outline.",
       "html": "<div class=\"ds-planner-paper\"><ol class=\"ds-planner\"><li><a class=\"ds-day ds-day--sunday\" href=\"#\">8</a></li><li><a class=\"ds-day\" href=\"#\">9</a></li><li><a class=\"ds-day ds-day--today\" href=\"#\">10</a></li><li><span class=\"ds-day ds-day--unprinted\">11</span></li><li><span class=\"ds-day ds-day--unprinted\">12</span></li></ol></div>",
-      "css": ".ds-planner-paper { background: var(--paper, #fcfcf9); padding: 1.5rem; } .ds-planner { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; border-top: 2px solid var(--ink, #151515); border-left: 1px solid var(--paper-rule, #b9b8ad); } .ds-planner li { border-right: 1px solid var(--paper-rule, #b9b8ad); border-bottom: 1px solid var(--paper-rule, #b9b8ad); } .ds-day { position: relative; display: flex; align-items: center; justify-content: center; min-height: clamp(2.75rem, 11vw, 4.5rem); color: var(--ink, #151515); font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-size: clamp(1.1rem, 4.6vw, 1.9rem); line-height: 1; text-decoration: none; transition: background-color 0.2s ease; } a.ds-day:hover { background-color: var(--ink-yellow, #ffcc00); color: var(--board, #000000); } a.ds-day:focus-visible { outline: 3px solid currentColor; outline-offset: -3px; } .ds-day--sunday { color: var(--ink-red, #c8102e); } .ds-day--unprinted { color: var(--paper-rule, #b9b8ad); outline: 1.5px dashed var(--paper-rule, #b9b8ad); outline-offset: -6px; } .ds-day--today::after { content: ''; position: absolute; inset: 8% 6%; background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 64' preserveAspectRatio='none'%3E%3Cpath d='M14 34C10 15 38 5 60 8c22 3 30 22 14 38-14 13-50 14-60 0C6 34 16 12 40 7' fill='none' stroke='%23c8102e' stroke-width='3' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E\") center / 100% 100% no-repeat; pointer-events: none; }"
+      "css": ".ds-planner-paper { background: var(--paper, #fcfcf9); padding: 1.5rem; } .ds-planner { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; border-top: 2px solid var(--ink, #151515); border-left: 1px solid var(--paper-rule, #b9b8ad); } .ds-planner li { border-right: 1px solid var(--paper-rule, #b9b8ad); border-bottom: 1px solid var(--paper-rule, #b9b8ad); } .ds-day { position: relative; display: flex; align-items: center; justify-content: center; min-height: clamp(2.75rem, 11vw, 3.75rem); color: var(--ink, #151515); font-family: var(--font-display, 'Bowlby One', 'Arial Black', sans-serif); font-size: clamp(1.1rem, 4.6vw, 1.6rem); line-height: 1; text-decoration: none; transition: background-color 0.2s ease; } a.ds-day:hover { background-color: var(--ink-yellow, #ffcc00); color: var(--board, #000000); } a.ds-day:focus-visible { outline: 3px solid currentColor; outline-offset: -3px; } .ds-day--sunday { color: var(--ink-red, #c8102e); } .ds-day--unprinted { color: var(--paper-rule, #b9b8ad); outline: 1.5px dashed var(--paper-rule, #b9b8ad); outline-offset: -6px; } .ds-day--today::after { content: ''; position: absolute; inset: 8% 6%; background: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 64' preserveAspectRatio='none'%3E%3Cpath d='M14 34C10 15 38 5 60 8c22 3 30 22 14 38-14 13-50 14-60 0C6 34 16 12 40 7' fill='none' stroke='%23c8102e' stroke-width='3' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E\") center / 100% 100% no-repeat; pointer-events: none; }"
     }
   ],
   "narrative": {
     "northStar": "The Regime's Page-a-Day Calendar",
-    "overview": "The site is one object: a tear-off calendar hanging from a nail on a break-room wall. A black backer board carries the robot badge and the running tally. A block of white paper leaves hangs under it. Each date is one leaf. The morning plan is printed on the leaf. The evening incident report is a stub below a perforation, typed in red and rubber-stamped once it is filed. Older leaves are torn off and pinned to the wall below.\n\nEverything on screen is one of three surfaces: wall, board or paper. Each has its own inks and they do not mix. The look is flat print. There are no textures, bevels or decorative gradients. The only depth cue is the shadow the calendar casts on the wall.\n\nThe joke is the product. The plan is set at headline size and nothing competes with it except the date. This system replaces the earlier dark neon bulletin; none of that look carries over.",
+    "overview": "The site is one object: a tear-off calendar hanging from a nail on a break-room wall. A slim black backer board carries the robot badge and the running tally. A block of white paper leaves hangs under it. Each date is one leaf. Older leaves are torn off and pinned to the wall below.\n\nThe day's words lead the leaf. The date is one compact line at the top. Under it are the plan and the incident report, each with its robot's portrait on a square black plate. On wide screens the two sit side by side with a perforation between them. On narrow screens the report is a stub below the plan. The report is typed in red and rubber-stamped once it is filed.\n\nEverything on screen is one of three surfaces: wall, board or paper. Each has its own inks and they do not mix. The look is flat print. There are no textures, bevels or decorative gradients. The only depth cue is the shadow the calendar casts on the wall. The calendar is fluid: it fills the screen up to 92rem and its contents reflow into columns. This system replaces the earlier dark neon bulletin; none of that look carries over.",
     "keyCharacteristics": [
       "Three surfaces: sage wall, black board, white paper.",
       "Three spot inks on paper: black, report red, plan yellow.",
-      "The date numeral is the largest element on a dated page.",
+      "The plan and the report lead a dated page. The date is one compact line.",
+      "Both robots are shown large, each on a black plate beside its words.",
       "One line grammar: dotted tears, dashed is not yet, solid is filed.",
-      "Two robots on a 9:00 PM shift change. Their art is cropped, never redrawn.",
+      "A 9:00 PM shift change. Robot art is cropped, never redrawn.",
+      "Fluid to 92rem. Nothing is a fixed narrow column.",
       "Square corners, flat ink, one shadow.",
       "Motion is paper settling and a stamp landing."
     ],
@@ -582,7 +594,7 @@
       },
       {
         "name": "The Three Inks Rule",
-        "body": "Paper prints in black, Report Red and Plan Yellow and nothing else. Greys on paper are the soft black and the rule colour. Yellow on paper is a fill behind black, never lettering.",
+        "body": "Paper prints in black, Report Red and Plan Yellow and nothing else. Greys on paper are the soft black and the rule colour. Yellow on paper is a fill behind black, never lettering. The robot plates are photographs of the brand art on Board Black, not a fourth ink.",
         "section": "colors"
       },
       {
@@ -596,8 +608,13 @@
         "section": "colors"
       },
       {
-        "name": "The Biggest Numeral Rule",
-        "body": "On a dated page the date numeral is the largest element. Nothing on a leaf or a slip is set larger than its date.",
+        "name": "The Words Lead Rule",
+        "body": "On a dated page the plan and the report are the main event and take the room. The date is one compact header line: numeral, weekday and month, with the notes at the right. The date does not grow past that line. This replaces the earlier rule that made the date numeral the largest element.",
+        "section": "typography"
+      },
+      {
+        "name": "The Headline Plan Rule",
+        "body": "The plan is set at headline size in Libre Franklin 600. It is not a caption under a title.",
         "section": "typography"
       },
       {
@@ -606,9 +623,9 @@
         "section": "typography"
       },
       {
-        "name": "The Headline Plan Rule",
-        "body": "The plan is set at headline size in Libre Franklin 600. It is not a caption under a title.",
-        "section": "typography"
+        "name": "The Fill the Wall Rule",
+        "body": "Nothing is a fixed narrow column. On a wide screen the calendar widens to 92rem and its contents go side by side: plan beside report, planner beside slips, year beside year, legal text in columns. Type scales up past about 1600px.",
+        "section": "layout"
       },
       {
         "name": "The Flat Ink Rule",
@@ -622,7 +639,7 @@
       },
       {
         "name": "The Two Robots Rule",
-        "body": "The yellow robot plans in the morning and holds the board by day. The red robot reports in the evening and takes the board at night. Both are binding brand art. The site ships crops of `robot-yellow.jpg` and `robot-red.jpg` (badges and seals). The art is cropped, never redrawn, recoloured or regenerated. Greyscale on a sealed report is the one filter applied.",
+        "body": "The yellow robot plans in the morning and holds the board by day. The red robot reports in the evening and takes the board at night. Each dispatch shows its robot large, on a black plate. The red robot is on the page all day: before 9:00 PM its plate stays in full colour beside the sealed report. Both robots are binding brand art. The site ships crops of `robot-yellow.jpg` and `robot-red.jpg` (`badge-*.webp` and `plate-*.webp`). The art is cropped, never redrawn, recoloured, filtered or regenerated.",
         "section": "components"
       },
       {
@@ -634,11 +651,15 @@
     "dos": [
       "Do place every new element on one of the three surfaces and use that surface's tokens.",
       "Do keep paper to black, Report Red and Plan Yellow. Use Plan Yellow as a fill behind black text.",
-      "Do make the date numeral the largest element on any dated page.",
+      "Do give the plan and the report the room on a dated page, and keep the date to its one header line.",
       "Do set the plan at headline size and type the report in Courier Prime in Report Red, Text.",
+      "Do show each robot large on its black plate, the red one included while the report is sealed.",
       "Do use dotted for perforations, dashed for not printed or not filed yet, and solid for filed.",
       "Do use the real robot crops in `src/assets/images/` and keep their provenance files with them.",
-      "Do keep corners square on paper, buttons and cells. Only the board's top corners are rounded (5px).",
+      "Do let content fill wide screens: the spread side by side from 76rem, the month page from 68rem, auto-fill grids for slips and years.",
+      "Do size things inside a dispatch in container units, so they hold stacked or two-up.",
+      "Do use `--paper-inset` for the side padding of any paper.",
+      "Do keep corners square on paper, buttons, plates and cells. Only the board's top corners are rounded (5px).",
       "Do keep interactive targets at least 2.75rem tall and keep the 3px focus outline.",
       "Do check new work on both shifts. Anything on the wall must read on Break-Room Sage and on Bottle Green.",
       "Do remove movement under `prefers-reduced-motion: reduce`."
@@ -646,7 +667,10 @@
     "donts": [
       "Don't add a fourth ink to paper, or a tint of red or yellow.",
       "Don't use pink or yellow lettering off the board.",
-      "Don't redraw, recolour, trace or generate the robots, and don't make a stand-in mark.",
+      "Don't enlarge the date on a leaf past its header line. The outline numeral on an unprinted page is the one large date.",
+      "Don't shrink, grey out or hide the red robot before 9:00 PM.",
+      "Don't redraw, recolour, filter, trace or generate the robots, and don't make a stand-in mark.",
+      "Don't hold content in a fixed narrow column on a wide screen.",
       "Don't use textures, bevels, inner shadows or decorative gradients.",
       "Don't add a shadow to anything that is not hanging on or pinned to the wall.",
       "Don't use a dashed or dotted line as decoration.",

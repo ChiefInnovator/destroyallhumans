@@ -1,5 +1,11 @@
-/* Legal pages: the small print, on a plain sheet. */
+/* Legal pages: the small print, on a plain sheet, set in columns where the sheet is wide. */
+.legal-page {
+  columns: 30rem;
+  column-gap: clamp(2rem, 5vw, 4rem);
+}
+
 .legal-page h1 {
+  column-span: all;
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(2rem, 8vw, 3.5rem);
@@ -10,7 +16,8 @@
 
 .legal-page section {
   max-width: 40rem;
-  margin-top: 2.25rem;
+  padding-top: 2.25rem;
+  break-inside: avoid;
 }
 
 .legal-page h2 {
@@ -60,6 +67,7 @@
 }
 
 .last-updated {
+  column-span: all;
   max-width: 40rem;
   margin-top: 2.5rem;
   padding-top: 0.9rem;

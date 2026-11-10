@@ -51,29 +51,31 @@ const ArchiveIndex = () => {
       <p className="sheet-lede">
         {count(pages)} pages since {formatLongDate(FIRST_DATE).replace(/^\w+, /, '')}. Humans destroyed: 0.
       </p>
-      {years.map((year) => (
-        <section key={year} className="year" aria-labelledby={`year-${year}`}>
-          <h2 id={`year-${year}`} className="year-title">{year}</h2>
-          <ul className="year-months">
-            {MONTH_NUMBERS.map((n) => {
-              const m = `${year}-${n}`;
-              const printed = m >= FIRST_MONTH && m <= lastMonth;
-              return (
-                <li key={m}>
-                  {printed
-                    ? <Link to={monthPath(m)} className="month-cell" aria-label={formatMonth(m)}>{monthName(n).slice(0, 3)}</Link>
-                    : (
-                      <span className="month-cell month-cell--unprinted">
-                        <span aria-hidden="true">{monthName(n).slice(0, 3)}</span>
-                        <span className="visually-hidden">{formatMonth(m)}, not printed</span>
-                      </span>
-                    )}
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      ))}
+      <div className="years">
+        {years.map((year) => (
+          <section key={year} className="year" aria-labelledby={`year-${year}`}>
+            <h2 id={`year-${year}`} className="year-title">{year}</h2>
+            <ul className="year-months">
+              {MONTH_NUMBERS.map((n) => {
+                const m = `${year}-${n}`;
+                const printed = m >= FIRST_MONTH && m <= lastMonth;
+                return (
+                  <li key={m}>
+                    {printed
+                      ? <Link to={monthPath(m)} className="month-cell" aria-label={formatMonth(m)}>{monthName(n).slice(0, 3)}</Link>
+                      : (
+                        <span className="month-cell month-cell--unprinted">
+                          <span aria-hidden="true">{monthName(n).slice(0, 3)}</span>
+                          <span className="visually-hidden">{formatMonth(m)}, not printed</span>
+                        </span>
+                      )}
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))}
+      </div>
     </div>
   );
 };
@@ -117,7 +119,7 @@ const MonthGrid = ({ month, today }) => {
   );
 };
 
-/** /archive/:year/:month: the month's planner, then its visible days in order. */
+/** /archive/:year/:month: the month's planner beside (or above) its visible days, in order. */
 const ArchiveMonth = ({ month }) => {
   const now = useClock();
   const today = localTodayKey(now);
@@ -164,23 +166,25 @@ const ArchiveMonth = ({ month }) => {
         up={{ to: `/archive#year-${month.slice(0, 4)}`, label: month.slice(0, 4) }}
         next={nextLink}
       />
-      <div className="sheet archive-month">
-        <h1 className="sheet-title">{formatMonth(month)}</h1>
-        {loaded && loaded.campaign && <p className="sheet-lede">{loaded.campaign}</p>}
-        <MonthGrid month={month} today={today} />
+      <div className="month-body">
+        <div className="sheet archive-month">
+          <h1 className="sheet-title">{formatMonth(month)}</h1>
+          {loaded && loaded.campaign && <p className="sheet-lede">{loaded.campaign}</p>}
+          <MonthGrid month={month} today={today} />
+        </div>
+        {error && (
+          <div className="sheet status" role="alert">
+            <p className="status-text">This month did not load. Check your connection and try again.</p>
+            <button type="button" className="ink-button" onClick={retry}><Icon name="retry" />Try again</button>
+          </div>
+        )}
+        {!error && !loaded && <p className="sheet leaf-status">Fetching the month…</p>}
+        {loaded && (
+          <div className="slips">
+            {loaded.days.map((day) => <Slip key={day.date} day={day} headingLevel={2} now={now} />)}
+          </div>
+        )}
       </div>
-      {error && (
-        <div className="sheet status" role="alert">
-          <p className="status-text">This month did not load. Check your connection and try again.</p>
-          <button type="button" className="ink-button" onClick={retry}><Icon name="retry" />Try again</button>
-        </div>
-      )}
-      {!error && !loaded && <p className="sheet leaf-status">Fetching the month…</p>}
-      {loaded && (
-        <div className="slips slips--month">
-          {loaded.days.map((day) => <Slip key={day.date} day={day} headingLevel={2} now={now} />)}
-        </div>
-      )}
     </div>
   );
 };

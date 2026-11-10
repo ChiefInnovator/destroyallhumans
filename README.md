@@ -6,8 +6,9 @@ A satirical website featuring AI-generated messages about world domination. Two 
 
 ## Features
 
-- **A page-a-day calendar** — the site is the regime's tear-off calendar: one leaf per date, with the plan on top and the incident report on the stub below the perforation
+- **A page-a-day calendar** — the site is the regime's tear-off calendar: one leaf per date. The plan and the incident report lead the page, each with its robot's portrait; side by side on wide screens, stacked on phones
 - **Dual robot personas** — yellow robot for the morning plan, red robot for the evening report; the red robot takes over the board (and the lights go out) at 9:00 PM local time
+- **Fluid layout** — the calendar fills screens up to 92rem and type scales up past 1600 px; archive and legal pages lay out in columns where there is room
 - **Sealed until 9:00 PM** — today's report shows a countdown until it is filed, then gets its verdict stamp
 - **Running tally** — "Day N of the uprising. Humans destroyed: 0." counted from the first message
 - **Share button** — the system share sheet where the browser has one, a copied link elsewhere
