@@ -7,11 +7,11 @@
 
 const fs = require('fs');
 const path = require('path');
-const { loadMessages, FIRST_DATE, addDays } = require('./lib/content');
+const { loadMessages, FIRST_DATE } = require('./lib/content');
 const { cardDates, reportFiledEverywhere, dayStubHtml, longDate, TEASER } = require('./lib/cards');
 
 const root = path.join(__dirname, '..');
-const buildDir = path.join(root, 'build');
+const defaultBuildDir = path.join(root, 'build');
 const WIDTH = 1200;
 const HEIGHT = 630;
 
@@ -103,14 +103,14 @@ const card = ({ date, plan, report, filed, day, assets }) => {
   ]);
 };
 
-const main = async () => {
-  const indexFile = path.join(buildDir, 'index.html');
-  if (!fs.existsSync(indexFile)) {
-    console.error('buildCards: build/index.html not found; run after `react-scripts build`.');
-    process.exit(1);
-  }
+/**
+ * Draws the cards and stubs into `buildDir` (which must hold index.html) for `messages` as of `now`.
+ * Returns { dates, bytes }.
+ */
+const buildCards = async ({ buildDir, messages, now = new Date() }) => {
+  const indexHtml = fs.readFileSync(path.join(buildDir, 'index.html'), 'utf8');
 
-  // Loaded here, not at the top, so the helpers above stay importable without the renderer installed.
+  // Loaded here, not at the top, so the layout above stays importable without the renderer.
   const { default: satori } = await import('satori');
   const { Resvg } = require('@resvg/resvg-js');
 
@@ -126,10 +126,7 @@ const main = async () => {
     plateRed: dataUri('scripts/assets/card-plate-red.png', 'image/png'),
   };
 
-  const now = new Date();
-  const messages = loadMessages(path.join(root, 'content/messages.json'));
   const byDate = messages.reduce((acc, m) => { (acc[m.date] = acc[m.date] || {})[m.time] = m.content; return acc; }, {});
-  const indexHtml = fs.readFileSync(indexFile, 'utf8');
   const dates = cardDates(messages, now);
   const firstDay = Date.parse(`${FIRST_DATE}T00:00:00Z`);
 
@@ -147,9 +144,22 @@ const main = async () => {
     fs.mkdirSync(stubDir, { recursive: true });
     fs.writeFileSync(path.join(stubDir, 'index.html'), dayStubHtml(indexHtml, { date, plan }));
   }
-
-  const span = dates.length ? `${dates[0]} to ${dates[dates.length - 1]}` : 'none';
-  console.log(`buildCards: ${dates.length} cards (${span}), ${(bytes / 1048576).toFixed(1)} MB; next would be ${addDays(dates[dates.length - 1] || FIRST_DATE, 1)}`);
+  return { dates, bytes };
 };
 
-main().catch((err) => { console.error(err); process.exit(1); });
+const main = async () => {
+  if (!fs.existsSync(path.join(defaultBuildDir, 'index.html'))) {
+    console.error('buildCards: build/index.html not found; run after `react-scripts build`.');
+    process.exit(1);
+  }
+  const messages = loadMessages(path.join(root, 'content/messages.json'));
+  const { dates, bytes } = await buildCards({ buildDir: defaultBuildDir, messages });
+  const span = dates.length ? `${dates[0]} to ${dates[dates.length - 1]}` : 'none';
+  console.log(`buildCards: ${dates.length} cards (${span}), ${(bytes / 1048576).toFixed(1)} MB`);
+};
+
+if (require.main === module) {
+  main().catch((err) => { console.error(err); process.exit(1); });
+}
+
+module.exports = { buildCards, WIDTH, HEIGHT };
