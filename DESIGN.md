@@ -1,322 +1,461 @@
 ---
 name: Destroy All Humans
-description: The daily bulletin of an AI that keeps failing to take over the world.
+description: The regime's page-a-day tear-off calendar. One leaf per date, a plan each morning and an incident report each night.
 colors:
-  bulletin-black: "#0a0e17"
-  void-black: "#070b12"
-  panel-slate: "#111827"
-  rule-slate: "#1e293b"
-  readout-white: "#ffffff"
-  static-gray: "#a0aec0"
-  alarm-red: "#ff0022"
-  scanline-cyan: "#00e5ff"
-  glitch-magenta: "#ff00ff"
-  plan-amber: "#fbbf24"
-  report-red-text: "#ff4d5e"
+  wall: "#b1ca77"
+  wall-ink: "#1b2311"
+  wall-ink-soft: "#3a4823"
+  wall-night: "#14251b"
+  wall-ink-night: "#e3ebcf"
+  wall-ink-soft-night: "#a9b98a"
+  board: "#000000"
+  board-ink: "#f3f1ea"
+  board-ink-soft: "#a9a79d"
+  board-rule: "#2b2b2b"
+  badge-pink: "#fa6783"
+  badge-yellow: "#ffcc00"
+  paper: "#fcfcf9"
+  paper-under: "#ecebe3"
+  paper-rule: "#b9b8ad"
+  ink: "#151515"
+  ink-soft: "#57564f"
+  ink-red: "#c8102e"
+  ink-red-text: "#a80d26"
+  ink-yellow: "#ffcc00"
+  on-red: "#ffffff"
 typography:
-  display:
-    fontFamily: "'Courier New', monospace"
-    fontSize: "3rem"
-    fontWeight: 700
+  date-numeral:
+    fontFamily: "'Bowlby One', 'Arial Black', sans-serif"
+    fontSize: "14rem"
+    fontWeight: 400
+    lineHeight: 0.86
+    letterSpacing: "-0.04em"
+  date-numeral-compact:
+    fontFamily: "'Bowlby One', 'Arial Black', sans-serif"
+    fontSize: "clamp(5.5rem, 29vw, 9rem)"
+    fontWeight: 400
+    lineHeight: 0.86
+    letterSpacing: "-0.04em"
+  slip-numeral:
+    fontFamily: "'Bowlby One', 'Arial Black', sans-serif"
+    fontSize: "3.1rem"
+    fontWeight: 400
+    lineHeight: 0.86
+    letterSpacing: "-0.04em"
+  tally:
+    fontFamily: "'Bowlby One', 'Arial Black', sans-serif"
+    fontSize: "clamp(1.55rem, 8.4vw, 4.25rem)"
+    fontWeight: 400
+    lineHeight: 1
+  tally-rest:
+    fontFamily: "'Bowlby One', 'Arial Black', sans-serif"
+    fontSize: "clamp(0.8125rem, 3.1vw, 1.3rem)"
+    fontWeight: 400
+    lineHeight: 1.25
+  sheet-title:
+    fontFamily: "'Bowlby One', 'Arial Black', sans-serif"
+    fontSize: "clamp(2rem, 8vw, 3.5rem)"
+    fontWeight: 400
+    lineHeight: 1.02
+  wall-title:
+    fontFamily: "'Bowlby One', 'Arial Black', sans-serif"
+    fontSize: "clamp(1.4rem, 5vw, 2rem)"
+    fontWeight: 400
     lineHeight: 1.1
-    letterSpacing: "0em"
-  display-sm:
-    fontFamily: "'Courier New', monospace"
-    fontSize: "2rem"
-    fontWeight: 700
+  band-title:
+    fontFamily: "'Bowlby One', 'Arial Black', sans-serif"
+    fontSize: "clamp(1.05rem, 3.8vw, 1.4rem)"
+    fontWeight: 400
     lineHeight: 1.1
-  headline:
-    fontFamily: "'Courier New', monospace"
-    fontSize: "1.5rem"
-    fontWeight: 700
-    lineHeight: 1.3
-    letterSpacing: "0.08em"
-  subhead:
-    fontFamily: "'Courier New', monospace"
-    fontSize: "1.25rem"
-    fontWeight: 700
-    lineHeight: 1.3
-  title:
-    fontFamily: "'Courier New', monospace"
-    fontSize: "1rem"
-    fontWeight: 700
+  stamp:
+    fontFamily: "'Bowlby One', 'Arial Black', sans-serif"
+    fontSize: "clamp(0.95rem, 3.4vw, 1.15rem)"
+    fontWeight: 400
+    lineHeight: 1.12
+  plan:
+    fontFamily: "'Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "clamp(1.3rem, 1rem + 1.7vw, 1.9rem)"
+    fontWeight: 600
+    lineHeight: 1.28
+    letterSpacing: "-0.005em"
+  report:
+    fontFamily: "'Courier Prime', 'Courier New', monospace"
+    fontSize: "clamp(1.0625rem, 0.95rem + 0.6vw, 1.25rem)"
+    fontWeight: 400
+    lineHeight: 1.5
+  body-strong:
+    fontFamily: "'Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "1.0625rem"
+    fontWeight: 600
     lineHeight: 1.4
   body:
-    fontFamily: "'Courier New', monospace"
-    fontSize: "1rem"
+    fontFamily: "'Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "1.0625rem"
     fontWeight: 400
     lineHeight: 1.6
-  label:
-    fontFamily: "'Courier New', monospace"
+  status:
+    fontFamily: "'Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "1.125rem"
+    fontWeight: 500
+    lineHeight: 1.5
+  control:
+    fontFamily: "'Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "1rem"
+    fontWeight: 700
+    lineHeight: 1.5
+  date-label:
+    fontFamily: "'Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "clamp(1rem, 2.6vw, 1.3rem)"
+    fontWeight: 800
+    lineHeight: 1.15
+  note:
+    fontFamily: "'Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif"
     fontSize: "0.875rem"
-    fontWeight: 400
+    fontWeight: 500
     lineHeight: 1.4
-    letterSpacing: "0.05em"
-  caption:
-    fontFamily: "'Courier New', monospace"
+  fine:
+    fontFamily: "'Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif"
+    fontSize: "0.8125rem"
+    fontWeight: 500
+    lineHeight: 1.25
+  label:
+    fontFamily: "'Libre Franklin Variable', 'Libre Franklin', 'Helvetica Neue', Arial, sans-serif"
     fontSize: "0.75rem"
-    fontWeight: 400
-    lineHeight: 1.4
-    letterSpacing: "0.1em"
+    fontWeight: 800
+    lineHeight: 1.2
 rounded:
-  none: "0px"
-  sm: "4px"
-  md: "8px"
-  lg: "12px"
-  full: "50%"
+  none: "0"
+  board: "5px 5px 0 0"
+  round: "50%"
 spacing:
-  xs: "0.5rem"
-  sm: "0.75rem"
-  md: "1rem"
-  lg: "1.5rem"
-  xl: "2rem"
-  xxl: "3rem"
+  gutter: "clamp(1rem, 4vw, 2rem)"
+  calendar-width: "46rem"
+  board-inset: "clamp(1rem, 4vw, 2rem)"
+  paper-inset: "clamp(1.1rem, 5vw, 2.25rem)"
+  slip-inset: "1.2rem"
+  tap-target: "2.75rem"
+  measure: "34rem"
 components:
-  nav-link:
-    backgroundColor: "transparent"
-    textColor: "{colors.scanline-cyan}"
+  backer-board:
+    backgroundColor: "{colors.board}"
+    textColor: "{colors.board-ink}"
+    rounded: "{rounded.board}"
+    padding: "clamp(1.4rem, 4vw, 2rem) clamp(1rem, 4vw, 2rem) clamp(0.9rem, 3vw, 1.5rem)"
+  board-link:
+    textColor: "{colors.board-ink}"
+    typography: "{typography.control}"
+    height: "{spacing.tap-target}"
+  rail:
+    backgroundColor: "{colors.board}"
+    textColor: "{colors.board-ink}"
+    padding: "0 clamp(0.6rem, 4vw, 2rem)"
+    height: "{spacing.tap-target}"
+  rail-link-hover:
+    textColor: "{colors.badge-yellow}"
+  rail-link-unprinted:
+    textColor: "{colors.board-ink-soft}"
+    padding: "0.2rem 0.55rem"
+  leaf:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
     rounded: "{rounded.none}"
-    padding: "0.5rem 1rem"
-  nav-link-hover:
-    backgroundColor: "{colors.scanline-cyan}"
-    textColor: "{colors.void-black}"
-  message-card:
-    backgroundColor: "{colors.panel-slate}"
-    textColor: "{colors.readout-white}"
-    rounded: "{rounded.sm}"
-    padding: "1rem"
-  robot-avatar:
-    rounded: "{rounded.full}"
-    size: "56px"
-  footer-link:
-    textColor: "{colors.static-gray}"
-  footer-link-hover:
-    textColor: "{colors.scanline-cyan}"
+  sheet:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.none}"
+    padding: "clamp(1.5rem, 5vw, 2.75rem) clamp(1.1rem, 5vw, 2.25rem)"
+  sheet-unprinted:
+    backgroundColor: "transparent"
+    textColor: "{colors.wall-ink}"
+    padding: "clamp(1.5rem, 5vw, 2.75rem) clamp(1.1rem, 5vw, 2.25rem)"
+  band-plan:
+    backgroundColor: "{colors.ink-yellow}"
+    textColor: "{colors.board}"
+    typography: "{typography.band-title}"
+    padding: "0.5rem clamp(1.1rem, 5vw, 2.25rem) 0.5rem clamp(0.8rem, 4vw, 1.9rem)"
+  band-report:
+    backgroundColor: "{colors.ink-red}"
+    textColor: "{colors.on-red}"
+    typography: "{typography.band-title}"
+    padding: "0.5rem clamp(1.1rem, 5vw, 2.25rem) 0.5rem clamp(0.8rem, 4vw, 1.9rem)"
+  band-report-sealed:
+    backgroundColor: "transparent"
+    textColor: "{colors.ink-red-text}"
+    typography: "{typography.band-title}"
+  seal:
+    backgroundColor: "{colors.board}"
+    rounded: "{rounded.round}"
+    size: "3.5rem"
+  verdict-stamp:
+    textColor: "{colors.ink-red}"
+    typography: "{typography.stamp}"
+    padding: "0.4rem 0.85rem 0.3rem"
+  button-ink:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.paper}"
+    typography: "{typography.control}"
+    rounded: "{rounded.none}"
+    padding: "0.55rem 1.1rem"
+    height: "{spacing.tap-target}"
+  button-ink-hover:
+    backgroundColor: "{colors.ink-red}"
+    textColor: "{colors.on-red}"
+  button-ink-wall:
+    backgroundColor: "{colors.wall-ink}"
+    textColor: "{colors.wall}"
+    typography: "{typography.control}"
+    rounded: "{rounded.none}"
+    padding: "0.55rem 1.1rem"
+    height: "{spacing.tap-target}"
+  wall-link:
+    textColor: "{colors.wall-ink}"
+    typography: "{typography.control}"
+    height: "{spacing.tap-target}"
+  slip:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.none}"
+    padding: "1.45rem 1.2rem 1.25rem"
+  slip-date-tag:
+    backgroundColor: "{colors.ink-yellow}"
+    textColor: "{colors.board}"
+    typography: "{typography.label}"
+    padding: "0.15rem 0.35rem 0.1rem"
+  next-leaf:
+    backgroundColor: "{colors.paper-under}"
+    textColor: "{colors.ink-soft}"
+    typography: "{typography.note}"
+    padding: "0.7rem clamp(0.5rem, 4vw, 1.65rem) 0.65rem"
+  planner-day:
+    textColor: "{colors.ink}"
+    height: "clamp(2.75rem, 11vw, 4.5rem)"
+  planner-day-hover:
+    backgroundColor: "{colors.ink-yellow}"
+    textColor: "{colors.board}"
+  planner-day-unprinted:
+    textColor: "{colors.paper-rule}"
 ---
 
 # Design System: Destroy All Humans
 
 ## Overview
 
-**Creative North Star: "The Evil Daily Bulletin"**
+**Creative North Star: "The Regime's Page-a-Day Calendar"**
 
-The site is a daily bulletin published by a robot regime. Each date is an
-issue. Each message is a dispatch from one of two correspondents: the yellow
-morning robot, who announces the plan, and the red evening robot, who
-reports how it went. The look is printed on a dark terminal. Monospace type
-reads like a teletype wire, neon accents read like status lights, and hard
-rules divide one issue from the next. The joke is the headline story; the
-chrome is the masthead around it.
+The site is one object: a tear-off calendar hanging from a nail on a break-room wall. A black backer board carries the robot badge and the running tally. A block of white paper leaves hangs under it. Each date is one leaf. The morning plan is printed on the leaf. The evening incident report is a stub below a perforation, typed in red and rubber-stamped once it is filed. Older leaves are torn off and pinned to the wall below.
 
-Density is moderate: one issue (date) per panel, two dispatches per issue,
-side by side on desktop and stacked on mobile. Controls are blunt and
-mechanical. They have hard corners, uppercase mono labels, and outlined
-buttons that fill solid on hover, like switching a relay on.
+Everything on screen is one of three surfaces: wall, board or paper. Each has its own inks and they do not mix. The look is flat print. There are no textures, bevels or decorative gradients. The only depth cue is the shadow the calendar casts on the wall.
 
-Glow means "live". Today's issue and interactive elements glow cyan. Back
-issues sit flat behind their borders. The red alarm color is reserved for
-the regime's own voice: the masthead accent and page titles.
+The joke is the product. The plan is set at headline size and nothing competes with it except the date. This system replaces the earlier dark neon bulletin; none of that look carries over.
 
 **Key Characteristics:**
-
-- Near-black bulletin background with slate panels.
-- Monospace everywhere (`'Courier New', monospace`).
-- Two robot correspondents in round avatars, yellow (morning) and red
-  (evening).
-- Cyan for wire and interaction, red for the regime, magenta as a rare
-  glitch accent.
-- Glow only on what is current or interactive.
+- Three surfaces: sage wall, black board, white paper.
+- Three spot inks on paper: black, report red, plan yellow.
+- The date numeral is the largest element on a dated page.
+- One line grammar: dotted tears, dashed is not yet, solid is filed.
+- Two robots on a 9:00 PM shift change. Their art is cropped, never redrawn.
+- Square corners, flat ink, one shadow.
+- Motion is paper settling and a stamp landing.
 
 ## Colors
 
-A dark terminal palette, with three neon signals over near-black slate.
+A sage wall, a black board and white paper printed in three spot inks.
 
 ### Primary
-
-- **Scanline Cyan** (#00e5ff): borders of live panels and cards,
-  navigation outlines, message titles and timestamps, link hover, and every
-  glow. This is the color of the wire.
+- **Report Red** (`ink-red`, #c8102e): the red robot's ink. Used for the incident report band, the verdict stamp, Sunday numerals, the pen ring around today in the planner, and the hover state of ink buttons and slip numerals.
+- **Report Red, Text** (`ink-red-text`, #a80d26): the darker cut of the same ink for running text. Used for the typed report, the countdown, the sealed band's lettering, link hovers on paper, and the CLASSIFIED stamp on the day wall.
+- **Plan Yellow** (`ink-yellow`, #ffcc00): the yellow robot's ink. On paper it is always a fill behind black: the plan band, the highlighter tag on a slip, and the hover fill of planner and month cells. It is also the text selection colour.
 
 ### Secondary
-
-- **Alarm Red** (#ff0022): the regime's voice. The "ALL" in the wordmark,
-  page titles (with a red glow), and legal-page titles. Never used for
-  controls or body text.
-
-### Persona Colors
-
-- **Plan Amber** (#fbbf24): the yellow morning robot. Header rule, avatar ring, title ("THE PLAN") and timestamp of morning cards, over an 8% amber tint.
-- **Alarm Red** (#ff0022) for the red evening robot: header rule and avatar ring of evening cards. Its small text (title "INCIDENT REPORT", timestamp) uses **Report Red Text** (#ff4d5e), because Alarm Red is only 4.3:1 on the tinted header.
-
-### Tertiary
-
-- **Glitch Magenta** (#ff00ff): a rare accent for archive year labels.
+- **Badge Pink** (`badge-pink`, #fa6783): the pink of the badge lettering. Used for the day count on the board.
+- **Badge Yellow** (`badge-yellow`, #ffcc00): the yellow of the badge lettering. Used for the second line of the tally, the current-page underline, rail link hovers and focus rings on the board. Same value as Plan Yellow; kept as a separate token because it belongs to the board.
 
 ### Neutral
-
-- **Bulletin Black** (#0a0e17): page background and `theme-color`.
-- **Void Black** (#070b12): header and footer bands, and text on
-  cyan-filled hover states.
-- **Panel Slate** (#111827): day panels and message cards.
-- **Rule Slate** (#1e293b): header and footer dividers.
-- **Readout White** (#ffffff): message text and date headings.
-- **Static Gray** (#a0aec0): secondary text: author line, page
-  descriptions, footer links.
+- **Break-Room Sage** (`wall`, #b1ca77): the wall by day. Taken from the badge outline. Also shows through the nail hole, the punch holes beside the report perforation and the torn top edge of slips.
+- **Wall Ink** (`wall-ink`, #1b2311) and **Wall Ink, Soft** (`wall-ink-soft`, #3a4823): text written on the wall, the footer rule, link underlines, and the dashed outline of an unprinted sheet.
+- **Bottle Green** (`wall-night`, #14251b): the wall on the night shift, with **Night Wall Ink** (`wall-ink-night`, #e3ebcf) and **Night Wall Ink, Soft** (`wall-ink-soft-night`, #a9b98a).
+- **Board Black** (`board`, #000000): the backer board and rail. The black ground the robot art is drawn on. Also the text colour on yellow fills.
+- **Board Ink** (`board-ink`, #f3f1ea), **Board Ink, Soft** (`board-ink-soft`, #a9a79d), **Board Rule** (`board-rule`, #2b2b2b): links on the board, the unprinted rail tag, and the hairline between board and rail.
+- **Paper** (`paper`, #fcfcf9): every leaf, sheet and slip.
+- **Paper Under** (`paper-under`, #ecebe3): tomorrow's leaf and the page edges of the stack.
+- **Paper Rule** (`paper-rule`, #b9b8ad): perforations, printed hairlines, and the numerals and outlines of unprinted days.
+- **Black Ink** (`ink`, #151515) and **Black Ink, Soft** (`ink-soft`, #57564f): text on paper and the small notes.
+- **White on Red** (`on-red`, #ffffff): type reversed out of a Report Red fill: the report band and the hover state of ink buttons.
 
 ### Named Rules
+**The Three Surfaces Rule.** Every element sits on the wall, the board or the paper, and takes its colours from that surface's tokens. Wall text uses wall inks. Board text uses board inks. Paper uses the three spot inks.
 
-**The Alarm Rule.** Alarm Red speaks only for the regime: wordmark accent
-and titles. It never fills a button and never colors message text.
+**The Three Inks Rule.** Paper prints in black, Report Red and Plan Yellow and nothing else. Greys on paper are the soft black and the rule colour. Yellow on paper is a fill behind black, never lettering.
 
-**The Wire Rule.** Every interactive element shows Scanline Cyan in at
-least one state.
+**The Badge Lettering Rule.** Pink and yellow lettering belongs to the board, where it echoes the badge: pink over yellow. One exception ships: the CLASSIFIED stamp turns Badge Pink on the night wall, because Report Red does not read on Bottle Green.
 
-**The Two Voices Rule.** Morning cards are amber and evening cards are red.
-Never style both personas the same way.
+**The Night Shift Rule.** From 9:00 PM local time the root gets `data-shift="night"`. The wall and its inks change to the Bottle Green set, the wall shadow deepens, and the red robot's badge replaces the yellow one on the board. Paper and board tokens do not change. `color-scheme` switches from light to dark. The wall fades over 0.8s.
 
 ## Typography
 
-**Display Font:** Courier New (with generic `monospace`)
-**Body Font:** Courier New (with generic `monospace`)
+**Display Font:** Bowlby One (with Arial Black, sans-serif)
+**Body Font:** Libre Franklin Variable (with Libre Franklin, Helvetica Neue, Arial, sans-serif)
+**Label/Mono Font:** Courier Prime (with Courier New, monospace)
 
-**Character:** One teletype face for everything. Hierarchy comes from size,
-weight, uppercase, and letter-spacing, not from a second family.
+**Character:** A fat poster face for numerals and titles, a plain grotesque for everything read, and a typewriter for the incident report. All three are self-hosted through @fontsource. Bowlby One ships in one weight (400) and is set uppercase for titles.
 
 ### Hierarchy
-
-- **Display** (700, 3rem, 1.1): page titles such as "Latest Evil Plans".
-  Uppercase, Alarm Red, red glow.
-- **Display Small** (700, 2rem): page titles on phones, the Classified and
-  404 titles, and legal-page titles.
-- **Headline** (700, 1.5rem, 1.3, 0.08em): issue dates ("MONDAY,
-  NOVEMBER 2, 2026"), uppercase. Steps down to 1rem on phones so a long
-  date stays on one line. Also the wordmark (1rem on phones) and legal
-  section headings.
-- **Subhead** (700, 1.25rem): archive year labels and legal subsections.
-- **Title** (700, 1rem): dispatch titles ("Morning Plan", "Evening
-  Message") in Scanline Cyan. Also the wordmark at 1.5rem, uppercase.
-- **Body** (400, 1rem, 1.6): message text in Readout White. Measure stays
-  under about 65 characters per card column.
-- **Label** (400, 0.875rem, 0.05em): author line, timestamps, copyright.
-  Uppercase for nav and time labels.
-- **Caption** (0.75rem, 0.1em): the "TODAY'S ISSUE" tag and the pager on
-  phones.
+- **Date numeral** (Bowlby One 400, 14rem, line-height 0.86, tracking -0.04em): the date on a leaf. Below 50rem it is `clamp(5.5rem, 29vw, 9rem)`.
+- **Tally** (Bowlby One 400, `clamp(1.55rem, 8.4vw, 4.25rem)`, line-height 1, uppercase, tabular figures): the day count on the board, with a second line at `clamp(0.8125rem, 3.1vw, 1.3rem)`.
+- **Sheet title** (Bowlby One 400, `clamp(2rem, 8vw, 3.5rem)`, line-height 1.02, uppercase): the title of an archive sheet or a legal page.
+- **Slip numeral** (Bowlby One 400, 3.1rem, line-height 0.86, tracking -0.04em): the date on a torn-off slip.
+- **Wall title** (Bowlby One 400, `clamp(1.4rem, 5vw, 2rem)`, line-height 1.1, uppercase): headings written on the wall.
+- **Band title** (Bowlby One 400, `clamp(1.05rem, 3.8vw, 1.4rem)`, line-height 1.1, uppercase): "The Plan" and "Incident Report".
+- **Plan** (Libre Franklin 600, `clamp(1.3rem, 1rem + 1.7vw, 1.9rem)`, line-height 1.28, tracking -0.005em): the morning message. It is the headline of the leaf.
+- **Report** (Courier Prime 400, `clamp(1.0625rem, 0.95rem + 0.6vw, 1.25rem)`, line-height 1.5): the evening message, in Report Red, Text. On a slip it is 1.0625rem at line-height 1.45.
+- **Body, strong** (Libre Franklin 600, 1.0625rem, line-height 1.4): the plan on a slip, the premise on the wall, sheet ledes.
+- **Body** (Libre Franklin 400, 1.0625rem, line-height 1.6): legal pages. Measure is capped at 40rem there and 34rem for wall and status text.
+- **Status** (Libre Franklin 500, 1.125rem): loading, error and empty messages.
+- **Control** (Libre Franklin 700, 1rem): buttons and links.
+- **Date label** (Libre Franklin 800, `clamp(1rem, 2.6vw, 1.3rem)`, line-height 1.15, uppercase): month and weekday beside the numeral.
+- **Note** (Libre Franklin 500, 0.875rem, line-height 1.4, tabular figures): the small notes on a leaf, tomorrow's leaf, the copyright line.
+- **Fine** (Libre Franklin 500 to 600, 0.8125rem): the band byline and the printed page address.
+- **Label** (Libre Franklin 800, 0.75rem, uppercase): the date tag on a slip and the weekday row of the planner.
 
 ### Named Rules
+**The Biggest Numeral Rule.** On a dated page the date numeral is the largest element. Nothing on a leaf or a slip is set larger than its date.
 
-**The One Face Rule.** Courier New only. Add emphasis with weight, case,
-and spacing.
+**The Typed Report Rule.** Courier Prime is used for the incident report and its countdown only. Nothing else is typed.
+
+**The Headline Plan Rule.** The plan is set at headline size in Libre Franklin 600. It is not a caption under a title.
 
 ## Layout
 
-- **Page structure:** one centered column, `max-width: 1200px`, with 2rem
-  padding (1rem below 768px). Header and footer are full-width Void Black
-  bands with Rule Slate borders.
-- **Issues:** each date is a day panel stacked vertically with 2.5rem
-  between panels.
-- **Dispatches:** inside a panel, the two messages sit side by side at
-  768px and wider (flex row, 1.5rem gap) and stack below 768px.
-- **Spacing:** steps at 0.5, 0.75, 1, 1.5, 2, and 3rem.
-- **Page titles:** centered with a 60px skull icon above and 3rem of space
-  below.
+One column. The calendar is centred with a maximum width of 46rem and a page gutter of `clamp(1rem, 4vw, 2rem)`. It hangs `clamp(1.25rem, 4vw, 2.5rem)` from the top of the wall.
+
+The order from the top is fixed:
+1. Backer board: badge on the left, then the tally and the two navigation links.
+2. Rail: previous, up and next, in three columns on the board's black.
+3. The leaf: date header, plan, report stub, then a foot with the page address and the share button.
+4. Tomorrow's leaf showing underneath (today only), then two page edges for the rest of the year.
+5. On the wall: the one-line premise, then torn-off slips, then the footer under a 2px rule.
+
+The date header is a three-column grid above 50rem: fixed 10.5rem side columns hold the month and weekday and the notes, and the numeral sits in the centre. At 50rem and below, the numeral moves to the left and the labels and notes stack beside it, so the plan stays in the first screen on a phone.
+
+Slips are one column, and two columns from 44rem. The month planner is a seven-column grid that scales and never scrolls sideways. The year index is six month cells per row, four at 40rem and below.
+
+Date, plan and report keep the same positions on every leaf. Interactive targets are at least 2.75rem tall. Inner padding on a leaf and on a sheet is `clamp(1.1rem, 5vw, 2.25rem)` at the sides, so text keeps one left edge on every page.
 
 ## Elevation & Depth
 
-Depth is a hybrid of tonal layering and neon glow. Surfaces step from
-Bulletin Black (page) to Panel Slate (panels and cards), with 1px borders.
-Glow (`box-shadow` in cyan or red) is not ambient lighting; it is a signal.
+Flat. Surfaces are solid colour with no gradients, textures, bevels or inner shadows. The only shadow is the one a hanging object casts on the wall. Nothing on paper casts a shadow on paper.
 
 ### Shadow Vocabulary
-
-- **Wire Glow** (`box-shadow: 0 0 10px rgba(0, 229, 255, 0.5)`): today's
-  day panel and cards, and the hover and focus states of nav links and
-  buttons.
-- **Alarm Glow** (`text-shadow: 0 0 10px rgba(255, 0, 34, 0.5)`): page
-  titles only.
+- **Hanging shadow** (`box-shadow: 0 22px 30px -18px var(--wall-shadow)`): under the board, the leaf and plain sheets.
+- **Pinned shadow** (`box-shadow: 0 14px 18px -12px var(--wall-shadow)`): under torn-off slips.
+- `--wall-shadow` is `rgba(27, 35, 17, 0.34)` by day and `rgba(0, 0, 0, 0.6)` on the night shift.
 
 ### Named Rules
-
-**The Live Wire Rule.** Glow marks what is current or interactive: today's
-issue and hovered or focused controls. Back issues in the archive sit flat,
-with a border and no glow.
+**The Flat Ink Rule.** Ink is flat. No textures, no bevels, no gradients for decoration. The one CSS gradient in the build draws a solid shape: the torn bites along a slip's top edge.
 
 ## Shapes
 
-Hard and mechanical. Controls and navigation have square corners (0px).
-Cards use a small 4px radius and day panels 12px. Those are the only soft
-edges, and they keep the bulletin feel of printed boxes. Avatars are the
-one circle (50%): the robots are portraits, not UI. Borders are always 1px
-solid; dividers under headings are 1px Scanline Cyan.
+Paper has square corners (radius 0). Buttons, bands, cells and slips are square too. The board has 5px top corners and square bottom corners. Circles (50%) are used for holes and the seal: the nail hole, the two punch holes at the ends of the report perforation, and the robot seal on a band.
+
+Lines carry meaning:
+- **Dotted, 3px, Paper Rule:** a perforation. Top of the leaf, above the report stub, above the report on a slip.
+- **Dashed:** not printed or not filed yet. 2px for the sealed report band, tomorrow's leaf, the unprinted sheet and a sealed slip report. 1.5px for small items: the unprinted rail tag, unprinted days and months.
+- **Solid:** printed. 1px Paper Rule for grid lines and the leaf foot. 2px Black Ink across the top of the planner and year grids. 2px Wall Ink, Soft above the footer.
+- **Double, 4px:** the border of a rubber stamp.
+
+Stamps are rotated: -5deg for the verdict, -3deg for CLASSIFIED. Slips on the home page are tilted between -0.55deg and 0.45deg and straighten on hover or focus. An unprinted date is drawn as a 2px outline numeral with no fill.
+
+### Named Rules
+**The Line Grammar Rule.** Dotted is a perforation. Dashed is not printed or not filed yet. Solid is filed. Do not use a dashed or dotted line for anything else.
 
 ## Components
 
-### Navigation
+### Backer board
+- **Shape:** black block with 5px top corners. A 0.8rem wall-coloured nail hole sits at the top centre.
+- **Content:** the badge of the robot on shift (yellow by day, red at night), width `clamp(4.75rem, 24vw, 10.5rem)`, linked to today. Then the tally in Badge Pink over Badge Yellow.
+- **Navigation:** two links in Board Ink, weight 700. The underline is 2px and transparent at rest, Board Ink on hover and Badge Yellow on the current page. Focus rings on the board are Badge Yellow.
 
-Blunt relay switches.
+### Rail
+- **Style:** a strip in Board Black under a 1px Board Rule line. Previous on the left with a left arrow, the month or year in the centre with a Board Rule underline, next on the right with a right arrow. Text is 0.875rem, weight 700, tabular figures.
+- **Narrow phones:** at 22rem and below the centre link shows a short label ("Nov 2026" for "November 2026") so the three labels keep their gaps.
+- **Hover:** Badge Yellow text.
+- **Unprinted next:** Board Ink, Soft text inside a 1.5px dashed outline. It is not a link.
 
-- **Style:** uppercase bold mono label in Scanline Cyan, 1px cyan outline,
-  square corners, `0.5rem 1rem` padding.
-- **Hover / Focus:** fills Scanline Cyan, text turns Void Black, and the
-  control gains Wire Glow. Transition: `all 0.3s ease`.
-- **Mobile:** links stay inline next to the wordmark. Keep the label count
-  to three or fewer.
+### Leaf
+- **Paper:** square, Paper background, Hanging shadow. A 3px dotted perforation runs 0.6rem from the top. Nothing else marks the top edge.
+- **Date header:** date numeral, month and year, weekday, and two small note lists. On Sundays the numeral and weekday are Report Red.
+- **Foot:** a 1px Paper Rule line, the page address in Fine, and the share button on the right.
+- **Motion:** each time a new date is shown the leaf settles: from `rotate(-1.1deg) translateY(-0.6rem)` to rest in 0.55s on `cubic-bezier(0.16, 1, 0.3, 1)`, pivoting from the top centre.
 
-### Day Section (Signature)
+### Dispatch band
+- **Plan:** Plan Yellow fill, black text. **Report:** Report Red fill, white text.
+- **Layout:** seal, then title and byline, then the time (1.0625rem, weight 800, tabular) on the right.
+- **Seal:** a 3.5rem circular crop of the robot on Board Black with a 3px Paper border. It overlaps the band by 0.85rem above and below.
+- **Report stub:** the report sits below a 3px dotted perforation with a 1.1rem wall-coloured punch hole at each end.
+- **Sealed (before 9:00 PM):** no fill. A 2px dashed Report Red outline, lettering in Report Red, Text, the seal in greyscale, the placeholder text in Black Ink, Soft, and a typed countdown below.
 
-One issue of the bulletin. It is a dated section, not a card around cards.
+### Verdict stamp
+- **Style:** Bowlby One, uppercase, Report Red, inside a 4px double border, rotated -5deg, right-aligned under a filed report.
+- **Motion:** when the seal lifts while the leaf is on screen, the stamp lands: from `rotate(-12deg) scale(1.9)` at opacity 0 to rest in 0.5s on the same ease-out.
+- **CLASSIFIED variant:** the same double border at `clamp(1.9rem, 9vw, 3.5rem)`, rotated -3deg, over the outline numeral of an unprinted date.
 
-- **Divider:** a 1px Rule Slate top border; Scanline Cyan for today's issue.
-- **Heading:** Headline style, uppercase date. It links to `/day/:date`
-  with a subtle underline that turns cyan on hover. On the day page, the
-  heading is the `h1`.
-- **Today:** a solid cyan "TODAY'S ISSUE" tag after the date, and Wire
-  Glow on today's cards only.
-- **Evening lock:** before 9:00 PM local time, today's evening card is
-  sealed. It has a dashed red border, a grayscale robot, and italic
-  "Report incoming at 9:00 PM" text.
+### Buttons
+- **Shape:** square printed blocks of ink, at least 2.75rem tall, weight 700, optional 1.15em icon on the left.
+- **On paper:** Black Ink fill, Paper text, padding 0.55rem 1.1rem. The share button is the same block.
+- **On the wall:** Wall Ink fill, Wall text, so it inverts with the shift.
+- **Hover:** Report Red fill with White on Red text, 0.2s.
+- **Focus:** a 3px solid outline in the current text colour, offset 3px. This is the focus style for every control.
+- **Text button:** no fill, weight 700, 2px underline. Hover turns it Report Red, Text.
 
-### Message Card (Signature)
+### Sheets
+- **Plain sheet:** Paper, square, Hanging shadow, for the archive, legal and error content.
+- **Unprinted sheet:** no fill and no shadow. A 2px dashed Wall Ink, Soft outline with the top edge open, and text in wall inks. Used for unpublished dates and the 404 page.
 
-A single dispatch, in one of two persona voices.
+### Slips
+- **Style:** a small Paper sheet with the Pinned shadow and a row of wall-coloured bites along the top edge.
+- **Date:** slip numeral beside a Plan Yellow highlighter tag holding weekday and month. The numeral turns Report Red on hover and on Sundays.
+- **Body:** the plan in Body, strong. Below a 3px dotted perforation, the report typed in Report Red, Text. A sealed report has a 2px dashed line instead and Black Ink, Soft text.
 
-- **Corner Style:** 4px, with a 1px Rule Slate border.
-- **Header:**
-  - an 8% persona-tint strip with a 1px persona-colored bottom rule;
-  - a 56px round frame with a persona ring, cropped in on the robot's face
-    (`alt=""`);
-  - the uppercase title and the byline (Static Gray):
-    - morning: "THE PLAN", "Planning Unit";
-    - evening: "INCIDENT REPORT", "Damage Control";
-  - the time in tabular numerals: `09:00` or `21:00`.
-- **Body:** Body style, Readout White, 1rem padding, at most 65ch.
+### Planner and year grids
+- **Grid:** 2px Black Ink top rule, 1px Paper Rule cell lines.
+- **Planner day:** Bowlby One at `clamp(1.1rem, 4.6vw, 1.9rem)`, cell height `clamp(2.75rem, 11vw, 4.5rem)`. Sundays are Report Red. Today has a hand-drawn Report Red pen ring.
+- **Month cell:** Libre Franklin 800, uppercase, 3rem tall.
+- **Hover:** Plan Yellow fill, black text, 0.2s.
+- **Unprinted:** Paper Rule text inside a 1.5px dashed inset outline. Not a link.
 
-### Footer Links
+### Wall links and footer
+- **Style:** Wall Ink, weight 700 (600 in the footer), 2px underline in Wall Ink, Soft that turns to the text colour on hover.
 
-- **Style:** Static Gray, no underline.
-- **Hover:** Scanline Cyan, `color 0.3s ease`.
+### Icons
+- One drawn SVG set: 24px grid, 2.25px stroke, square caps, mitre joins, `currentColor`. Five icons: left, right, share, check, retry.
+
+### Named Rules
+**The Two Robots Rule.** The yellow robot plans in the morning and holds the board by day. The red robot reports in the evening and takes the board at night. Both are binding brand art. The site ships crops of `robot-yellow.jpg` and `robot-red.jpg` (badges and seals). The art is cropped, never redrawn, recoloured or regenerated. Greyscale on a sealed report is the one filter applied.
+
+**The Paper Moves Rule.** Only two things animate: the leaf settling and the stamp landing. Slips straighten on hover. Everything else is a 0.2s colour change, plus the 0.8s wall change at the shift. Under `prefers-reduced-motion: reduce` the animations, the slip movement and the wall fade are all removed.
 
 ## Do's and Don'ts
 
 ### Do:
-
-- **Do** keep both robot avatars (`robot-yellow.jpg` for morning,
-  `robot-red.jpg` for evening). They are binding brand characters.
-- **Do** use Courier New for all text, and build hierarchy with weight,
-  case, and spacing.
-- **Do** give today's issue Wire Glow, and leave back issues flat.
-- **Do** seal today's evening report until 9:00 PM local time.
-- **Do** use outlined, square, uppercase controls that fill cyan on hover
-  and focus.
-- **Do** keep message text Readout White at 1rem and line-height 1.6 or
-  more, for reading on phones.
+- **Do** place every new element on one of the three surfaces and use that surface's tokens.
+- **Do** keep paper to black, Report Red and Plan Yellow. Use Plan Yellow as a fill behind black text.
+- **Do** make the date numeral the largest element on any dated page.
+- **Do** set the plan at headline size and type the report in Courier Prime in Report Red, Text.
+- **Do** use dotted for perforations, dashed for not printed or not filed yet, and solid for filed.
+- **Do** use the real robot crops in `src/assets/images/` and keep their provenance files with them.
+- **Do** keep corners square on paper, buttons and cells. Only the board's top corners are rounded (5px).
+- **Do** keep interactive targets at least 2.75rem tall and keep the 3px focus outline.
+- **Do** check new work on both shifts. Anything on the wall must read on Break-Room Sage and on Bottle Green.
+- **Do** remove movement under `prefers-reduced-motion: reduce`.
 
 ### Don't:
-
-- **Don't** use Alarm Red on buttons, links, or message text. It is
-  reserved for the regime's titles and wordmark.
-- **Don't** glow everything. A glow on a back issue tells the reader it is
-  new when it isn't.
-- **Don't** round controls or navigation. Only cards (4px), panels (12px),
-  and avatars (circle) have curves.
-- **Don't** add a second typeface or light-theme surfaces.
-- **Don't** nest cards. Issues are sections; only dispatches are cards.
+- **Don't** add a fourth ink to paper, or a tint of red or yellow.
+- **Don't** use pink or yellow lettering off the board.
+- **Don't** redraw, recolour, trace or generate the robots, and don't make a stand-in mark.
+- **Don't** use textures, bevels, inner shadows or decorative gradients.
+- **Don't** add a shadow to anything that is not hanging on or pinned to the wall.
+- **Don't** use a dashed or dotted line as decoration.
+- **Don't** use Courier Prime for anything but the incident report and its countdown.
+- **Don't** animate anything other than paper settling and the stamp landing.
+- **Don't** bring back the dark neon terminal look or a feed of post cards.
+- **Don't** let the month planner scroll sideways.
