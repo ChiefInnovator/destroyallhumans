@@ -46,7 +46,7 @@ Destroy All Humans is a daily satirical comic told in text. A fictional AI that 
 ## Brand Commitments
 
 - **Name and wordmark:** "Destroy All Humans", at `destroyallhumans.ai`.
-- **Two robot avatars (binding):** `src/assets/images/robot-yellow.jpg` (morning, comic) and `src/assets/images/robot-red.jpg` (evening, ominous). Future design work keeps both characters. The site ships crops of these two files (`badge-*.webp`, `seal-*.webp`, the app icons); the art is never redrawn.
+- **Two robot avatars (binding):** `src/assets/images/robot-yellow.jpg` (morning, comic) and `src/assets/images/robot-red.jpg` (evening, ominous). Future design work keeps both characters. The site ships crops of these two files (`badge-*.webp`, `plate-*.webp`, the app icons); the art is never redrawn. Both robots are shown large on every dated page.
 - **Voice:** comedy first, provocation second. It is pure satire with no real threats, and it follows the limits in `content/VOICE.md`.
 - **Not binding:** the palette and the typography. The skull logo was retired in the calendar redesign (v1.0.0).
 
@@ -61,7 +61,7 @@ Destroy All Humans is a daily satirical comic told in text. A fictional AI that 
 
 1. **Today's message comes first.** A visitor sees today's plan without scrolling or choosing.
 2. **Every day stands alone and can be shared.** A single day's page is complete without the rest of the site.
-3. **The joke is the product.** UI never competes with the message text for attention.
+3. **The joke is the product.** UI never competes with the message text for attention. The date is a header, never the hero.
 4. **The two robots are characters, not decoration.** Morning and evening must feel like two distinct voices.
 5. **It is a daily ritual.** The design signals what is new today and that more is coming tonight or tomorrow.
 

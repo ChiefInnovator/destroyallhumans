@@ -104,51 +104,41 @@
   border-top: 3px dotted var(--paper-rule);
 }
 
+/* The date line: a calendar's date, kept small so the day's words lead the page. */
 .leaf-date {
-  display: grid;
-  /* Fixed side columns: the notes hold their place whatever the date's width. */
-  grid-template-columns: 10.5rem minmax(0, 1fr) 10.5rem;
-  grid-template-areas:
-    'month num weekday'
-    'year num uprising';
-  column-gap: 1rem;
-  padding: clamp(1.9rem, 5vw, 2.6rem) clamp(1.1rem, 5vw, 2.25rem) clamp(1.1rem, 3vw, 1.6rem);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem clamp(0.75rem, 2.5vw, 1.25rem);
+  padding: 1.6rem var(--paper-inset) 1rem;
 }
 
-.leaf-month,
-.leaf-weekday {
-  font-size: clamp(1rem, 2.6vw, 1.3rem);
-  font-weight: 800;
+.leaf-day {
+  font-weight: 400;
+}
+
+.leaf-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(3.25rem, 9vw, 5.25rem);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+}
+
+.leaf-when {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(0.9375rem, 2.4vw, 1.3rem);
   line-height: 1.15;
   text-transform: uppercase;
 }
 
-.leaf-month {
-  grid-area: month;
-}
-
-.leaf-month span {
-  display: block;
-}
-
 .leaf-weekday {
-  grid-area: weekday;
-  text-align: right;
+  font-weight: 800;
 }
 
-.leaf-day {
-  grid-area: num;
-  justify-self: center;
-  font-weight: 400;
-}
-
-/* The date is the largest thing on any page. */
-.leaf-num {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 14rem;
-  line-height: 0.86;
-  letter-spacing: -0.04em;
+.leaf-month {
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .leaf--sunday .leaf-num,
@@ -157,27 +147,18 @@
 }
 
 .leaf-notes {
-  align-self: end;
-  font-size: 0.875rem;
+  margin-left: auto;
+  font-size: 0.8125rem;
   font-weight: 500;
   line-height: 1.4;
+  text-align: right;
   color: var(--ink-soft);
   font-variant-numeric: tabular-nums;
-  text-wrap: balance;
-}
-
-.leaf-notes--year {
-  grid-area: year;
-}
-
-.leaf-notes--uprising {
-  grid-area: uprising;
-  text-align: right;
 }
 
 .leaf-status {
   min-height: 11rem;
-  padding: 1.25rem clamp(1.1rem, 5vw, 2.25rem) 2rem;
+  padding: 1.25rem var(--paper-inset) 2rem;
   font-size: 1.125rem;
   font-weight: 500;
   color: var(--ink-soft);
@@ -188,17 +169,35 @@
   color: var(--ink);
 }
 
-/* A dispatch: a band of the robot's ink, then its words. */
+/* The spread: the plan and the report. This is the page. */
+.spread {
+  display: grid;
+}
+
+/*
+ * A dispatch: a band of the robot's ink, the robot itself, then its words.
+ * Sizes follow the dispatch's own width, so they hold whether it stacks or sits two-up.
+ */
 .dispatch {
   position: relative;
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.dispatch-band,
+.dispatch-body {
+  --plate: 5.75rem;
+  --plate: clamp(5.75rem, 23cqi, 10.5rem);
 }
 
 .dispatch-band {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem clamp(1.1rem, 5vw, 2.25rem) 0.5rem clamp(0.8rem, 4vw, 1.9rem);
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  align-content: center;
+  column-gap: 0.75rem;
+  min-height: 3.5rem;
+  padding: 0.45rem var(--paper-inset) 0.45rem calc(var(--paper-inset) + var(--plate) + 1rem);
 }
 
 .dispatch--morning .dispatch-band {
@@ -211,22 +210,17 @@
   color: var(--on-red);
 }
 
-/* The robot signs its band; the portrait breaks out of it. */
-.dispatch-seal {
-  position: relative;
-  width: 3.5rem;
-  height: 3.5rem;
-  margin: -0.85rem 0;
-  border: 3px solid var(--paper);
-  border-radius: 50%;
-  background-color: var(--board);
-  object-fit: cover;
+/* The title takes the full line; the byline and the hour share the one under it. */
+.dispatch-id {
+  display: contents;
 }
 
 .dispatch-title {
+  grid-column: 1 / -1;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(1.05rem, 3.8vw, 1.4rem);
+  font-size: 1.05rem;
+  font-size: clamp(1.05rem, 4.2cqi, 1.6rem);
   line-height: 1.1;
   text-transform: uppercase;
 }
@@ -235,25 +229,37 @@
   font-size: 0.8125rem;
   font-weight: 600;
   line-height: 1.25;
+  white-space: nowrap;
 }
 
 .dispatch-time {
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
   font-weight: 800;
+  line-height: 1.25;
   font-variant-numeric: tabular-nums;
 }
 
 .dispatch-body {
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem clamp(1.1rem, 5vw, 2.25rem) 1.9rem;
+  display: flow-root;
+  padding: 1.25rem var(--paper-inset) 1.9rem;
+}
+
+/* The robot's portrait, on the black the art was drawn on. It breaks up out of the words into the band. */
+.dispatch-plate {
+  position: relative;
+  float: left;
+  width: var(--plate);
+  height: var(--plate);
+  margin: -3.1rem 1rem 0.35rem 0;
+  background-color: var(--board);
 }
 
 /* The plan is the headline. */
 .dispatch--morning .dispatch-text {
-  font-size: clamp(1.3rem, 1rem + 1.7vw, 1.9rem);
+  font-size: 1.3rem;
+  font-size: clamp(1.3rem, 4.5cqi, 2.2rem);
   font-weight: 600;
-  line-height: 1.28;
+  line-height: 1.26;
   letter-spacing: -0.005em;
   text-wrap: pretty;
 }
@@ -286,22 +292,19 @@
 
 .dispatch--evening .dispatch-text {
   font-family: var(--font-typed);
-  font-size: clamp(1.0625rem, 0.95rem + 0.6vw, 1.25rem);
-  line-height: 1.5;
+  font-size: 1.125rem;
+  font-size: clamp(1.125rem, 3.5cqi, 1.6rem);
+  line-height: 1.45;
   color: var(--ink-red-text);
   text-wrap: pretty;
 }
 
-/* Dashed means not filed yet. */
+/* Dashed means not filed yet. The robot is already at its desk. */
 .dispatch--sealed .dispatch-band {
   background-color: transparent;
   color: var(--ink-red-text);
   outline: 2px dashed var(--ink-red);
   outline-offset: -2px;
-}
-
-.dispatch--sealed .dispatch-seal {
-  filter: grayscale(1);
 }
 
 .dispatch--sealed .dispatch-text {
@@ -312,17 +315,78 @@
   margin-top: 0.5rem;
   font-family: var(--font-typed);
   font-size: 1.0625rem;
+  font-size: clamp(1.0625rem, 3cqi, 1.3rem);
   color: var(--ink-red-text);
   font-variant-numeric: tabular-nums;
 }
 
+/* A roomy dispatch: the hour moves out to the end of the band, and the words keep a column of their own beside the robot. */
+@container (min-width: 34rem) {
+  .dispatch-band {
+    align-items: center;
+  }
+
+  .dispatch-title {
+    grid-column: 1;
+    align-self: end;
+  }
+
+  .dispatch-by {
+    grid-column: 1;
+    align-self: start;
+  }
+
+  .dispatch-time {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    font-size: 1.125rem;
+  }
+
+  .dispatch-body {
+    display: grid;
+    grid-template-columns: var(--plate) minmax(0, 1fr);
+    column-gap: 1.1rem;
+    align-items: start;
+  }
+
+  .dispatch-body > * {
+    grid-column: 2;
+  }
+
+  .dispatch-body > .dispatch-plate {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    float: none;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+}
+
+/* Wide leaves: plan and report side by side, torn apart down the middle. Each half is then roomy (34rem or more). */
+@media (min-width: 76rem) {
+  .spread {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .dispatch--evening {
+    padding-top: 0;
+    border-top: 0;
+    border-left: 3px dotted var(--paper-rule);
+  }
+
+  .dispatch--evening::before,
+  .dispatch--evening::after {
+    content: none;
+  }
+}
+
 /* The verdict, rubber-stamped under every filed report. */
 .stamp {
-  align-self: flex-end;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1.1rem 0.4rem 0 0;
+  width: fit-content;
+  margin: 1.1rem 0.4rem 0 auto;
   padding: 0.4rem 0.85rem 0.3rem;
   border: 4px double currentColor;
   font-family: var(--font-display);
@@ -355,7 +419,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem 1rem;
-  padding: 0.75rem clamp(1.1rem, 5vw, 2.25rem) 1rem;
+  padding: 0.75rem var(--paper-inset) 1rem;
   border-top: 1px solid var(--paper-rule);
 }
 
@@ -439,20 +503,10 @@
 
 .slips {
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  align-items: start;
   gap: 1.5rem 1.25rem;
   margin-top: 1.1rem;
-}
-
-.slips--month {
-  gap: 1.1rem;
-  margin-top: 1.5rem;
-}
-
-@media (min-width: 44rem) {
-  .torn .slips {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-  }
 }
 
 .slip {
@@ -509,7 +563,7 @@
 
 .slip-num {
   font-family: var(--font-display);
-  font-size: 3.1rem;
+  font-size: 2.5rem;
   line-height: 0.86;
   letter-spacing: -0.04em;
   transition: color 0.2s ease;
@@ -563,49 +617,19 @@
   margin-top: 1.25rem;
 }
 
-/* Until the calendar reaches full width, the date sits beside its notes so the plan stays in the first screen. */
-@media (max-width: 50rem) {
+/* Phones: the notes drop under the date line. */
+@media (max-width: 30rem) {
   .leaf-date {
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-rows: auto auto auto 1fr;
-    grid-template-areas:
-      'num weekday'
-      'num month'
-      'num year'
-      'num uprising';
-    column-gap: 0.9rem;
-    align-items: start;
-  }
-
-  .leaf-weekday,
-  .leaf-notes--uprising {
-    text-align: left;
-  }
-
-  .leaf-month {
-    font-weight: 700;
-  }
-
-  .leaf-month span {
-    display: inline;
-  }
-
-  .leaf-day {
-    justify-self: start;
+    flex-wrap: wrap;
   }
 
   .leaf-notes {
-    align-self: start;
-    margin-top: 0.3rem;
-    font-size: 0.8125rem;
-  }
-
-  .leaf-notes--uprising {
-    margin-top: 0;
-  }
-
-  .leaf-num {
-    font-size: clamp(5.5rem, 29vw, 9rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.9rem;
+    width: 100%;
+    margin-left: 0;
+    text-align: left;
   }
 }
 

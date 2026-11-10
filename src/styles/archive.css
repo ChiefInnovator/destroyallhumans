@@ -1,4 +1,10 @@
-/* Every page: each year is a ruled row of twelve months. */
+/* Every page: each year is a ruled block of twelve months; years sit side by side where there is room. */
+.years {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: 0 clamp(1.5rem, 4vw, 3rem);
+}
+
 .year {
   margin-top: 2.25rem;
 }
@@ -52,6 +58,34 @@ a.planner-day:focus-visible {
   outline-offset: -6px;
 }
 
+/* A month page: the planner, then the month's days. Side by side on wide screens, with the planner held in view. */
+.month-body {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.month-body .slips {
+  margin-top: 0;
+}
+
+@media (min-width: 68rem) {
+  .month-body {
+    grid-template-columns: minmax(22rem, 29rem) minmax(0, 1fr);
+    align-items: start;
+    column-gap: 2rem;
+  }
+
+  .archive-month {
+    position: sticky;
+    top: 1rem;
+  }
+
+  .month-body > .status,
+  .month-body > .leaf-status {
+    align-self: start;
+  }
+}
+
 /* One month as a wall planner. It never scrolls sideways; it scales. */
 .planner {
   margin-top: 1.5rem;
@@ -91,9 +125,9 @@ a.planner-day:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: clamp(2.75rem, 11vw, 4.5rem);
+  min-height: clamp(2.75rem, 11vw, 3.75rem);
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 4.6vw, 1.9rem);
+  font-size: clamp(1.1rem, 4.6vw, 1.6rem);
   line-height: 1;
   text-decoration: none;
   transition: background-color 0.2s ease;
